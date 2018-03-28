@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace HOI4_Tools.Model
+{
+    class Opt
+    {
+        private static double resolutionMultiplier;
+        public static double zoom = 1;
+        public static int buttonDelay = 100;
+
+        static Opt()
+        {
+            resolutionMultiplier = SystemParameters.PrimaryScreenWidth / 1920;
+        }
+
+        public static double ApResMod(double number)
+        {
+            //return number;
+            return Math.Round((number * resolutionMultiplier) * zoom);
+        }
+    }
+}
