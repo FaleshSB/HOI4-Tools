@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HOI4_Tools"
         mc:Ignorable="d"
-        Title="HOI4 Tools" Height="900" Width="900"
+        Title="HOI4 Tools" Height="900" Width="1200"
         Source="View/StartPage.xaml"
         WindowStartupLocation="CenterScreen" ShowsNavigationUI="False"/>

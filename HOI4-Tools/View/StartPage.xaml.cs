@@ -22,13 +22,10 @@ namespace HOI4_Tools.View
     /// </summary>
     public partial class StartPage : DefaultPage
     {
-        private System.Drawing.Size buttonSize = new System.Drawing.Size((int)Math.Round(Opt.ApResMod(168)), (int)Math.Round(Opt.ApResMod(36)));
+        private System.Drawing.Size buttonSize = new System.Drawing.Size((int)Math.Round(Opt.ApResMod(379)), (int)Math.Round(Opt.ApResMod(55)));
 
         private Dictionary<string, Image> buttons = new Dictionary<string, Image>();
-        private string manageSquadsButtonName = "manage_squads_start";
-        private string browseCardsButtonName = "browse_cards_start";
-        private string calculateStatsButtonName = "calculate_stats_start";
-        private string quizButtonName = "quiz_start";
+        private string devisionDesignerButtonName = "division_designer_start";
         private Canvas contentCanvas = new Canvas();
         private string filteredLocation;
         private bool isButtonBeingPressed = false;
@@ -37,6 +34,9 @@ namespace HOI4_Tools.View
 
         public StartPage()
         {
+            string baseLocation = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
+            filteredLocation = System.IO.Path.GetDirectoryName(baseLocation).Replace("file:\\", "") + "\\Misc\\";
+
             contentWrapPanel.Name = "contentWrapPanel";
             contentWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
             contentScrollViewer.Content = contentWrapPanel;
@@ -45,12 +45,58 @@ namespace HOI4_Tools.View
             contentCanvas.Height = 900;
             //contentCanvas.Background = new SolidColorBrush(Colors.Black);
             contentWrapPanel.Children.Add(contentCanvas);
-            InitializeComponent();/*
-            buttons.Add(manageSquadsButtonName, CreateButton(manageSquadsButtonName));
-            buttons.Add(browseCardsButtonName, CreateButton(browseCardsButtonName));
-            buttons.Add(calculateStatsButtonName, CreateButton(calculateStatsButtonName));
-            buttons.Add(quizButtonName, CreateButton(quizButtonName));
-            contentCanvas.Width = buttons[quizButtonName].Width;*/
+            InitializeComponent();
+            buttons.Add(devisionDesignerButtonName, CreateButton(devisionDesignerButtonName));
+            contentCanvas.Width = buttons[devisionDesignerButtonName].Width;
+        }
+        private Image CreateButton(string buttonName)
+        {
+            Image button = new Image();
+            button.Name = buttonName;
+            button.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + buttonName + ".png"), buttonSize);
+            button.Width = buttonSize.Width;
+            button.Height = buttonSize.Height;
+            button.UseLayoutRounding = true;
+            button.MouseEnter += new MouseEventHandler(ButtonHover);
+            button.MouseLeave += new MouseEventHandler(ButtonStopHover);
+            button.MouseDown += new MouseButtonEventHandler(ButtonClicked);
+            RenderOptions.SetBitmapScalingMode(button, BitmapScalingMode.HighQuality);
+
+            return button;
+        }
+
+        private void ButtonHover(object sender, MouseEventArgs e)
+        {
+            Image button = (Image)sender;
+            buttons[button.Name].Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + button.Name + "_hover.png"), buttonSize);
+        }
+        private void ButtonStopHover(object sender, MouseEventArgs e)
+        {
+            Image button = (Image)sender;
+            buttons[button.Name].Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + button.Name + ".png"), buttonSize);
+        }
+        private async void ButtonClicked(object sender, MouseButtonEventArgs e)
+        {
+            if (isButtonBeingPressed) return;
+            isButtonBeingPressed = true;
+            Image button = (Image)sender;
+            buttons[button.Name].Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + button.Name + "_pressed.png"), buttonSize);
+            await Task.Delay(Opt.buttonDelay);
+            isButtonBeingPressed = false;
+
+            if (button.Name == devisionDesignerButtonName)
+            {
+                NavigationService.Navigate((DivisionDesignerPage)Pages.pages[PageName.DivisionDesigner]);
+            }
+        }
+
+        protected override void DisplayContent()
+        {
+            contentCanvas.Children.Clear();
+
+            Canvas.SetLeft(buttons[devisionDesignerButtonName], 0);
+            Canvas.SetTop(buttons[devisionDesignerButtonName], Opt.ApResMod(400));
+            contentCanvas.Children.Add(buttons[devisionDesignerButtonName]);
         }
     }
 }
