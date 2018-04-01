@@ -33,5 +33,16 @@ namespace HOI4_Tools.Model
                 return null;
             }
         }
+        public static string[] LoadFile(string fileName, string subFolder)
+        {
+            if (File.Exists(Path.Combine(filteredLocation + "\\" + subFolder + "\\" , fileName)))
+            {
+                return File.ReadAllLines(Path.Combine(filteredLocation, fileName));
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

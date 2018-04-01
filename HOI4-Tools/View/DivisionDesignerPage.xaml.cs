@@ -26,7 +26,7 @@ namespace HOI4_Tools.View
         public DivisionDesignerPage()
         {
 
-            Units units = new Units();
+            ParadoxDataGatherer units = new ParadoxDataGatherer();
 
 
 

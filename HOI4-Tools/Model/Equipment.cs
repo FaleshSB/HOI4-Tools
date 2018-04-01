@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace HOI4_Tools.Model
 {
-    class Unit
+    class Equipment
     {
-        public UnitName unitName;
-        public UnitType unitType;
-        public UnitIcon unitIcon;
-
         public int manpower;
         public int trainingTime;
         public int maxOrganisation;
@@ -30,7 +26,7 @@ namespace HOI4_Tools.Model
 
         public bool canBeParachuted = false;
 
-        public Dictionary<int, Equipment> equipment = new Dictionary<int, Equipment>(); 
+        public TransportType transportType;
 
         public Dictionary<TerrainType, TerrainStats> terrainStats = new Dictionary<TerrainType, TerrainStats>();
     }

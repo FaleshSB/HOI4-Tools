@@ -13,4 +13,5 @@ namespace HOI4_Tools.Model
     public enum UnitType { Armor, Infantry, Mobile, Support }
     public enum UnitIcon { Armored, Infantry, Other, Ship, Transport, Uboat }
     public enum TerrainType { Forest, Hills, Mountain, Marsh, Plains, Urban, Desert, River, Amphibious }
+    public enum TransportType { Motorized, Mechanized }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HOI4_Tools.Model
 {
-    public class Units
+    public class ParadoxDataGatherer
     {
         string[] infantryFileData;
 
@@ -36,7 +36,7 @@ namespace HOI4_Tools.Model
         bool isCheckingMotorized = false;
         bool isCheckingMechanized = false;
 
-        public Units()
+        public ParadoxDataGatherer()
         {
             GetData();
         }
@@ -85,121 +85,134 @@ namespace HOI4_Tools.Model
 
         private void GetStats(Unit unit, int start, int end)
         {
-            Regex regex;
             Match match;
             for (int i = start; i < end; i++)
             {
-                regex = new Regex(@"combat_width[^0-9]+?([\-0-9]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"combat_width[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.combatWidth = Int32.Parse(match.Groups[1].Value);
                 }
-                regex = new Regex(@"max_organisation[^0-9]+?([\-0-9]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"max_organisation[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.maxOrganisation = Int32.Parse(match.Groups[1].Value);
                 }
-                regex = new Regex(@"manpower[^0-9]+?([\-0-9]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"manpower[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.manpower = Int32.Parse(match.Groups[1].Value);
                 }
-                regex = new Regex(@"training_time[^0-9]+?([\-0-9]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"training_time[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.trainingTime = Int32.Parse(match.Groups[1].Value);
                 }
-                regex = new Regex(@"suppression[^0-9]+?([\-0-9]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"suppression[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.suppression = Int32.Parse(match.Groups[1].Value);
                 }
-                regex = new Regex(@"infantry_equipment[^0-9]+?([\-0-9]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"infantry_equipment[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.infantryEquipment = Int32.Parse(match.Groups[1].Value);
                 }
-                regex = new Regex(@"support_equipment[^0-9]+?([\-0-9]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"support_equipment[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.supportEquipment = Int32.Parse(match.Groups[1].Value);
                 }
+                match = Regex.Match(infantryFileData[i], @"motorized_equipment[^0-9]+?([\-0-9]+)");
+                if (match.Success)
+                {
+                    unit.motorizedEquipment = Int32.Parse(match.Groups[1].Value);
+                }
+                match = Regex.Match(infantryFileData[i], @"mechanized_equipment[^0-9]+?([\-0-9]+)");
+                if (match.Success)
+                {
+                    unit.mechanizedEquipment = Int32.Parse(match.Groups[1].Value);
+                }
 
 
-                regex = new Regex(@"weight[^0-9]+?([\-0-9\.]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"weight[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.weight = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                regex = new Regex(@"supply_consumption[^0-9]+?([\-0-9\.]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"supply_consumption[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.supplyConsumption = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                regex = new Regex(@"maximum_speed[^0-9]+?([\-0-9\.]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"maximum_speed[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.maxSpeed = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                regex = new Regex(@"breakthrough[^0-9]+?([\-0-9\.]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"breakthrough[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.breakthrough = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-
-
-                regex = new Regex(@"can_be_parachuted.*?yes");
-                match = regex.Match(infantryFileData[i]);
+                match = Regex.Match(infantryFileData[i], @"hardness[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
+                {
+                    unit.hardness = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
+                }
+
+
+                if (Regex.Match(infantryFileData[i], @"can_be_parachuted.*?yes").Success)
                 {
                     unit.canBeParachuted = true;
                 }
 
 
-                if (infantryFileData[i].Contains("forest = {"))
+                /*
+                if (Regex.Match(infantryFileData[i], @"transport.*?motorized_equipment").Success)
+                {
+                    unit.transportType = TransportType.Motorized;
+                }
+                if (Regex.Match(infantryFileData[i], @"transport.*?mechanized_equipment").Success)
+                {
+                    unit.transportType = TransportType.Mechanized;
+                }
+                */
+
+
+                if (Regex.Match(infantryFileData[i], @"forest.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Forest, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("hills = {"))
+                if (Regex.Match(infantryFileData[i], @"hills.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Hills, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("mountain = {"))
+                if (Regex.Match(infantryFileData[i], @"mountain.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Mountain, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("marsh = {"))
+                if (Regex.Match(infantryFileData[i], @"marsh.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Marsh, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("plains = {"))
+                if (Regex.Match(infantryFileData[i], @"plains.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Plains, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("urban = {"))
+                if (Regex.Match(infantryFileData[i], @"urban.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Urban, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("desert = {"))
+                if (Regex.Match(infantryFileData[i], @"desert.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Desert, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("river = {"))
+                if (Regex.Match(infantryFileData[i], @"river.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.River, i + 1, i + 3);
                 }
-                if (infantryFileData[i].Contains("amphibious = {"))
+                if (Regex.Match(infantryFileData[i], @"amphibious.*?\{").Success)
                 {
                     GetTerrainStats(unit, TerrainType.Amphibious, i + 1, i + 3);
                 }
@@ -245,44 +258,43 @@ namespace HOI4_Tools.Model
                     infantryStart = i;
                     GetEnds(i);
                     isCheckingInfantry = true;
-                }/*
-                if (infantryFileData[i].Contains("infantry = {"))
-                {
-                    infantryStart = i;
-                    GetEnds(i);
-                    isCheckingInfantry = true;
-                }*/
-                else if (infantryFileData[i].Contains("bicycle_battalion = {"))
+                }
+                else if (Regex.Match(infantryFileData[i], @"bicycle_battalion.*?\{").Success)
                 {
                     bicycleBattalionStart = i;
                     GetEnds(i);
                     isCheckingBicycleBattalion = true;
                 }
-                else if (infantryFileData[i].Contains("marine = {"))
+
+                else if (Regex.Match(infantryFileData[i], @"marine.*?\{").Success)
                 {
                     marineStart = i;
                     GetEnds(i);
                     isCheckingMarine = true;
                 }
-                else if (infantryFileData[i].Contains("mountaineers = {"))
+
+                else if (Regex.Match(infantryFileData[i], @"mountaineers.*?\{").Success)
                 {
                     mountaineersStart = i;
                     GetEnds(i);
                     isCheckingMountaineers = true;
                 }
-                else if (infantryFileData[i].Contains("paratrooper = {"))
+
+                else if (Regex.Match(infantryFileData[i], @"paratrooper.*?\{").Success)
                 {
                     paratrooperStart = i;
                     GetEnds(i);
                     isCheckingParatrooper = true;
                 }
-                else if (infantryFileData[i].Contains("motorized = {"))
+
+                else if (Regex.Match(infantryFileData[i], @"motorized.*?\{").Success)
                 {
                     motorizedStart = i;
                     GetEnds(i);
                     isCheckingMotorized = true;
                 }
-                else if (infantryFileData[i].Contains("mechanized = {"))
+
+                else if (Regex.Match(infantryFileData[i], @"mechanized.*?\{").Success)
                 {
                     mechanizedStart = i;
                     GetEnds(i);
