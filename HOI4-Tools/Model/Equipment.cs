@@ -8,26 +8,18 @@ namespace HOI4_Tools.Model
 {
     class Equipment
     {
-        public int manpower;
-        public int trainingTime;
-        public int maxOrganisation;
-        public int combatWidth;
-        public int suppression;
-        public int infantryEquipment;
-        public int supportEquipment;
-        public int motorizedEquipment;
-        public int mechanizedEquipment;
+        public int year;
+        public int maximumSpeed;
+        public int defense;
+        public int breakthrough;
+        public int armorValue;
 
-        public float weight;
-        public float supplyConsumption;
-        public float maxSpeed;
-        public float breakthrough;
+        public float reliability;
         public float hardness;
-
-        public bool canBeParachuted = false;
-
-        public TransportType transportType;
-
-        public Dictionary<TerrainType, TerrainStats> terrainStats = new Dictionary<TerrainType, TerrainStats>();
+        public float softAttack;
+        public float hardAttack;
+        public float apAttack;
+        public float airAttack;
+        public float buildCostIc;
     }
 }
