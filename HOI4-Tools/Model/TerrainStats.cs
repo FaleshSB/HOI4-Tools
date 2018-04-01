@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace HOI4_Tools.Model
 {
-    static class Divisions
+    class TerrainStats
     {
-        public static List<Division> divisions = new List<Division>();
-
-        static Divisions()
-        {
-            
-        }
+        public float attack = 0;
+        public float defence = 0;
+        public float movement = 0;
     }
 }

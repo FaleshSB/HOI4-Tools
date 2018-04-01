@@ -44,7 +44,8 @@ namespace HOI4_Tools.View
 
         protected override void DisplayContent()
         {
-            System.Drawing.Size buttonSize = new System.Drawing.Size((int)Math.Round(Opt.ApResMod(1035)), (int)Math.Round(Opt.ApResMod(342)));
+            System.Drawing.Size divisionDesignerBackgroundSize = new System.Drawing.Size((int)Math.Round(Opt.ApResMod(1047)), (int)Math.Round(Opt.ApResMod(276)));
+            System.Drawing.Size addUnitSize = new System.Drawing.Size((int)Math.Round(Opt.ApResMod(72)), (int)Math.Round(Opt.ApResMod(38)));
 
             string filteredLocation;
             string baseLocation = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
@@ -54,27 +55,35 @@ namespace HOI4_Tools.View
 
             //foreach (Division division in Division.divisions.OrderByDescending(build => build.displayOrder).ToList())
             //{
-                AlignableWrapPanel divisionWrapPanel = new AlignableWrapPanel();
-                divisionWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
+            AlignableWrapPanel divisionWrapPanel = new AlignableWrapPanel();
+            divisionWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
 
-                AlignableWrapPanel spacerWrapPanel = new AlignableWrapPanel();
-                spacerWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
+            AlignableWrapPanel spacerWrapPanel = new AlignableWrapPanel();
+            spacerWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
 
-                Canvas topSpacer = new Canvas();
-                topSpacer.Width = 99999;
-                topSpacer.Height = Opt.ApResMod(50);
-                spacerWrapPanel.Children.Add(topSpacer);
+            Canvas topSpacer = new Canvas();
+            topSpacer.Width = 99999;
+            topSpacer.Height = Opt.ApResMod(50);
+            spacerWrapPanel.Children.Add(topSpacer);
 
-                divisionWrapPanel.Children.Add(spacerWrapPanel);
+            divisionWrapPanel.Children.Add(spacerWrapPanel);
 
-                Image divisionBackground = new Image();
-                divisionBackground.Width = Opt.ApResMod(1035);
-                divisionBackground.Height = Opt.ApResMod(342);
-                divisionBackground.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "division_background.png"), buttonSize);
+            Canvas devisionDesignerCanvas = new Canvas();
+            devisionDesignerCanvas.Height = Opt.ApResMod(276);
+            devisionDesignerCanvas.Width = Opt.ApResMod(1047);
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "division_designer_background.png"), divisionDesignerBackgroundSize); ;
+            devisionDesignerCanvas.Background = ib;
 
-                divisionWrapPanel.Children.Add(divisionBackground);
+            Image addUnit = new Image();
+            addUnit.Width = Opt.ApResMod(72);
+            addUnit.Height = Opt.ApResMod(38);
+            addUnit.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
+            devisionDesignerCanvas.Children.Add(addUnit);
 
-                contentWrapPanel.Children.Add(divisionWrapPanel);
+
+            divisionWrapPanel.Children.Add(devisionDesignerCanvas);
+            contentWrapPanel.Children.Add(divisionWrapPanel);
             //}
         }
     }
