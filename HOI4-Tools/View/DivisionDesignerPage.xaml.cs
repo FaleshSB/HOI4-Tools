@@ -25,8 +25,6 @@ namespace HOI4_Tools.View
 
         public DivisionDesignerPage()
         {
-            ParadoxDataGatherer units = new ParadoxDataGatherer();
-
             Pages.pages[PageName.DivisionDesigner] = this;
 
             InitializeComponent();
@@ -35,6 +33,13 @@ namespace HOI4_Tools.View
             contentWrapPanel.Name = "contentWrapPanel";
             contentWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
             contentScrollViewer.Content = contentWrapPanel;
+
+            Division testDivision = new Division();
+            for (int i = 0; i < 10; i++)
+            {
+                testDivision.AddUnit(UnitName.Infantry);
+            }
+            Divisions.divisions.Add(testDivision);
         }
 
         protected override void DisplayContent()
@@ -48,76 +53,116 @@ namespace HOI4_Tools.View
 
             contentWrapPanel.Children.Clear();
 
-            //foreach (Division division in Division.divisions.OrderByDescending(build => build.displayOrder).ToList())
-            //{
-            AlignableWrapPanel divisionWrapPanel = new AlignableWrapPanel();
-            divisionWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
-
-            AlignableWrapPanel spacerWrapPanel = new AlignableWrapPanel();
-            spacerWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
-
-            Canvas topSpacer = new Canvas();
-            topSpacer.Width = 99999;
-            topSpacer.Height = Opt.ApResMod(50);
-            spacerWrapPanel.Children.Add(topSpacer);
-
-            divisionWrapPanel.Children.Add(spacerWrapPanel);
-
-            Canvas devisionDesignerCanvas = new Canvas();
-            devisionDesignerCanvas.Height = Opt.ApResMod(276);
-            devisionDesignerCanvas.Width = Opt.ApResMod(1047);
-            ImageBrush ib = new ImageBrush();
-            ib.ImageSource = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "division_designer_background.png"), divisionDesignerBackgroundSize); ;
-            devisionDesignerCanvas.Background = ib;
-            divisionWrapPanel.Children.Add(devisionDesignerCanvas);
-
-            StackPanel fullDesignerStackPanel = new StackPanel();
-            fullDesignerStackPanel.Orientation = Orientation.Horizontal;
-            devisionDesignerCanvas.Children.Add(fullDesignerStackPanel);
-
-            StackPanel supportColumn = new StackPanel();
-            supportColumn.Orientation = Orientation.Vertical;
-            supportColumn.VerticalAlignment = VerticalAlignment.Top;
-            supportColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
-            fullDesignerStackPanel.Children.Add(supportColumn);
-            Image addSupport;
-            for (int i = 0; i < 5; i++)
+            foreach (Division division in Divisions.divisions)
             {
-                addSupport = new Image();
-                addSupport.Width = Opt.ApResMod(72);
-                addSupport.Height = Opt.ApResMod(38);
-                addSupport.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
-                addSupport.Margin = ScaledThicknessFactory.GetThickness(0, 0, 10, 14);
-                supportColumn.Children.Add(addSupport);
-            }
+                AlignableWrapPanel divisionWrapPanel = new AlignableWrapPanel();
+                divisionWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
 
-            for (int y = 0; y < 5; y++)
-            {
-                StackPanel unitColumn = new StackPanel();
-                unitColumn.Orientation = Orientation.Vertical;
-                unitColumn.VerticalAlignment = VerticalAlignment.Top;
-                unitColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
-                fullDesignerStackPanel.Children.Add(unitColumn);
-                Image addUnit;
+                AlignableWrapPanel spacerWrapPanel = new AlignableWrapPanel();
+                spacerWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+                Canvas topSpacer = new Canvas();
+                topSpacer.Width = 99999;
+                topSpacer.Height = Opt.ApResMod(50);
+                spacerWrapPanel.Children.Add(topSpacer);
+
+                divisionWrapPanel.Children.Add(spacerWrapPanel);
+
+                Canvas devisionDesignerCanvas = new Canvas();
+                devisionDesignerCanvas.Height = Opt.ApResMod(276);
+                devisionDesignerCanvas.Width = Opt.ApResMod(1047);
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "division_designer_background.png"), divisionDesignerBackgroundSize); ;
+                devisionDesignerCanvas.Background = ib;
+                divisionWrapPanel.Children.Add(devisionDesignerCanvas);
+
+                StackPanel fullDesignerStackPanel = new StackPanel();
+                fullDesignerStackPanel.Orientation = Orientation.Horizontal;
+                devisionDesignerCanvas.Children.Add(fullDesignerStackPanel);
+
+                StackPanel supportColumn = new StackPanel();
+                supportColumn.Orientation = Orientation.Vertical;
+                supportColumn.VerticalAlignment = VerticalAlignment.Top;
+                supportColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                fullDesignerStackPanel.Children.Add(supportColumn);
+                Image addSupport;
                 for (int i = 0; i < 5; i++)
                 {
-                    addUnit = new Image();
-                    addUnit.Width = Opt.ApResMod(72);
-                    addUnit.Height = Opt.ApResMod(38);
-                    addUnit.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
-                    addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
-                    unitColumn.Children.Add(addUnit);
+                    addSupport = new Image();
+                    addSupport.Width = Opt.ApResMod(72);
+                    addSupport.Height = Opt.ApResMod(38);
+                    addSupport.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
+                    addSupport.Margin = ScaledThicknessFactory.GetThickness(0, 0, 10, 14);
+                    supportColumn.Children.Add(addSupport);
                 }
+
+                for (int y = 0; y < 5; y++)
+                {
+                    StackPanel unitColumn = new StackPanel();
+                    unitColumn.Orientation = Orientation.Vertical;
+                    unitColumn.VerticalAlignment = VerticalAlignment.Top;
+                    unitColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                    fullDesignerStackPanel.Children.Add(unitColumn);
+                    Image addUnit;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        addUnit = new Image();
+                        addUnit.Width = Opt.ApResMod(72);
+                        addUnit.Height = Opt.ApResMod(38);
+                        addUnit.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
+                        addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
+                        unitColumn.Children.Add(addUnit);
+                    }
+                }
+
+
+                StackPanel firstStatsColumn = new StackPanel();
+                firstStatsColumn.Orientation = Orientation.Vertical;
+                firstStatsColumn.VerticalAlignment = VerticalAlignment.Top;
+                firstStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                fullDesignerStackPanel.Children.Add(firstStatsColumn);
+
+                Label stat;
+
+                stat = new Label();
+                stat.FontSize = 16;
+                stat.Content = "Speed: " + division.maxSpeed;
+                firstStatsColumn.Children.Add(stat);
+                stat = new Label();
+                stat.FontSize = 16;
+                stat.Content = "HP: " + division.maxSpeed;
+                firstStatsColumn.Children.Add(stat);
+                stat = new Label();
+                stat.FontSize = 16;
+                stat.Content = "Organization: " + division.maxOrganisation;
+                firstStatsColumn.Children.Add(stat);
+                stat = new Label();
+                stat.FontSize = 16;
+                stat.Content = "Suppression: " + division.suppression;
+                firstStatsColumn.Children.Add(stat);
+                stat = new Label();
+                stat.FontSize = 16;
+                stat.Content = "Weight: " + division.weight;
+                firstStatsColumn.Children.Add(stat);
+                stat = new Label();
+                stat.FontSize = 16;
+                stat.Content = "Supply Consumtion: " + division.supplyConsumption;
+                firstStatsColumn.Children.Add(stat);
+                stat = new Label();
+                stat.FontSize = 16;
+                stat.Content = "Reliability: " + division.reliability;
+                firstStatsColumn.Children.Add(stat);
+
+                StackPanel secondStatsColumn = new StackPanel();
+                secondStatsColumn.Orientation = Orientation.Vertical;
+                secondStatsColumn.VerticalAlignment = VerticalAlignment.Top;
+                secondStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                fullDesignerStackPanel.Children.Add(secondStatsColumn);
+
+
+
+                contentWrapPanel.Children.Add(divisionWrapPanel);
             }
-
-
-
-
-
-
-
-            contentWrapPanel.Children.Add(divisionWrapPanel);
-            //}
         }
     }
 }

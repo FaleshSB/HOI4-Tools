@@ -69,16 +69,26 @@ namespace HOI4_Tools.Model
             infantryEquipmentFileData = FileHandler.LoadFile("infantry.txt", "equipment");
             GetInfantryEquipmentLocations();
 
-            Equipment infantryEquipment = new Equipment();
-            GetEquipmentStats(infantryEquipment, infantryEquipmentStart, infantryEquipmentEnd);
-            Equipment infantryEquipment0 = (Equipment)infantryEquipment.GetClone();
+            Equipment infantryEquipmentTemplate = new Equipment();
+            GetEquipmentStats(infantryEquipmentTemplate, infantryEquipmentStart, infantryEquipmentEnd);
+
+            UnitsAndEquipment.equipment[UnitName.Infantry] = new Dictionary<int, Equipment>();
+
+            Equipment infantryEquipment0 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment0, infantryEquipment0Start, infantryEquipment0End);
-            Equipment infantryEquipment1 = (Equipment)infantryEquipment.GetClone();
+            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment0.year] = infantryEquipment0;
+
+            Equipment infantryEquipment1 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment1, infantryEquipment1Start, infantryEquipment1End);
-            Equipment infantryEquipment2 = (Equipment)infantryEquipment.GetClone();
+            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment1.year] = infantryEquipment1;
+
+            Equipment infantryEquipment2 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment2, infantryEquipment2Start, infantryEquipment2End);
-            Equipment infantry3Equipment = (Equipment)infantryEquipment.GetClone();
-            GetEquipmentStats(infantry3Equipment, infantryEquipment3Start, infantryEquipment3End);
+            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment2.year] = infantryEquipment2;
+
+            Equipment infantryEquipment3 = (Equipment)infantryEquipmentTemplate.GetClone();
+            GetEquipmentStats(infantryEquipment3, infantryEquipment3Start, infantryEquipment3End);
+            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment3.year] = infantryEquipment3;
         }
 
         private void GetUnitData()
@@ -91,36 +101,49 @@ namespace HOI4_Tools.Model
             infantry.unitType = UnitType.Infantry;
             infantry.unitIcon = UnitIcon.Infantry;
             GetUnitStats(infantry, infantryStart, infantryEnd);
+            UnitsAndEquipment.units[UnitName.Infantry] = infantry;
+
             Unit bicycleBattalion = new Unit();
-            infantry.unitName = UnitName.BicycleBattalion;
-            infantry.unitType = UnitType.Infantry;
-            infantry.unitIcon = UnitIcon.Infantry;
+            bicycleBattalion.unitName = UnitName.BicycleBattalion;
+            bicycleBattalion.unitType = UnitType.Infantry;
+            bicycleBattalion.unitIcon = UnitIcon.Infantry;
             GetUnitStats(bicycleBattalion, bicycleBattalionStart, bicycleBattalionEnd);
+            UnitsAndEquipment.units[UnitName.BicycleBattalion] = bicycleBattalion;
+
             Unit marine = new Unit();
-            infantry.unitName = UnitName.Marine;
-            infantry.unitType = UnitType.Infantry;
-            infantry.unitIcon = UnitIcon.Infantry;
+            marine.unitName = UnitName.Marine;
+            marine.unitType = UnitType.Infantry;
+            marine.unitIcon = UnitIcon.Infantry;
             GetUnitStats(marine, marineStart, marineEnd);
+            UnitsAndEquipment.units[UnitName.Marine] = marine;
+
             Unit mountaineers = new Unit();
-            infantry.unitName = UnitName.Mountaineers;
-            infantry.unitType = UnitType.Infantry;
-            infantry.unitIcon = UnitIcon.Infantry;
+            mountaineers.unitName = UnitName.Mountaineers;
+            mountaineers.unitType = UnitType.Infantry;
+            mountaineers.unitIcon = UnitIcon.Infantry;
             GetUnitStats(mountaineers, mountaineersStart, mountaineersEnd);
+            UnitsAndEquipment.units[UnitName.Mountaineers] = mountaineers;
+
             Unit paratrooper = new Unit();
-            infantry.unitName = UnitName.Paratrooper;
-            infantry.unitType = UnitType.Infantry;
-            infantry.unitIcon = UnitIcon.Infantry;
+            paratrooper.unitName = UnitName.Paratrooper;
+            paratrooper.unitType = UnitType.Infantry;
+            paratrooper.unitIcon = UnitIcon.Infantry;
             GetUnitStats(paratrooper, paratrooperStart, paratrooperEnd);
+            UnitsAndEquipment.units[UnitName.Paratrooper] = paratrooper;
+
             Unit motorized = new Unit();
-            infantry.unitName = UnitName.Motorized;
-            infantry.unitType = UnitType.Infantry;
-            infantry.unitIcon = UnitIcon.Infantry;
+            motorized.unitName = UnitName.Motorized;
+            motorized.unitType = UnitType.Infantry;
+            motorized.unitIcon = UnitIcon.Infantry;
             GetUnitStats(motorized, motorizedStart, motorizedEnd);
+            UnitsAndEquipment.units[UnitName.Motorized] = motorized;
+
             Unit mechanized = new Unit();
-            infantry.unitName = UnitName.Mechanized;
-            infantry.unitType = UnitType.Infantry;
-            infantry.unitIcon = UnitIcon.Infantry;
+            mechanized.unitName = UnitName.Mechanized;
+            mechanized.unitType = UnitType.Infantry;
+            mechanized.unitIcon = UnitIcon.Infantry;
             GetUnitStats(mechanized, mechanizedStart, mechanizedEnd);
+            UnitsAndEquipment.units[UnitName.Mechanized] = mechanized;
         }
 
         private void GetEquipmentStats(Equipment equipment, int start, int end)
@@ -202,6 +225,11 @@ namespace HOI4_Tools.Model
                 if (match.Success)
                 {
                     unit.combatWidth = Int32.Parse(match.Groups[1].Value);
+                }
+                match = Regex.Match(infantryFileData[i], @"max_strength[^0-9]+?([\-0-9]+)");
+                if (match.Success)
+                {
+                    unit.maxStrength = Int32.Parse(match.Groups[1].Value);
                 }
                 match = Regex.Match(infantryFileData[i], @"max_organisation[^0-9]+?([\-0-9]+)");
                 if (match.Success)

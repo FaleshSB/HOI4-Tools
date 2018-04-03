@@ -12,25 +12,24 @@ namespace HOI4_Tools.Model
         public UnitType unitType;
         public UnitIcon unitIcon;
 
-        public int manpower;
-        public int trainingTime;
-        public int maxOrganisation;
-        public int combatWidth;
-        public int suppression;
-        public int infantryEquipment;
-        public int supportEquipment;
-        public int motorizedEquipment;
-        public int mechanizedEquipment;
+        public int manpower = 0;
+        public int trainingTime = 0;
+        public int maxStrength = 0;
+        public int maxOrganisation = 0;
+        public int combatWidth = 0;
+        public int suppression = 0;
+        public int infantryEquipment = 0;
+        public int supportEquipment = 0;
+        public int motorizedEquipment = 0;
+        public int mechanizedEquipment = 0;
 
-        public float weight;
-        public float supplyConsumption;
-        public float maxSpeed;
-        public float breakthrough;
-        public float hardness;
+        public float weight = 0;
+        public float supplyConsumption = 0;
+        public float maxSpeed = 0;
+        public float breakthrough = 0;
+        public float hardness = 0;
 
         public bool canBeParachuted = false;
-
-        public Dictionary<int, Equipment> equipment = new Dictionary<int, Equipment>(); 
 
         public Dictionary<TerrainType, TerrainStats> terrainStats = new Dictionary<TerrainType, TerrainStats>();
     }

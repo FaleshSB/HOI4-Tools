@@ -8,19 +8,20 @@ namespace HOI4_Tools.Model
 {
     class Equipment
     {
-        public int year;
-        public int maximumSpeed;
-        public int defense;
-        public int breakthrough;
-        public int armorValue;
+        // When adding equipment stats make sure they are also added to places like Division.CalculateStats()
+        public int year = 0;
+        public int maximumSpeed = 0;
+        public int defense = 0;
+        public int breakthrough = 0;
+        public int armorValue = 0;
 
-        public float reliability;
-        public float hardness;
-        public float softAttack;
-        public float hardAttack;
-        public float apAttack;
-        public float airAttack;
-        public float buildCostIc;
+        public float reliability = 0;
+        public float hardness = 0;
+        public float softAttack = 0;
+        public float hardAttack = 0;
+        public float apAttack = 0;
+        public float airAttack = 0;
+        public float buildCostIc = 0;
 
         public Equipment GetClone()
         {

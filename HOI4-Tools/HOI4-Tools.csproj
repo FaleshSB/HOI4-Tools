@@ -85,7 +85,7 @@
     <Compile Include="Model\TerrainStats.cs" />
     <Compile Include="Model\Unit.cs" />
     <Compile Include="Model\ParadoxDataGatherer.cs" />
-    <Compile Include="Model\Units.cs" />
+    <Compile Include="Model\UnitsAndEquipment.cs" />
     <Compile Include="View\DivisionDesignerPage.xaml.cs">
       <DependentUpon>DivisionDesignerPage.xaml</DependentUpon>
     </Compile>

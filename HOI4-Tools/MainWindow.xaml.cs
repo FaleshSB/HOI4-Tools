@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HOI4_Tools.Model;
 
 namespace HOI4_Tools
 {
@@ -22,6 +23,7 @@ namespace HOI4_Tools
     {
         public MainWindow()
         {
+            ParadoxDataGatherer paradoxDataGatherer = new ParadoxDataGatherer();
             InitializeComponent();
         }
     }
