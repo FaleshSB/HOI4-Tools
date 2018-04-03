@@ -71,16 +71,14 @@ namespace HOI4_Tools.Model
 
             Equipment infantryEquipment = new Equipment();
             GetEquipmentStats(infantryEquipment, infantryEquipmentStart, infantryEquipmentEnd);
-            Equipment infantryEquipment0 = new Equipment();
+            Equipment infantryEquipment0 = (Equipment)infantryEquipment.GetClone();
             GetEquipmentStats(infantryEquipment0, infantryEquipment0Start, infantryEquipment0End);
-            Equipment infantryEquipment1 = new Equipment();
+            Equipment infantryEquipment1 = (Equipment)infantryEquipment.GetClone();
             GetEquipmentStats(infantryEquipment1, infantryEquipment1Start, infantryEquipment1End);
-            Equipment infantryEquipment2 = new Equipment();
+            Equipment infantryEquipment2 = (Equipment)infantryEquipment.GetClone();
             GetEquipmentStats(infantryEquipment2, infantryEquipment2Start, infantryEquipment2End);
-            Equipment infantry3Equipment = new Equipment();
+            Equipment infantry3Equipment = (Equipment)infantryEquipment.GetClone();
             GetEquipmentStats(infantry3Equipment, infantryEquipment3Start, infantryEquipment3End);
-
-
         }
 
         private void GetUnitData()

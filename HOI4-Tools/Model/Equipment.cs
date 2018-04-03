@@ -21,5 +21,10 @@ namespace HOI4_Tools.Model
         public float apAttack;
         public float airAttack;
         public float buildCostIc;
+
+        public Equipment GetClone()
+        {
+            return (Equipment)this.MemberwiseClone();
+        }
     }
 }

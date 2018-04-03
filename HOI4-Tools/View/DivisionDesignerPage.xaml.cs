@@ -25,12 +25,7 @@ namespace HOI4_Tools.View
 
         public DivisionDesignerPage()
         {
-
             ParadoxDataGatherer units = new ParadoxDataGatherer();
-
-
-
-
 
             Pages.pages[PageName.DivisionDesigner] = this;
 
@@ -74,15 +69,53 @@ namespace HOI4_Tools.View
             ImageBrush ib = new ImageBrush();
             ib.ImageSource = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "division_designer_background.png"), divisionDesignerBackgroundSize); ;
             devisionDesignerCanvas.Background = ib;
-
-            Image addUnit = new Image();
-            addUnit.Width = Opt.ApResMod(72);
-            addUnit.Height = Opt.ApResMod(38);
-            addUnit.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
-            devisionDesignerCanvas.Children.Add(addUnit);
-
-
             divisionWrapPanel.Children.Add(devisionDesignerCanvas);
+
+            StackPanel fullDesignerStackPanel = new StackPanel();
+            fullDesignerStackPanel.Orientation = Orientation.Horizontal;
+            devisionDesignerCanvas.Children.Add(fullDesignerStackPanel);
+
+            StackPanel supportColumn = new StackPanel();
+            supportColumn.Orientation = Orientation.Vertical;
+            supportColumn.VerticalAlignment = VerticalAlignment.Top;
+            supportColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+            fullDesignerStackPanel.Children.Add(supportColumn);
+            Image addSupport;
+            for (int i = 0; i < 5; i++)
+            {
+                addSupport = new Image();
+                addSupport.Width = Opt.ApResMod(72);
+                addSupport.Height = Opt.ApResMod(38);
+                addSupport.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
+                addSupport.Margin = ScaledThicknessFactory.GetThickness(0, 0, 10, 14);
+                supportColumn.Children.Add(addSupport);
+            }
+
+            for (int y = 0; y < 5; y++)
+            {
+                StackPanel unitColumn = new StackPanel();
+                unitColumn.Orientation = Orientation.Vertical;
+                unitColumn.VerticalAlignment = VerticalAlignment.Top;
+                unitColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                fullDesignerStackPanel.Children.Add(unitColumn);
+                Image addUnit;
+                for (int i = 0; i < 5; i++)
+                {
+                    addUnit = new Image();
+                    addUnit.Width = Opt.ApResMod(72);
+                    addUnit.Height = Opt.ApResMod(38);
+                    addUnit.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
+                    addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
+                    unitColumn.Children.Add(addUnit);
+                }
+            }
+
+
+
+
+
+
+
             contentWrapPanel.Children.Add(divisionWrapPanel);
             //}
         }

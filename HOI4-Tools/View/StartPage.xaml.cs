@@ -48,8 +48,6 @@ namespace HOI4_Tools.View
             InitializeComponent();
             buttons.Add(devisionDesignerButtonName, CreateButton(devisionDesignerButtonName));
             contentCanvas.Width = buttons[devisionDesignerButtonName].Width;
-
-            NavigationService.Navigate((DivisionDesignerPage)Pages.pages[PageName.DivisionDesigner]);
         }
         private Image CreateButton(string buttonName)
         {
