@@ -22,6 +22,9 @@ namespace HOI4_Tools.View
     public partial class DivisionDesignerPage : DefaultPage
     {
         private AlignableWrapPanel contentWrapPanel;
+        private bool isAddingUnit = false;
+        private int divisionIsAddingUnitTo;
+        private int columnIsAddingUnitTo;
 
         public DivisionDesignerPage()
         {
@@ -37,6 +40,8 @@ namespace HOI4_Tools.View
             Division testDivision = new Division();
             Divisions.divisions[0] = testDivision;
         }
+
+
 
         protected override void DisplayContent()
         {
@@ -76,79 +81,159 @@ namespace HOI4_Tools.View
                 fullDesignerStackPanel.Orientation = Orientation.Horizontal;
                 devisionDesignerCanvas.Children.Add(fullDesignerStackPanel);
 
-                StackPanel supportColumn = new StackPanel();
-                supportColumn.Orientation = Orientation.Vertical;
-                supportColumn.VerticalAlignment = VerticalAlignment.Top;
-                supportColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
-                fullDesignerStackPanel.Children.Add(supportColumn);
-                Image addSupport;
-                for (int i = 0; i < 5; i++)
+
+
+                if (isAddingUnit && divisionIsAddingUnitTo == idAndDivision.Key)
                 {
-                    addSupport = new Image();
-                    addSupport.Width = Opt.ApResMod(72);
-                    addSupport.Height = Opt.ApResMod(38);
-                    addSupport.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
-                    addSupport.Margin = ScaledThicknessFactory.GetThickness(0, 0, 10, 14);
-                    supportColumn.Children.Add(addSupport);
+                    StackPanel column;
+                    column = CreateUnitColumn(fullDesignerStackPanel);
+                    column.Children.Add(CreateUnitButton(ButtonName.Cavalry, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.Motorized, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.Mechanized, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.MotorizedRocketArtillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+
+                    column = CreateUnitColumn(fullDesignerStackPanel);
+                    column.Children.Add(CreateUnitButton(ButtonName.Infantry, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.Paratroopers, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.Marines, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.Mountaineers, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.BicycleBattalion, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+
+                    column = CreateUnitColumn(fullDesignerStackPanel);
+                    column.Children.Add(CreateUnitButton(ButtonName.Artillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.AntiTank, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.AntiAir, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.RocketArtillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+
+                    column = CreateUnitColumn(fullDesignerStackPanel);
+                    column.Children.Add(CreateUnitButton(ButtonName.LightTank, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.MediumTank, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.HeavyTank, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.SuperHeavyTank, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.ModernTank, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+
+                    column = CreateUnitColumn(fullDesignerStackPanel);
+                    column.Children.Add(CreateUnitButton(ButtonName.LightSPArtillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.MediumSPArtillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.HeavySPArtillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.SuperHeavySPArtillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.ModernSPArtillery, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+
+                    column = CreateUnitColumn(fullDesignerStackPanel);
+                    column.Children.Add(CreateUnitButton(ButtonName.LightTankDestroyer, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.MediumTankDestroyer, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.HeavyTankDestroyer, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.SuperHeavyTankDestroyer, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.ModernTankDestroyer, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+
+                    column = CreateUnitColumn(fullDesignerStackPanel);
+                    column.Children.Add(CreateUnitButton(ButtonName.LightSPAntiAir, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.MediumSPAntiAir, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.HeavySPAntiAir, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.SuperHeavySPAntiAir, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+                    column.Children.Add(CreateUnitButton(ButtonName.ModernSPAntiAir, columnIsAddingUnitTo, divisionIsAddingUnitTo));
+
                 }
 
-                for (int column = 0; column < 5; column++)
+
+
+                else
                 {
-                    StackPanel unitColumn = new StackPanel();
-                    unitColumn.Orientation = Orientation.Vertical;
-                    unitColumn.VerticalAlignment = VerticalAlignment.Top;
-                    unitColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
-                    fullDesignerStackPanel.Children.Add(unitColumn);
-                    int count = 0;
-                    bool shouldDisplayAddUnit = false;
-                    ImageButton addUnit;
-                    if(idAndDivision.Value.unitsInDivision.ContainsKey(column) == false)
+                    StackPanel supportColumn = new StackPanel();
+                    supportColumn.Orientation = Orientation.Vertical;
+                    supportColumn.VerticalAlignment = VerticalAlignment.Top;
+                    supportColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                    fullDesignerStackPanel.Children.Add(supportColumn);
+                    Image addSupport;
+                    for (int i = 0; i < 5; i++)
                     {
-                        shouldDisplayAddUnit = true;
+                        addSupport = new Image();
+                        addSupport.Width = Opt.ApResMod(72);
+                        addSupport.Height = Opt.ApResMod(38);
+                        addSupport.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
+                        addSupport.Margin = ScaledThicknessFactory.GetThickness(0, 0, 10, 14);
+                        supportColumn.Children.Add(addSupport);
                     }
-                    else
+
+                    for (int column = 0; column < 5; column++)
                     {
-                        foreach(KeyValuePair<UnitName, int> unitAndQuantity in idAndDivision.Value.unitsInDivision[column])
+                        StackPanel unitColumn = new StackPanel();
+                        unitColumn.Orientation = Orientation.Vertical;
+                        unitColumn.VerticalAlignment = VerticalAlignment.Top;
+                        unitColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                        fullDesignerStackPanel.Children.Add(unitColumn);
+                        int count = 0;
+                        bool shouldDisplayAddUnit = false;
+                        ImageButton addUnit;
+                        if (idAndDivision.Value.unitsInDivision.ContainsKey(column) == false)
                         {
-                            for (int i = 0; i < unitAndQuantity.Value; i++)
+                            shouldDisplayAddUnit = true;
+                        }
+                        else
+                        {
+                            foreach (KeyValuePair<UnitName, int> unitAndQuantity in idAndDivision.Value.unitsInDivision[column])
                             {
-                                addUnit = new ImageButton((ButtonName)Enum.Parse(typeof(ButtonName), unitAndQuantity.Key.ToString()));
-                                addUnit.uniqueDivisionId = idAndDivision.Key;
-                                addUnit.column = column;
-                                addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
-                                unitColumn.Children.Add(addUnit);
-                                count++;
+                                for (int i = 0; i < unitAndQuantity.Value; i++)
+                                {
+                                    addUnit = new ImageButton((ButtonName)Enum.Parse(typeof(ButtonName), unitAndQuantity.Key.ToString()));
+                                    addUnit.uniqueDivisionId = idAndDivision.Key;
+                                    addUnit.column = column;
+                                    addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
+                                    unitColumn.Children.Add(addUnit);
+                                    count++;
+                                }
                             }
                         }
+                        if (shouldDisplayAddUnit || count < 5)
+                        {
+                            addUnit = new ImageButton(ButtonName.AddUnit);
+                            addUnit.MouseDown += new MouseButtonEventHandler(ButtonClicked);
+                            addUnit.uniqueDivisionId = idAndDivision.Key;
+                            addUnit.column = column;
+                            addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
+                            unitColumn.Children.Add(addUnit);
+                        }
                     }
-                    if (shouldDisplayAddUnit || count < 5)
-                    {
-                        addUnit = new ImageButton(ButtonName.AddUnit);
-                        addUnit.MouseDown += new MouseButtonEventHandler(ButtonClicked);
-                        addUnit.uniqueDivisionId = idAndDivision.Key;
-                        addUnit.column = column;
-                        addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
-                        unitColumn.Children.Add(addUnit);
-                    }
+
+
+                    StackPanel firstStatsColumn = new StackPanel();
+                    firstStatsColumn.Orientation = Orientation.Vertical;
+                    firstStatsColumn.VerticalAlignment = VerticalAlignment.Top;
+                    firstStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                    fullDesignerStackPanel.Children.Add(firstStatsColumn);
+
+                    AddStat(firstStatsColumn, "Speed", idAndDivision.Value.maxSpeed.ToString());
+                    AddStat(firstStatsColumn, "HP", idAndDivision.Value.maxStrength.ToString());
+                    AddStat(firstStatsColumn, "Organization", idAndDivision.Value.maxOrganisation.ToString());
+                    AddStat(firstStatsColumn, "Suppression", idAndDivision.Value.suppression.ToString());
+                    AddStat(firstStatsColumn, "Weight", idAndDivision.Value.weight.ToString());
+                    AddStat(firstStatsColumn, "Supply Consumtion", idAndDivision.Value.supplyConsumption.ToString());
+                    AddStat(firstStatsColumn, "Reliability", idAndDivision.Value.reliability.ToString());
+
                 }
-
-
-                StackPanel firstStatsColumn = new StackPanel();
-                firstStatsColumn.Orientation = Orientation.Vertical;
-                firstStatsColumn.VerticalAlignment = VerticalAlignment.Top;
-                firstStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
-                fullDesignerStackPanel.Children.Add(firstStatsColumn);
-
-                AddStat(firstStatsColumn, "Speed", idAndDivision.Value.maxSpeed.ToString());
-                AddStat(firstStatsColumn, "HP", idAndDivision.Value.maxStrength.ToString());
-                AddStat(firstStatsColumn, "Organization", idAndDivision.Value.maxOrganisation.ToString());
-                AddStat(firstStatsColumn, "Suppression", idAndDivision.Value.suppression.ToString());
-                AddStat(firstStatsColumn, "Weight", idAndDivision.Value.weight.ToString());
-                AddStat(firstStatsColumn, "Supply Consumtion", idAndDivision.Value.supplyConsumption.ToString());
-                AddStat(firstStatsColumn, "Reliability", idAndDivision.Value.reliability.ToString());
 
                 contentWrapPanel.Children.Add(divisionWrapPanel);
             }
+        }
+
+        private ImageButton CreateUnitButton(ButtonName buttonName, int column, int uniqueDivisionId)
+        {
+            ImageButton unitButton;
+            unitButton = new ImageButton(buttonName);
+            unitButton.uniqueDivisionId = uniqueDivisionId;
+            unitButton.column = column;
+            unitButton.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
+            return unitButton;
+        }
+
+        private StackPanel CreateUnitColumn(StackPanel parent)
+        {
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Orientation = Orientation.Vertical;
+            stackPanel.VerticalAlignment = VerticalAlignment.Top;
+            stackPanel.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+            parent.Children.Add(stackPanel);
+            return stackPanel;
         }
 
         private void AddStat(StackPanel column, string statDescription, string stat)
@@ -179,7 +264,17 @@ namespace HOI4_Tools.View
         private void ButtonClicked(object sender, MouseButtonEventArgs e)
         {
             ImageButton imageButton = (ImageButton)sender;
-            Divisions.divisions[imageButton.uniqueDivisionId].AddUnit(UnitName.Infantry, imageButton.column);
+            if(isAddingUnit == false)
+            {
+                isAddingUnit = true;
+                divisionIsAddingUnitTo = imageButton.uniqueDivisionId;
+                columnIsAddingUnitTo = imageButton.column;
+            }
+            else
+            {
+                isAddingUnit = false;
+                Divisions.divisions[imageButton.uniqueDivisionId].AddUnit((UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()), imageButton.column);
+            }            
             DisplayContent();
         }
     }
