@@ -35,11 +35,7 @@ namespace HOI4_Tools.View
             contentScrollViewer.Content = contentWrapPanel;
 
             Division testDivision = new Division();
-            for (int i = 0; i < 10; i++)
-            {
-                testDivision.AddUnit(UnitName.Infantry);
-            }
-            Divisions.divisions.Add(testDivision);
+            Divisions.divisions[0] = testDivision;
         }
 
         protected override void DisplayContent()
@@ -53,7 +49,7 @@ namespace HOI4_Tools.View
 
             contentWrapPanel.Children.Clear();
 
-            foreach (Division division in Divisions.divisions)
+            foreach (KeyValuePair<int, Division> idAndDivision in Divisions.divisions)
             {
                 AlignableWrapPanel divisionWrapPanel = new AlignableWrapPanel();
                 divisionWrapPanel.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -96,20 +92,41 @@ namespace HOI4_Tools.View
                     supportColumn.Children.Add(addSupport);
                 }
 
-                for (int y = 0; y < 5; y++)
+                for (int column = 0; column < 5; column++)
                 {
                     StackPanel unitColumn = new StackPanel();
                     unitColumn.Orientation = Orientation.Vertical;
                     unitColumn.VerticalAlignment = VerticalAlignment.Top;
                     unitColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
                     fullDesignerStackPanel.Children.Add(unitColumn);
-                    Image addUnit;
-                    for (int i = 0; i < 5; i++)
+                    int count = 0;
+                    bool shouldDisplayAddUnit = false;
+                    ImageButton addUnit;
+                    if(idAndDivision.Value.unitsInDivision.ContainsKey(column) == false)
                     {
-                        addUnit = new Image();
-                        addUnit.Width = Opt.ApResMod(72);
-                        addUnit.Height = Opt.ApResMod(38);
-                        addUnit.Source = ImageResizer.ResizeImage(System.Drawing.Image.FromFile(filteredLocation + "add_unit.png"), addUnitSize);
+                        shouldDisplayAddUnit = true;
+                    }
+                    else
+                    {
+                        foreach(KeyValuePair<UnitName, int> unitAndQuantity in idAndDivision.Value.unitsInDivision[column])
+                        {
+                            for (int i = 0; i < unitAndQuantity.Value; i++)
+                            {
+                                addUnit = new ImageButton((ButtonName)Enum.Parse(typeof(ButtonName), unitAndQuantity.Key.ToString()));
+                                addUnit.uniqueDivisionId = idAndDivision.Key;
+                                addUnit.column = column;
+                                addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
+                                unitColumn.Children.Add(addUnit);
+                                count++;
+                            }
+                        }
+                    }
+                    if (shouldDisplayAddUnit || count < 5)
+                    {
+                        addUnit = new ImageButton(ButtonName.AddUnit);
+                        addUnit.MouseDown += new MouseButtonEventHandler(ButtonClicked);
+                        addUnit.uniqueDivisionId = idAndDivision.Key;
+                        addUnit.column = column;
                         addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
                         unitColumn.Children.Add(addUnit);
                     }
@@ -122,47 +139,48 @@ namespace HOI4_Tools.View
                 firstStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
                 fullDesignerStackPanel.Children.Add(firstStatsColumn);
 
-                Label stat;
-
-                stat = new Label();
-                stat.FontSize = 16;
-                stat.Content = "Speed: " + division.maxSpeed;
-                firstStatsColumn.Children.Add(stat);
-                stat = new Label();
-                stat.FontSize = 16;
-                stat.Content = "HP: " + division.maxSpeed;
-                firstStatsColumn.Children.Add(stat);
-                stat = new Label();
-                stat.FontSize = 16;
-                stat.Content = "Organization: " + division.maxOrganisation;
-                firstStatsColumn.Children.Add(stat);
-                stat = new Label();
-                stat.FontSize = 16;
-                stat.Content = "Suppression: " + division.suppression;
-                firstStatsColumn.Children.Add(stat);
-                stat = new Label();
-                stat.FontSize = 16;
-                stat.Content = "Weight: " + division.weight;
-                firstStatsColumn.Children.Add(stat);
-                stat = new Label();
-                stat.FontSize = 16;
-                stat.Content = "Supply Consumtion: " + division.supplyConsumption;
-                firstStatsColumn.Children.Add(stat);
-                stat = new Label();
-                stat.FontSize = 16;
-                stat.Content = "Reliability: " + division.reliability;
-                firstStatsColumn.Children.Add(stat);
-
-                StackPanel secondStatsColumn = new StackPanel();
-                secondStatsColumn.Orientation = Orientation.Vertical;
-                secondStatsColumn.VerticalAlignment = VerticalAlignment.Top;
-                secondStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
-                fullDesignerStackPanel.Children.Add(secondStatsColumn);
-
-
+                AddStat(firstStatsColumn, "Speed", idAndDivision.Value.maxSpeed.ToString());
+                AddStat(firstStatsColumn, "HP", idAndDivision.Value.maxStrength.ToString());
+                AddStat(firstStatsColumn, "Organization", idAndDivision.Value.maxOrganisation.ToString());
+                AddStat(firstStatsColumn, "Suppression", idAndDivision.Value.suppression.ToString());
+                AddStat(firstStatsColumn, "Weight", idAndDivision.Value.weight.ToString());
+                AddStat(firstStatsColumn, "Supply Consumtion", idAndDivision.Value.supplyConsumption.ToString());
+                AddStat(firstStatsColumn, "Reliability", idAndDivision.Value.reliability.ToString());
 
                 contentWrapPanel.Children.Add(divisionWrapPanel);
             }
+        }
+
+        private void AddStat(StackPanel column, string statDescription, string stat)
+        {
+            Label statLable;
+            StackPanel descriptionAndStat = new StackPanel();
+            descriptionAndStat.Orientation = Orientation.Horizontal;
+            descriptionAndStat.VerticalAlignment = VerticalAlignment.Top;
+            column.Children.Add(descriptionAndStat);
+            descriptionAndStat.Width = Opt.ApResMod(180);
+
+            
+            statLable = new Label();
+            statLable.Width = Opt.ApResMod(140);
+            statLable.FontSize = Opt.ApResMod(16);
+            statLable.Content = statDescription + ": ";
+            statLable.HorizontalContentAlignment = HorizontalAlignment.Left;
+            descriptionAndStat.Children.Add(statLable);
+            statLable = new Label();
+            statLable.Width = Opt.ApResMod(40);
+            statLable.FontSize = Opt.ApResMod(16);
+            statLable.Content = stat;
+            statLable.HorizontalContentAlignment = HorizontalAlignment.Right;
+            statLable.HorizontalAlignment = HorizontalAlignment.Right;
+            descriptionAndStat.Children.Add(statLable);
+        }
+
+        private void ButtonClicked(object sender, MouseButtonEventArgs e)
+        {
+            ImageButton imageButton = (ImageButton)sender;
+            Divisions.divisions[imageButton.uniqueDivisionId].AddUnit(UnitName.Infantry, imageButton.column);
+            DisplayContent();
         }
     }
 }

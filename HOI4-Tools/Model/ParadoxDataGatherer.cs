@@ -99,49 +99,42 @@ namespace HOI4_Tools.Model
             Unit infantry = new Unit();
             infantry.unitName = UnitName.Infantry;
             infantry.unitType = UnitType.Infantry;
-            infantry.unitIcon = UnitIcon.Infantry;
             GetUnitStats(infantry, infantryStart, infantryEnd);
             UnitsAndEquipment.units[UnitName.Infantry] = infantry;
 
             Unit bicycleBattalion = new Unit();
             bicycleBattalion.unitName = UnitName.BicycleBattalion;
             bicycleBattalion.unitType = UnitType.Infantry;
-            bicycleBattalion.unitIcon = UnitIcon.Infantry;
             GetUnitStats(bicycleBattalion, bicycleBattalionStart, bicycleBattalionEnd);
             UnitsAndEquipment.units[UnitName.BicycleBattalion] = bicycleBattalion;
 
             Unit marine = new Unit();
-            marine.unitName = UnitName.Marine;
+            marine.unitName = UnitName.Marines;
             marine.unitType = UnitType.Infantry;
-            marine.unitIcon = UnitIcon.Infantry;
             GetUnitStats(marine, marineStart, marineEnd);
-            UnitsAndEquipment.units[UnitName.Marine] = marine;
+            UnitsAndEquipment.units[UnitName.Marines] = marine;
 
             Unit mountaineers = new Unit();
             mountaineers.unitName = UnitName.Mountaineers;
             mountaineers.unitType = UnitType.Infantry;
-            mountaineers.unitIcon = UnitIcon.Infantry;
             GetUnitStats(mountaineers, mountaineersStart, mountaineersEnd);
             UnitsAndEquipment.units[UnitName.Mountaineers] = mountaineers;
 
             Unit paratrooper = new Unit();
-            paratrooper.unitName = UnitName.Paratrooper;
+            paratrooper.unitName = UnitName.Paratroopers;
             paratrooper.unitType = UnitType.Infantry;
-            paratrooper.unitIcon = UnitIcon.Infantry;
             GetUnitStats(paratrooper, paratrooperStart, paratrooperEnd);
-            UnitsAndEquipment.units[UnitName.Paratrooper] = paratrooper;
+            UnitsAndEquipment.units[UnitName.Paratroopers] = paratrooper;
 
             Unit motorized = new Unit();
             motorized.unitName = UnitName.Motorized;
             motorized.unitType = UnitType.Infantry;
-            motorized.unitIcon = UnitIcon.Infantry;
             GetUnitStats(motorized, motorizedStart, motorizedEnd);
             UnitsAndEquipment.units[UnitName.Motorized] = motorized;
 
             Unit mechanized = new Unit();
             mechanized.unitName = UnitName.Mechanized;
             mechanized.unitType = UnitType.Infantry;
-            mechanized.unitIcon = UnitIcon.Infantry;
             GetUnitStats(mechanized, mechanizedStart, mechanizedEnd);
             UnitsAndEquipment.units[UnitName.Mechanized] = mechanized;
         }

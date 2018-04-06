@@ -10,7 +10,6 @@ namespace HOI4_Tools.Model
     {
         public UnitName unitName;
         public UnitType unitType;
-        public UnitIcon unitIcon;
 
         public int manpower = 0;
         public int trainingTime = 0;

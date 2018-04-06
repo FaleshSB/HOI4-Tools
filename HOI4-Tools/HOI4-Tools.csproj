@@ -78,6 +78,7 @@
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\Equipment.cs" />
     <Compile Include="Model\FileHandler.cs" />
+    <Compile Include="Model\ImageButton.cs" />
     <Compile Include="Model\ImageResizer.cs" />
     <Compile Include="Model\Opt.cs" />
     <Compile Include="Model\Pages.cs" />

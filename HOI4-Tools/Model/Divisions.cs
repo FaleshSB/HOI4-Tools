@@ -8,6 +8,6 @@ namespace HOI4_Tools.Model
 {
     static class Divisions
     {
-        public static List<Division> divisions = new List<Division>();
+        public static Dictionary<int, Division> divisions = new Dictionary<int, Division>();
     }
 }
