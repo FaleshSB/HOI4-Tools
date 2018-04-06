@@ -218,8 +218,8 @@ namespace HOI4_Tools.View
 
         private ImageButton CreateUnitButton(ButtonName buttonName, int column, int uniqueDivisionId)
         {
-            ImageButton unitButton;
-            unitButton = new ImageButton(buttonName);
+            ImageButton unitButton = new ImageButton(buttonName);
+            unitButton.MouseDown += new MouseButtonEventHandler(ButtonClicked);
             unitButton.uniqueDivisionId = uniqueDivisionId;
             unitButton.column = column;
             unitButton.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);

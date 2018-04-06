@@ -19,7 +19,7 @@ namespace HOI4_Tools.Model
                              ModernSPAntiAir, ModernSPArtillery, ModernTank, ModernTankDestroyer, Motorized, MotorizedRocketArtillery,
                              Mountaineers, Paratroopers, RocketArtillery, SuperHeavySPAntiAir, SuperHeavySPArtillery, SuperHeavyTank,
                              SuperHeavyTankDestroyer, AddUnit, MediumSPAntiAir }
-    public enum UnitType { Armor, Infantry, Mobile, Support }
+    public enum EquipmentType { Infantry }
     public enum TerrainType { Forest, Hills, Mountain, Marsh, Plains, Urban, Desert, River, Amphibious }
     public enum TransportType { Motorized, Mechanized }
 }

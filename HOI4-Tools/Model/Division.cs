@@ -107,7 +107,7 @@ namespace HOI4_Tools.Model
                     int numberOfUnits = unitNameAndNumber.Value;
                     totalNumberOfUnits += numberOfUnits;
                     int highest = 0;
-                    foreach (KeyValuePair<int, Equipment> yearAndEquipment in UnitsAndEquipment.equipment[unitNameAndNumber.Key])
+                    foreach (KeyValuePair<int, Equipment> yearAndEquipment in UnitsAndEquipment.GetEquipment(unitNameAndNumber.Key))
                     {
                         if (yearAndEquipment.Key <= year && yearAndEquipment.Key > highest)
                         {

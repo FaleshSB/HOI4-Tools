@@ -12,29 +12,10 @@ namespace HOI4_Tools.Model
     {
         string[] infantryFileData;
 
-        int infantryStart;
-        int bicycleBattalionStart;
-        int marineStart;
-        int mountaineersStart;
-        int paratrooperStart;
-        int motorizedStart;
-        int mechanizedStart;
+        private Dictionary<UnitName, int> unitStart = new Dictionary<UnitName, int>();
+        private Dictionary<UnitName, int> unitEnd = new Dictionary<UnitName, int>();
+        private Dictionary<UnitName, bool> checking = new Dictionary<UnitName, bool>();
 
-        int infantryEnd;
-        int bicycleBattalionEnd;
-        int marineEnd;
-        int mountaineersEnd;
-        int paratrooperEnd;
-        int motorizedEnd;
-        int mechanizedEnd;
-
-        bool isCheckingInfantry = false;
-        bool isCheckingBicycleBattalion = false;
-        bool isCheckingMarine = false;
-        bool isCheckingMountaineers = false;
-        bool isCheckingParatrooper = false;
-        bool isCheckingMotorized = false;
-        bool isCheckingMechanized = false;
 
 
         string[] infantryEquipmentFileData;
@@ -60,6 +41,11 @@ namespace HOI4_Tools.Model
 
         public ParadoxDataGatherer()
         {
+            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
+            {
+                checking[unitName] = false;
+            }
+
             GetUnitData();
             GetEquipmentData();
         }
@@ -72,23 +58,23 @@ namespace HOI4_Tools.Model
             Equipment infantryEquipmentTemplate = new Equipment();
             GetEquipmentStats(infantryEquipmentTemplate, infantryEquipmentStart, infantryEquipmentEnd);
 
-            UnitsAndEquipment.equipment[UnitName.Infantry] = new Dictionary<int, Equipment>();
+            UnitsAndEquipment.equipment[EquipmentType.Infantry] = new Dictionary<int, Equipment>();
 
             Equipment infantryEquipment0 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment0, infantryEquipment0Start, infantryEquipment0End);
-            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment0.year] = infantryEquipment0;
+            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment0.year] = infantryEquipment0;
 
             Equipment infantryEquipment1 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment1, infantryEquipment1Start, infantryEquipment1End);
-            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment1.year] = infantryEquipment1;
+            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment1.year] = infantryEquipment1;
 
             Equipment infantryEquipment2 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment2, infantryEquipment2Start, infantryEquipment2End);
-            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment2.year] = infantryEquipment2;
+            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment2.year] = infantryEquipment2;
 
             Equipment infantryEquipment3 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment3, infantryEquipment3Start, infantryEquipment3End);
-            UnitsAndEquipment.equipment[UnitName.Infantry][infantryEquipment3.year] = infantryEquipment3;
+            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment3.year] = infantryEquipment3;
         }
 
         private void GetUnitData()
@@ -96,47 +82,10 @@ namespace HOI4_Tools.Model
             infantryFileData = FileHandler.LoadFile("infantry.txt");
             GetInfantryLocations();
 
-            Unit infantry = new Unit();
-            infantry.unitName = UnitName.Infantry;
-            infantry.unitType = UnitType.Infantry;
-            GetUnitStats(infantry, infantryStart, infantryEnd);
-            UnitsAndEquipment.units[UnitName.Infantry] = infantry;
-
-            Unit bicycleBattalion = new Unit();
-            bicycleBattalion.unitName = UnitName.BicycleBattalion;
-            bicycleBattalion.unitType = UnitType.Infantry;
-            GetUnitStats(bicycleBattalion, bicycleBattalionStart, bicycleBattalionEnd);
-            UnitsAndEquipment.units[UnitName.BicycleBattalion] = bicycleBattalion;
-
-            Unit marine = new Unit();
-            marine.unitName = UnitName.Marines;
-            marine.unitType = UnitType.Infantry;
-            GetUnitStats(marine, marineStart, marineEnd);
-            UnitsAndEquipment.units[UnitName.Marines] = marine;
-
-            Unit mountaineers = new Unit();
-            mountaineers.unitName = UnitName.Mountaineers;
-            mountaineers.unitType = UnitType.Infantry;
-            GetUnitStats(mountaineers, mountaineersStart, mountaineersEnd);
-            UnitsAndEquipment.units[UnitName.Mountaineers] = mountaineers;
-
-            Unit paratrooper = new Unit();
-            paratrooper.unitName = UnitName.Paratroopers;
-            paratrooper.unitType = UnitType.Infantry;
-            GetUnitStats(paratrooper, paratrooperStart, paratrooperEnd);
-            UnitsAndEquipment.units[UnitName.Paratroopers] = paratrooper;
-
-            Unit motorized = new Unit();
-            motorized.unitName = UnitName.Motorized;
-            motorized.unitType = UnitType.Infantry;
-            GetUnitStats(motorized, motorizedStart, motorizedEnd);
-            UnitsAndEquipment.units[UnitName.Motorized] = motorized;
-
-            Unit mechanized = new Unit();
-            mechanized.unitName = UnitName.Mechanized;
-            mechanized.unitType = UnitType.Infantry;
-            GetUnitStats(mechanized, mechanizedStart, mechanizedEnd);
-            UnitsAndEquipment.units[UnitName.Mechanized] = mechanized;
+            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
+            {
+                GetUnitStats(unitName);
+            }
         }
 
         private void GetEquipmentStats(Equipment equipment, int start, int end)
@@ -209,11 +158,13 @@ namespace HOI4_Tools.Model
             }
         }
 
-        private void GetUnitStats(Unit unit, int start, int end)
+        private void GetUnitStats(UnitName unitName)
         {
+            Unit unit;
             Match match;
-            for (int i = start; i < end; i++)
+            for (int i = unitStart[unitName]; i < unitEnd[unitName]; i++)
             {
+                unit = new Unit();
                 match = Regex.Match(infantryFileData[i], @"combat_width[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
@@ -347,6 +298,8 @@ namespace HOI4_Tools.Model
                 {
                     GetTerrainStats(unit, TerrainType.Amphibious, i + 1, i + 3);
                 }
+
+                UnitsAndEquipment.units[unitName] = unit;
             }
         }
 
@@ -454,85 +407,52 @@ namespace HOI4_Tools.Model
             {
                 if (Regex.Match(infantryFileData[i], @"infantry.*?\{").Success)
                 {
-                    infantryStart = i;
-                    GetInfantryLocationEnds(i);
-                    isCheckingInfantry = true;
+                    unitStart[UnitName.Infantry] = i;
+                    checking[UnitName.Infantry] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"bicycle_battalion.*?\{").Success)
                 {
-                    bicycleBattalionStart = i;
-                    GetInfantryLocationEnds(i);
-                    isCheckingBicycleBattalion = true;
+                    unitStart[UnitName.BicycleBattalion] = i;
+                    checking[UnitName.BicycleBattalion] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"marine.*?\{").Success)
                 {
-                    marineStart = i;
-                    GetInfantryLocationEnds(i);
-                    isCheckingMarine = true;
+                    unitStart[UnitName.Marines] = i;
+                    checking[UnitName.Marines] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"mountaineers.*?\{").Success)
                 {
-                    mountaineersStart = i;
-                    GetInfantryLocationEnds(i);
-                    isCheckingMountaineers = true;
+                    unitStart[UnitName.Mountaineers] = i;
+                    checking[UnitName.Mountaineers] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"paratrooper.*?\{").Success)
                 {
-                    paratrooperStart = i;
-                    GetInfantryLocationEnds(i);
-                    isCheckingParatrooper = true;
+                    unitStart[UnitName.Paratroopers] = i;
+                    checking[UnitName.Paratroopers] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"motorized.*?\{").Success)
                 {
-                    motorizedStart = i;
-                    GetInfantryLocationEnds(i);
-                    isCheckingMotorized = true;
+                    unitStart[UnitName.Motorized] = i;
+                    checking[UnitName.Motorized] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"mechanized.*?\{").Success)
                 {
-                    mechanizedStart = i;
-                    GetInfantryLocationEnds(i);
-                    isCheckingMechanized = true;
+                    unitStart[UnitName.Mechanized] = i;
+                    checking[UnitName.Mechanized] = true;
                 }
+                GetUnitLocationEnds();
             }
-            GetInfantryLocationEnds(i);
+            GetUnitLocationEnds();
         }
-        private void GetInfantryLocationEnds(int location)
+        private void GetUnitLocationEnds()
         {
-            if(isCheckingInfantry)
+            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
             {
-                infantryEnd = location - 1;
-                isCheckingInfantry = false;
-            }
-            else if (isCheckingBicycleBattalion)
-            {
-                bicycleBattalionEnd = location - 1;
-                isCheckingBicycleBattalion = false;
-            }
-            else if (isCheckingMarine)
-            {
-                marineEnd = location - 1;
-                isCheckingMarine = false;
-            }
-            else if (isCheckingMountaineers)
-            {
-                mountaineersEnd = location - 1;
-                isCheckingMountaineers = false;
-            }
-            else if (isCheckingParatrooper)
-            {
-                paratrooperEnd = location - 1;
-                isCheckingParatrooper = false;
-            }
-            else if (isCheckingMotorized)
-            {
-                motorizedEnd = location - 1;
-                isCheckingMotorized = false;
-            }
-            else if (isCheckingMechanized)
-            {
-                mechanizedEnd = location - 1;
-                isCheckingMechanized = false;
+                if (checking[unitName])
+                {
+                    unitEnd[unitName] = unitStart[unitName] - 1;
+                    checking[unitName] = false;
+                }
             }
         }
     }

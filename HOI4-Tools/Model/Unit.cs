@@ -8,9 +8,6 @@ namespace HOI4_Tools.Model
 {
     class Unit
     {
-        public UnitName unitName;
-        public UnitType unitType;
-
         public int manpower = 0;
         public int trainingTime = 0;
         public int maxStrength = 0;
