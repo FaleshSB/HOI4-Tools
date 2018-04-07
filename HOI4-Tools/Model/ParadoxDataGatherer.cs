@@ -15,6 +15,7 @@ namespace HOI4_Tools.Model
         private Dictionary<UnitName, bool> checking = new Dictionary<UnitName, bool>();
         private Dictionary<UnitsInFile, string[]> unitFileData = new Dictionary<UnitsInFile, string[]>();
 
+        private Dictionary<EquipmentInFile, string[]> equipmentFileData = new Dictionary<EquipmentInFile, string[]>();
 
 
         string[] infantryEquipmentFileData;
@@ -76,6 +77,20 @@ namespace HOI4_Tools.Model
             UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment3.year] = infantryEquipment3;
         }
 
+        private void GetEquipmentDataNew()
+        {
+            equipmentFileData[EquipmentInFile.Infantry] = FileHandler.LoadFile("anti_air.txt", "equipment");
+            equipmentFileData[EquipmentInFile.AntiAir] = FileHandler.LoadFile("anti_tank.txt", "equipment");
+            equipmentFileData[EquipmentInFile.AntiTank] = FileHandler.LoadFile("artillery.txt", "equipment");
+            equipmentFileData[EquipmentInFile.Artillery] = FileHandler.LoadFile("infantry.txt", "equipment");
+            equipmentFileData[EquipmentInFile.Mechanized] = FileHandler.LoadFile("mechanized.txt", "equipment");
+            equipmentFileData[EquipmentInFile.Motorized] = FileHandler.LoadFile("motorized.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankHeavy] = FileHandler.LoadFile("tank_heavy.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankLight] = FileHandler.LoadFile("tank_light.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankMedium] = FileHandler.LoadFile("tank_medium.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankModern] = FileHandler.LoadFile("tank_modern.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankSuperHeavy] = FileHandler.LoadFile("tank_super_heavy.txt", "equipment");
+        }
         private void GetUnitData()
         {
             unitFileData[UnitsInFile.Infantry] = FileHandler.LoadFile("infantry.txt");
@@ -92,7 +107,73 @@ namespace HOI4_Tools.Model
             unitFileData[UnitsInFile.SPArtilleryBrigade] = FileHandler.LoadFile("sp_artillery_brigade.txt");
             unitFileData[UnitsInFile.TankDestroyerBrigade] = FileHandler.LoadFile("tank_destroyer_brigade.txt");
             GetUnitLocations();
-            //GetUnitStats();
+
+            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
+            {
+                switch (unitName)
+                {
+
+                    case UnitName.BicycleBattalion:
+                    case UnitName.Infantry:
+                    case UnitName.Marines:
+                    case UnitName.Mechanized:
+                    case UnitName.Motorized:
+                    case UnitName.Mountaineers:
+                    case UnitName.Paratroopers:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.Infantry]);
+                        break;
+                    case UnitName.Cavalry:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.Cavalry]);
+                        break;
+                    case UnitName.AntiAir:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.AntiAirBrigade]);
+                        break;
+                    case UnitName.AntiTank:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.TankDestroyerBrigade]);
+                        break;
+                    case UnitName.Artillery:
+                    case UnitName.RocketArtillery:
+                    case UnitName.MotorizedRocketArtillery:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.ArtilleryBrigade]);
+                        break;
+                    case UnitName.LightTank:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.LightArmour]);
+                        break;
+                    case UnitName.MediumTank:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.MediumArmour]);
+                        break;
+                    case UnitName.HeavyTank:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.HeavyArmour]);
+                        break;
+                    case UnitName.SuperHeavyTank:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.SuperHeavyArmour]);
+                        break;
+                    case UnitName.ModernTank:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.ModernArmour]);
+                        break;
+                    case UnitName.LightSPAntiAir:
+                    case UnitName.MediumSPAntiAir:
+                    case UnitName.HeavySPAntiAir:
+                    case UnitName.SuperHeavySPAntiAir:
+                    case UnitName.ModernSPAntiAir:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.SPAntiAirBrigade]);
+                        break;
+                    case UnitName.LightSPArtillery:
+                    case UnitName.MediumSPArtillery:
+                    case UnitName.HeavySPArtillery:
+                    case UnitName.SuperHeavySPArtillery:
+                    case UnitName.ModernSPArtillery:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.SPArtilleryBrigade]);
+                        break;
+                    case UnitName.LightTankDestroyer:
+                    case UnitName.MediumTankDestroyer:
+                    case UnitName.HeavyTankDestroyer:
+                    case UnitName.SuperHeavyTankDestroyer:
+                    case UnitName.ModernTankDestroyer:
+                        GetUnitStats(unitName, unitFileData[UnitsInFile.TankDestroyerBrigade]);
+                        break;
+                }
+            }
         }
 
         private void GetEquipmentStats(Equipment equipment, int start, int end)

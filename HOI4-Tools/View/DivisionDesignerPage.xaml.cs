@@ -25,6 +25,7 @@ namespace HOI4_Tools.View
         private bool isAddingUnit = false;
         private int divisionIsAddingUnitTo;
         private int columnIsAddingUnitTo;
+        private ButtonName buttonNamePressedToAddUnit;
 
         public DivisionDesignerPage()
         {
@@ -176,6 +177,7 @@ namespace HOI4_Tools.View
                                 for (int i = 0; i < unitAndQuantity.Value; i++)
                                 {
                                     addUnit = new ImageButton((ButtonName)Enum.Parse(typeof(ButtonName), unitAndQuantity.Key.ToString()));
+                                    addUnit.MouseDown += new MouseButtonEventHandler(ButtonClicked);
                                     addUnit.uniqueDivisionId = idAndDivision.Key;
                                     addUnit.column = column;
                                     addUnit.Margin = ScaledThicknessFactory.GetThickness(0, 0, 0, 14);
@@ -262,17 +264,29 @@ namespace HOI4_Tools.View
         }
 
         private void ButtonClicked(object sender, MouseButtonEventArgs e)
-        {
+        {            
             ImageButton imageButton = (ImageButton)sender;
             if(isAddingUnit == false)
             {
-                isAddingUnit = true;
-                divisionIsAddingUnitTo = imageButton.uniqueDivisionId;
-                columnIsAddingUnitTo = imageButton.column;
+                if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    Divisions.divisions[imageButton.uniqueDivisionId].AddUnit((UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()), imageButton.column);
+                }
+                else
+                {
+                    isAddingUnit = true;
+                    divisionIsAddingUnitTo = imageButton.uniqueDivisionId;
+                    columnIsAddingUnitTo = imageButton.column;
+                    buttonNamePressedToAddUnit = imageButton.ButtonName;
+                }                
             }
             else
             {
                 isAddingUnit = false;
+                if(buttonNamePressedToAddUnit != ButtonName.AddUnit)
+                {
+                    Divisions.divisions[imageButton.uniqueDivisionId].unitsInDivision[columnIsAddingUnitTo][(UnitName)Enum.Parse(typeof(UnitName), buttonNamePressedToAddUnit.ToString())]--;
+                }
                 Divisions.divisions[imageButton.uniqueDivisionId].AddUnit((UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()), imageButton.column);
             }            
             DisplayContent();

@@ -20,6 +20,8 @@ namespace HOI4_Tools.Model
                              Mountaineers, Paratroopers, RocketArtillery, SuperHeavySPAntiAir, SuperHeavySPArtillery, SuperHeavyTank,
                              SuperHeavyTankDestroyer, AddUnit, MediumSPAntiAir }
     public enum EquipmentType { Infantry }
+    public enum EquipmentInFile { Infantry, AntiAir, AntiTank, Artillery, Mechanized, Motorized, TankHeavy, TankLight, TankMedium,
+                                  TankModern, TankSuperHeavy}
     public enum UnitsInFile { Infantry, Cavalry, LightArmour, MediumArmour, HeavyArmour, SuperHeavyArmour, ModernArmour,
                               ArtilleryBrigade, AntiTankBrigade, AntiAirBrigade, SPAntiAirBrigade, SPArtilleryBrigade, TankDestroyerBrigade }
     public enum TerrainType { Forest, Hills, Mountain, Marsh, Plains, Urban, Desert, River, Amphibious }
