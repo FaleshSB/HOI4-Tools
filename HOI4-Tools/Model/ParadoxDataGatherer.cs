@@ -10,8 +10,6 @@ namespace HOI4_Tools.Model
 {
     public class ParadoxDataGatherer
     {
-        string[] infantryFileData;
-
         private Dictionary<UnitName, int> unitStart = new Dictionary<UnitName, int>();
         private Dictionary<UnitName, int> unitEnd = new Dictionary<UnitName, int>();
         private Dictionary<UnitName, bool> checking = new Dictionary<UnitName, bool>();
@@ -79,12 +77,51 @@ namespace HOI4_Tools.Model
 
         private void GetUnitData()
         {
-            infantryFileData = FileHandler.LoadFile("infantry.txt");
-            GetInfantryLocations();
-
             foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
             {
-                GetUnitStats(unitName);
+                switch (unitName)
+                {
+
+                    case UnitName.BicycleBattalion:
+                    case UnitName.Infantry:
+                    case UnitName.Marines:
+                    case UnitName.Mechanized:
+                    case UnitName.Motorized:
+                    case UnitName.Mountaineers:
+                    case UnitName.Paratroopers:
+                        GetInfantryLocations(FileHandler.LoadFile("infantry.txt"));
+                        GetUnitStats(unitName, FileHandler.LoadFile("infantry.txt"));
+                        break;
+
+                    case UnitName.AntiAir:
+                    case UnitName.AntiTank:
+                    case UnitName.Artillery:
+                    case UnitName.Cavalry:
+                    case UnitName.HeavySPAntiAir:
+                    case UnitName.HeavySPArtillery:
+                    case UnitName.HeavyTank:
+                    case UnitName.HeavyTankDestroyer:
+                    case UnitName.LightSPAntiAir:
+                    case UnitName.LightSPArtillery:
+                    case UnitName.LightTank:
+                    case UnitName.LightTankDestroyer:
+                    case UnitName.MediumSPArtillery:
+                    case UnitName.MediumTank:
+                    case UnitName.MediumTankDestroyer:
+                    case UnitName.ModernSPAntiAir:
+                    case UnitName.ModernSPArtillery:
+                    case UnitName.ModernTank:
+                    case UnitName.ModernTankDestroyer:
+                    case UnitName.MotorizedRocketArtillery:
+                    case UnitName.RocketArtillery:
+                    case UnitName.SuperHeavySPAntiAir:
+                    case UnitName.SuperHeavySPArtillery:
+                    case UnitName.SuperHeavyTank:
+                    case UnitName.SuperHeavyTankDestroyer:
+                    case UnitName.MediumSPAntiAir:
+                    default:
+                        break;
+                }
             }
         }
 
@@ -158,93 +195,93 @@ namespace HOI4_Tools.Model
             }
         }
 
-        private void GetUnitStats(UnitName unitName)
+        private void GetUnitStats(UnitName unitName, string[] paradoxData)
         {
-            Unit unit;
+            Unit unit = new Unit();
             Match match;
+
             for (int i = unitStart[unitName]; i < unitEnd[unitName]; i++)
             {
-                unit = new Unit();
-                match = Regex.Match(infantryFileData[i], @"combat_width[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"combat_width[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.combatWidth = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"max_strength[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"max_strength[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.maxStrength = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"max_organisation[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"max_organisation[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.maxOrganisation = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"manpower[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"manpower[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.manpower = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"training_time[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"training_time[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.trainingTime = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"suppression[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"suppression[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.suppression = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"infantry_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"infantry_equipment[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.infantryEquipment = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"support_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"support_equipment[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.supportEquipment = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"motorized_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"motorized_equipment[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.motorizedEquipment = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryFileData[i], @"mechanized_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"mechanized_equipment[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     unit.mechanizedEquipment = Int32.Parse(match.Groups[1].Value);
                 }
 
 
-                match = Regex.Match(infantryFileData[i], @"weight[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"weight[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.weight = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryFileData[i], @"supply_consumption[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"supply_consumption[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.supplyConsumption = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryFileData[i], @"maximum_speed[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"maximum_speed[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.maxSpeed = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryFileData[i], @"breakthrough[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"breakthrough[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.breakthrough = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryFileData[i], @"hardness[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"hardness[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.hardness = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
 
 
-                if (Regex.Match(infantryFileData[i], @"can_be_parachuted.*?yes").Success)
+                if (Regex.Match(paradoxData[i], @"can_be_parachuted.*?yes").Success)
                 {
                     unit.canBeParachuted = true;
                 }
@@ -262,48 +299,47 @@ namespace HOI4_Tools.Model
                 */
 
 
-                if (Regex.Match(infantryFileData[i], @"forest.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"forest.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Forest, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Forest, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"hills.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"hills.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Hills, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Hills, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"mountain.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"mountain.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Mountain, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Mountain, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"marsh.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"marsh.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Marsh, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Marsh, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"plains.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"plains.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Plains, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Plains, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"urban.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"urban.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Urban, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Urban, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"desert.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"desert.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Desert, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Desert, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"river.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"river.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.River, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.River, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(infantryFileData[i], @"amphibious.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"amphibious.*?\{").Success)
                 {
-                    GetTerrainStats(unit, TerrainType.Amphibious, i + 1, i + 3);
+                    GetTerrainStats(unit, TerrainType.Amphibious, i + 1, i + 3, paradoxData);
                 }
-
-                UnitsAndEquipment.units[unitName] = unit;
             }
+            UnitsAndEquipment.units[unitName] = unit;
         }
 
-        private void GetTerrainStats(Unit unit, TerrainType terrainType, int start, int end)
+        private void GetTerrainStats(Unit unit, TerrainType terrainType, int start, int end, string[] paradoxData)
         {
             Regex regex;
             Match match;
@@ -311,19 +347,19 @@ namespace HOI4_Tools.Model
             for (int i = start; i < end; i++)
             {
                 regex = new Regex(@"attack[^0-9]+?([\-0-9\.]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = regex.Match(paradoxData[i]);
                 if (match.Success)
                 {
                     terrainStats.attack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
                 regex = new Regex(@"defence[^0-9]+?([\-0-9\.]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = regex.Match(paradoxData[i]);
                 if (match.Success)
                 {
                     terrainStats.defence = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
                 regex = new Regex(@"movement[^0-9]+?([\-0-9\.]+)");
-                match = regex.Match(infantryFileData[i]);
+                match = regex.Match(paradoxData[i]);
                 if (match.Success)
                 {
                     terrainStats.movement = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
@@ -400,7 +436,7 @@ namespace HOI4_Tools.Model
         }
 
 
-        private void GetInfantryLocations()
+        private void GetInfantryLocations(string[] infantryFileData)
         {
             int i;
             for (i = 0; i < infantryFileData.Length; i++)
@@ -408,51 +444,84 @@ namespace HOI4_Tools.Model
                 if (Regex.Match(infantryFileData[i], @"infantry.*?\{").Success)
                 {
                     unitStart[UnitName.Infantry] = i;
+                    GetUnitLocationEnds(i);
                     checking[UnitName.Infantry] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"bicycle_battalion.*?\{").Success)
                 {
                     unitStart[UnitName.BicycleBattalion] = i;
+                    GetUnitLocationEnds(i);
                     checking[UnitName.BicycleBattalion] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"marine.*?\{").Success)
                 {
                     unitStart[UnitName.Marines] = i;
+                    GetUnitLocationEnds(i);
                     checking[UnitName.Marines] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"mountaineers.*?\{").Success)
                 {
                     unitStart[UnitName.Mountaineers] = i;
+                    GetUnitLocationEnds(i);
                     checking[UnitName.Mountaineers] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"paratrooper.*?\{").Success)
                 {
                     unitStart[UnitName.Paratroopers] = i;
+                    GetUnitLocationEnds(i);
                     checking[UnitName.Paratroopers] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"motorized.*?\{").Success)
                 {
                     unitStart[UnitName.Motorized] = i;
+                    GetUnitLocationEnds(i);
                     checking[UnitName.Motorized] = true;
                 }
                 else if (Regex.Match(infantryFileData[i], @"mechanized.*?\{").Success)
                 {
                     unitStart[UnitName.Mechanized] = i;
+                    GetUnitLocationEnds(i);
                     checking[UnitName.Mechanized] = true;
                 }
-                GetUnitLocationEnds();
             }
-            GetUnitLocationEnds();
+            GetUnitLocationEnds(i);
         }
-        private void GetUnitLocationEnds()
+        private void GetUnitLocationEnds(int location)
         {
-            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
+            if (checking[UnitName.Infantry])
             {
-                if (checking[unitName])
-                {
-                    unitEnd[unitName] = unitStart[unitName] - 1;
-                    checking[unitName] = false;
-                }
+                unitEnd[UnitName.Infantry] = location - 1;
+                checking[UnitName.Infantry] = false;
+            }
+            else if (checking[UnitName.BicycleBattalion])
+            {
+                unitEnd[UnitName.BicycleBattalion] = location - 1;
+                checking[UnitName.BicycleBattalion] = false;
+            }
+            else if (checking[UnitName.Marines])
+            {
+                unitEnd[UnitName.Marines] = location - 1;
+                checking[UnitName.Marines] = false;
+            }
+            else if (checking[UnitName.Mountaineers])
+            {
+                unitEnd[UnitName.Mountaineers] = location - 1;
+                checking[UnitName.Mountaineers] = false;
+            }
+            else if (checking[UnitName.Paratroopers])
+            {
+                unitEnd[UnitName.Paratroopers] = location - 1;
+                checking[UnitName.Paratroopers] = false;
+            }
+            else if (checking[UnitName.Motorized])
+            {
+                unitEnd[UnitName.Motorized] = location - 1;
+                checking[UnitName.Motorized] = false;
+            }
+            else if (checking[UnitName.Mechanized])
+            {
+                unitEnd[UnitName.Mechanized] = location - 1;
+                checking[UnitName.Mechanized] = false;
             }
         }
     }
