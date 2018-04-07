@@ -13,6 +13,7 @@ namespace HOI4_Tools.Model
         private Dictionary<UnitName, int> unitStart = new Dictionary<UnitName, int>();
         private Dictionary<UnitName, int> unitEnd = new Dictionary<UnitName, int>();
         private Dictionary<UnitName, bool> checking = new Dictionary<UnitName, bool>();
+        private Dictionary<UnitsInFile, string[]> unitFileData = new Dictionary<UnitsInFile, string[]>();
 
 
 
@@ -77,52 +78,21 @@ namespace HOI4_Tools.Model
 
         private void GetUnitData()
         {
-            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
-            {
-                switch (unitName)
-                {
-
-                    case UnitName.BicycleBattalion:
-                    case UnitName.Infantry:
-                    case UnitName.Marines:
-                    case UnitName.Mechanized:
-                    case UnitName.Motorized:
-                    case UnitName.Mountaineers:
-                    case UnitName.Paratroopers:
-                        GetInfantryLocations(FileHandler.LoadFile("infantry.txt"));
-                        GetUnitStats(unitName, FileHandler.LoadFile("infantry.txt"));
-                        break;
-
-                    case UnitName.AntiAir:
-                    case UnitName.AntiTank:
-                    case UnitName.Artillery:
-                    case UnitName.Cavalry:
-                    case UnitName.HeavySPAntiAir:
-                    case UnitName.HeavySPArtillery:
-                    case UnitName.HeavyTank:
-                    case UnitName.HeavyTankDestroyer:
-                    case UnitName.LightSPAntiAir:
-                    case UnitName.LightSPArtillery:
-                    case UnitName.LightTank:
-                    case UnitName.LightTankDestroyer:
-                    case UnitName.MediumSPArtillery:
-                    case UnitName.MediumTank:
-                    case UnitName.MediumTankDestroyer:
-                    case UnitName.ModernSPAntiAir:
-                    case UnitName.ModernSPArtillery:
-                    case UnitName.ModernTank:
-                    case UnitName.ModernTankDestroyer:
-                    case UnitName.MotorizedRocketArtillery:
-                    case UnitName.RocketArtillery:
-                    case UnitName.SuperHeavySPAntiAir:
-                    case UnitName.SuperHeavySPArtillery:
-                    case UnitName.SuperHeavyTank:
-                    case UnitName.SuperHeavyTankDestroyer:
-                    case UnitName.MediumSPAntiAir:
-                    default:
-                        break;
-                }
-            }
+            unitFileData[UnitsInFile.Infantry] = FileHandler.LoadFile("infantry.txt");
+            unitFileData[UnitsInFile.Cavalry] = FileHandler.LoadFile("cavalry.txt");
+            unitFileData[UnitsInFile.LightArmour] = FileHandler.LoadFile("light_armor.txt");
+            unitFileData[UnitsInFile.MediumArmour] = FileHandler.LoadFile("medium_armor.txt");
+            unitFileData[UnitsInFile.HeavyArmour] = FileHandler.LoadFile("heavy_armor.txt");
+            unitFileData[UnitsInFile.SuperHeavyArmour] = FileHandler.LoadFile("super_heavy_armor.txt");
+            unitFileData[UnitsInFile.ModernArmour] = FileHandler.LoadFile("modern_armor.txt");
+            unitFileData[UnitsInFile.AntiTankBrigade] = FileHandler.LoadFile("anti_tank_brigade.txt");
+            unitFileData[UnitsInFile.AntiAirBrigade] = FileHandler.LoadFile("anti-air_brigade.txt");
+            unitFileData[UnitsInFile.ArtilleryBrigade] = FileHandler.LoadFile("artillery_brigade.txt");
+            unitFileData[UnitsInFile.SPAntiAirBrigade] = FileHandler.LoadFile("sp_anti-air_brigade.txt");
+            unitFileData[UnitsInFile.SPArtilleryBrigade] = FileHandler.LoadFile("sp_artillery_brigade.txt");
+            unitFileData[UnitsInFile.TankDestroyerBrigade] = FileHandler.LoadFile("tank_destroyer_brigade.txt");
+            GetUnitLocations();
+            //GetUnitStats();
         }
 
         private void GetEquipmentStats(Equipment equipment, int start, int end)
@@ -435,93 +405,221 @@ namespace HOI4_Tools.Model
             }
         }
 
-
-        private void GetInfantryLocations(string[] infantryFileData)
+        private void GetUnitLocationsHelper(UnitName unitName, int location)
+        {
+            unitStart[unitName] = location;
+            GetUnitLocationEnds(location);
+            checking[unitName] = true;
+        }
+        private void GetUnitLocations()
         {
             int i;
-            for (i = 0; i < infantryFileData.Length; i++)
+            for (i = 0; i < unitFileData[UnitsInFile.Infantry].Length; i++)
             {
-                if (Regex.Match(infantryFileData[i], @"infantry.*?\{").Success)
+                if (Regex.Match(unitFileData[UnitsInFile.Infantry][i], @"infantry.*?\{").Success)
                 {
-                    unitStart[UnitName.Infantry] = i;
-                    GetUnitLocationEnds(i);
-                    checking[UnitName.Infantry] = true;
+                    GetUnitLocationsHelper(UnitName.Infantry, i);
                 }
-                else if (Regex.Match(infantryFileData[i], @"bicycle_battalion.*?\{").Success)
+                else if (Regex.Match(unitFileData[UnitsInFile.Infantry][i], @"bicycle_battalion.*?\{").Success)
                 {
-                    unitStart[UnitName.BicycleBattalion] = i;
-                    GetUnitLocationEnds(i);
-                    checking[UnitName.BicycleBattalion] = true;
+                    GetUnitLocationsHelper(UnitName.BicycleBattalion, i);
                 }
-                else if (Regex.Match(infantryFileData[i], @"marine.*?\{").Success)
+                else if (Regex.Match(unitFileData[UnitsInFile.Infantry][i], @"marine.*?\{").Success)
                 {
-                    unitStart[UnitName.Marines] = i;
-                    GetUnitLocationEnds(i);
-                    checking[UnitName.Marines] = true;
+                    GetUnitLocationsHelper(UnitName.Marines, i);
                 }
-                else if (Regex.Match(infantryFileData[i], @"mountaineers.*?\{").Success)
+                else if (Regex.Match(unitFileData[UnitsInFile.Infantry][i], @"mountaineers.*?\{").Success)
                 {
-                    unitStart[UnitName.Mountaineers] = i;
-                    GetUnitLocationEnds(i);
-                    checking[UnitName.Mountaineers] = true;
+                    GetUnitLocationsHelper(UnitName.Mountaineers, i);
                 }
-                else if (Regex.Match(infantryFileData[i], @"paratrooper.*?\{").Success)
+                else if (Regex.Match(unitFileData[UnitsInFile.Infantry][i], @"paratrooper.*?\{").Success)
                 {
-                    unitStart[UnitName.Paratroopers] = i;
-                    GetUnitLocationEnds(i);
-                    checking[UnitName.Paratroopers] = true;
+                    GetUnitLocationsHelper(UnitName.Paratroopers, i);
                 }
-                else if (Regex.Match(infantryFileData[i], @"motorized.*?\{").Success)
+                else if (Regex.Match(unitFileData[UnitsInFile.Infantry][i], @"motorized.*?\{").Success)
                 {
-                    unitStart[UnitName.Motorized] = i;
-                    GetUnitLocationEnds(i);
-                    checking[UnitName.Motorized] = true;
+                    GetUnitLocationsHelper(UnitName.Motorized, i);
                 }
-                else if (Regex.Match(infantryFileData[i], @"mechanized.*?\{").Success)
+                else if (Regex.Match(unitFileData[UnitsInFile.Infantry][i], @"mechanized.*?\{").Success)
                 {
-                    unitStart[UnitName.Mechanized] = i;
-                    GetUnitLocationEnds(i);
-                    checking[UnitName.Mechanized] = true;
+                    GetUnitLocationsHelper(UnitName.Mechanized, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.Cavalry].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.Cavalry][i], @"cavalry.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.Cavalry, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.LightArmour].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.LightArmour][i], @"light_armor.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.LightTank, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.MediumArmour].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.MediumArmour][i], @"medium_armor.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.MediumTank, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.HeavyArmour].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.HeavyArmour][i], @"^[^_]*?heavy_armor.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.HeavyTank, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.SuperHeavyArmour].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.SuperHeavyArmour][i], @"super_heavy_armor.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.SuperHeavyTank, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.ModernArmour].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.ModernArmour][i], @"modern_armor.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.ModernTank, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.AntiTankBrigade].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.AntiTankBrigade][i], @"anti_tank_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.AntiTank, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.AntiAirBrigade].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.AntiAirBrigade][i], @"anti_air_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.AntiAir, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.ArtilleryBrigade].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.ArtilleryBrigade][i], @"^[^_]*?artillery_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.Artillery, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.ArtilleryBrigade][i], @"rocket_artillery_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.RocketArtillery, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.ArtilleryBrigade][i], @"motorized_rocket_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.MotorizedRocketArtillery, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.SPAntiAirBrigade].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.SPAntiAirBrigade][i], @"light_sp_anti_air_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.LightSPAntiAir, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPAntiAirBrigade][i], @"medium_sp_anti_air_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.MediumSPAntiAir, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPAntiAirBrigade][i], @"^[^_]*?heavy_sp_anti_air_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.HeavySPAntiAir, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPAntiAirBrigade][i], @"super_heavy_sp_anti_air_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.SuperHeavySPAntiAir, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPAntiAirBrigade][i], @"modern_sp_anti_air_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.ModernSPAntiAir, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.SPArtilleryBrigade].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.SPArtilleryBrigade][i], @"light_sp_artillery_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.LightSPArtillery, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPArtilleryBrigade][i], @"medium_sp_artillery_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.MediumSPArtillery, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPArtilleryBrigade][i], @"^[^_]*?heavy_sp_artillery_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.HeavySPArtillery, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPArtilleryBrigade][i], @"super_heavy_sp_artillery_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.SuperHeavySPArtillery, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.SPArtilleryBrigade][i], @"modern_sp_artillery_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.ModernSPArtillery, i);
+                }
+            }
+            GetUnitLocationEnds(i);
+
+            for (i = 0; i < unitFileData[UnitsInFile.TankDestroyerBrigade].Length; i++)
+            {
+                if (Regex.Match(unitFileData[UnitsInFile.TankDestroyerBrigade][i], @"light_tank_destroyer_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.LightTankDestroyer, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.TankDestroyerBrigade][i], @"medium_tank_destroyer_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.MediumTankDestroyer, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.TankDestroyerBrigade][i], @"^[^_]*?heavy_tank_destroyer_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.HeavyTankDestroyer, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.TankDestroyerBrigade][i], @"super_heavy_tank_destroyer_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.SuperHeavyTankDestroyer, i);
+                }
+                else if (Regex.Match(unitFileData[UnitsInFile.TankDestroyerBrigade][i], @"modern_tank_destroyer_brigade.*?\{").Success)
+                {
+                    GetUnitLocationsHelper(UnitName.ModernTankDestroyer, i);
                 }
             }
             GetUnitLocationEnds(i);
         }
         private void GetUnitLocationEnds(int location)
         {
-            if (checking[UnitName.Infantry])
+            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
             {
-                unitEnd[UnitName.Infantry] = location - 1;
-                checking[UnitName.Infantry] = false;
-            }
-            else if (checking[UnitName.BicycleBattalion])
-            {
-                unitEnd[UnitName.BicycleBattalion] = location - 1;
-                checking[UnitName.BicycleBattalion] = false;
-            }
-            else if (checking[UnitName.Marines])
-            {
-                unitEnd[UnitName.Marines] = location - 1;
-                checking[UnitName.Marines] = false;
-            }
-            else if (checking[UnitName.Mountaineers])
-            {
-                unitEnd[UnitName.Mountaineers] = location - 1;
-                checking[UnitName.Mountaineers] = false;
-            }
-            else if (checking[UnitName.Paratroopers])
-            {
-                unitEnd[UnitName.Paratroopers] = location - 1;
-                checking[UnitName.Paratroopers] = false;
-            }
-            else if (checking[UnitName.Motorized])
-            {
-                unitEnd[UnitName.Motorized] = location - 1;
-                checking[UnitName.Motorized] = false;
-            }
-            else if (checking[UnitName.Mechanized])
-            {
-                unitEnd[UnitName.Mechanized] = location - 1;
-                checking[UnitName.Mechanized] = false;
+                if (checking[unitName])
+                {
+                    unitEnd[unitName] = location - 1;
+                    checking[unitName] = false;
+                }
             }
         }
     }
