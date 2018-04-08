@@ -9,77 +9,73 @@ namespace HOI4_Tools.Model
     static class UnitsAndEquipment
     {
         public static Dictionary<UnitName, Unit> units = new Dictionary<UnitName, Unit>();
-        public static Dictionary<EquipmentType, Dictionary<int, Equipment>> equipment = new Dictionary<EquipmentType, Dictionary<int, Equipment>>();
+        public static Dictionary<EquipmentName, Dictionary<int, Equipment>> equipment = new Dictionary<EquipmentName, Dictionary<int, Equipment>>();
 
         public static Dictionary<int, Equipment> GetEquipment(UnitName unitName)
         {
             switch (unitName)
             {
-
-
                 case UnitName.Infantry:
                 case UnitName.BicycleBattalion:
                 case UnitName.Cavalry:
                 case UnitName.Marines:
                 case UnitName.Mountaineers:
                 case UnitName.Paratroopers:
-                    return equipment[EquipmentType.Infantry];
-
-
+                    return equipment[EquipmentName.Infantry];
                 case UnitName.AntiAir:
-                    break;
+                    return equipment[EquipmentName.AntiAir];
                 case UnitName.AntiTank:
-                    break;
+                    return equipment[EquipmentName.AntiTank];
                 case UnitName.Artillery:
-                    break;
+                    return equipment[EquipmentName.Artillery];
                 case UnitName.HeavySPAntiAir:
-                    break;
+                    return equipment[EquipmentName.HeavyTankAntiAir];
                 case UnitName.HeavySPArtillery:
-                    break;
+                    return equipment[EquipmentName.HeavyTankArtillery];
                 case UnitName.HeavyTank:
-                    break;
+                    return equipment[EquipmentName.HeavyTank];
                 case UnitName.HeavyTankDestroyer:
-                    break;
+                    return equipment[EquipmentName.HeavyTankDestroyer];
                 case UnitName.LightSPAntiAir:
-                    break;
+                    return equipment[EquipmentName.LightTankAntiAir];
                 case UnitName.LightSPArtillery:
-                    break;
+                    return equipment[EquipmentName.LightTankArtillery];
                 case UnitName.LightTank:
-                    break;
+                    return equipment[EquipmentName.LightTank];
                 case UnitName.LightTankDestroyer:
-                    break;
+                    return equipment[EquipmentName.LightTankDestroyer];
                 case UnitName.Mechanized:
-                    break;
+                    return equipment[EquipmentName.Mechanized];
                 case UnitName.MediumSPArtillery:
-                    break;
+                    return equipment[EquipmentName.MediumTankArtillery];
                 case UnitName.MediumTank:
-                    break;
+                    return equipment[EquipmentName.MediumTank];
                 case UnitName.MediumTankDestroyer:
-                    break;
+                    return equipment[EquipmentName.MediumTankDestroyer];
                 case UnitName.ModernSPAntiAir:
-                    break;
+                    return equipment[EquipmentName.ModernTankAntiAir];
                 case UnitName.ModernSPArtillery:
-                    break;
+                    return equipment[EquipmentName.ModernTankArtillery];
                 case UnitName.ModernTank:
-                    break;
+                    return equipment[EquipmentName.ModernTank];
                 case UnitName.ModernTankDestroyer:
-                    break;
+                    return equipment[EquipmentName.ModernTankDestroyer];
                 case UnitName.Motorized:
-                    break;
+                    return equipment[EquipmentName.Motorized];
                 case UnitName.MotorizedRocketArtillery:
-                    break;
+                    return equipment[EquipmentName.MotorizedRocketArtillery];
                 case UnitName.RocketArtillery:
-                    break;
+                    return equipment[EquipmentName.RocketArtillery];
                 case UnitName.SuperHeavySPAntiAir:
-                    break;
+                    return equipment[EquipmentName.SuperHeavyTankAntiAir];
                 case UnitName.SuperHeavySPArtillery:
-                    break;
+                    return equipment[EquipmentName.SuperHeavyTankArtillery];
                 case UnitName.SuperHeavyTank:
-                    break;
+                    return equipment[EquipmentName.SuperHeavyTank];
                 case UnitName.SuperHeavyTankDestroyer:
-                    break;
+                    return equipment[EquipmentName.SuperHeavyTankDestroyer];
                 case UnitName.MediumSPAntiAir:
-                    break;
+                    return equipment[EquipmentName.MediumTankAntiAir];
             }
             return null;
         }

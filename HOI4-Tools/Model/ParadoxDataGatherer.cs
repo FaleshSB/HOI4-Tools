@@ -19,7 +19,7 @@ namespace HOI4_Tools.Model
         private Dictionary<EquipmentName, int> equipmentEnd = new Dictionary<EquipmentName, int>();
         private Dictionary<EquipmentName, bool> equipmentChecking = new Dictionary<EquipmentName, bool>();
         private Dictionary<EquipmentInFile, string[]> equipmentFileData = new Dictionary<EquipmentInFile, string[]>();
-
+        private Dictionary<EquipmentName, Equipment> equipmentArchetype = new Dictionary<EquipmentName, Equipment>();
 
         public ParadoxDataGatherer()
         {
@@ -50,28 +50,224 @@ namespace HOI4_Tools.Model
             equipmentFileData[EquipmentInFile.TankModern] = FileHandler.LoadFile("tank_modern.txt", "equipment");
             equipmentFileData[EquipmentInFile.TankSuperHeavy] = FileHandler.LoadFile("tank_super_heavy.txt", "equipment");
             GetEquipmentLocations();
-            /*
-            Equipment infantryEquipmentTemplate = new Equipment();
-            GetEquipmentStats(infantryEquipmentTemplate, infantryEquipmentStart, infantryEquipmentEnd);
 
-            UnitsAndEquipment.equipment[EquipmentType.Infantry] = new Dictionary<int, Equipment>();
+            foreach (EquipmentName equipmentName in Enum.GetValues(typeof(EquipmentName)))
+            {
+                switch (equipmentName)
+                {
+                    case EquipmentName.Infantry:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Infantry], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.AntiAir:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiAir], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.AntiTank:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiTank], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.Artillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.RocketArtillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.MotorizedRocketArtillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.Mechanized:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Mechanized], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.Motorized:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Motorized], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.HeavyTank:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.HeavyTankArtillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.HeavyTankDestroyer:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.HeavyTankAntiAir:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.LightTank:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.LightTankArtillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.LightTankDestroyer:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.LightTankAntiAir:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.MediumTank:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.MediumTankArtillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.MediumTankDestroyer:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.MediumTankAntiAir:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.SuperHeavyTank:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.SuperHeavyTankArtillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.SuperHeavyTankDestroyer:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.SuperHeavyTankAntiAir:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.ModernTank:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.ModernTankArtillery:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.ModernTankDestroyer:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], new Equipment(), equipmentName, true);
+                        break;
+                    case EquipmentName.ModernTankAntiAir:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], new Equipment(), equipmentName, true);
+                        break;
+                }
+            }
 
-            Equipment infantryEquipment0 = (Equipment)infantryEquipmentTemplate.GetClone();
-            GetEquipmentStats(infantryEquipment0, infantryEquipment0Start, infantryEquipment0End);
-            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment0.year] = infantryEquipment0;
-
-            Equipment infantryEquipment1 = (Equipment)infantryEquipmentTemplate.GetClone();
-            GetEquipmentStats(infantryEquipment1, infantryEquipment1Start, infantryEquipment1End);
-            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment1.year] = infantryEquipment1;
-
-            Equipment infantryEquipment2 = (Equipment)infantryEquipmentTemplate.GetClone();
-            GetEquipmentStats(infantryEquipment2, infantryEquipment2Start, infantryEquipment2End);
-            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment2.year] = infantryEquipment2;
-
-            Equipment infantryEquipment3 = (Equipment)infantryEquipmentTemplate.GetClone();
-            GetEquipmentStats(infantryEquipment3, infantryEquipment3Start, infantryEquipment3End);
-            UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment3.year] = infantryEquipment3;
-            */
+            foreach (EquipmentName equipmentName in Enum.GetValues(typeof(EquipmentName)))
+            {
+                switch (equipmentName)
+                {
+                    case EquipmentName.Infantry0:
+                    case EquipmentName.Infantry1:
+                    case EquipmentName.Infantry2:
+                    case EquipmentName.Infantry3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Infantry], equipmentArchetype[EquipmentName.Infantry], EquipmentName.Infantry);
+                        break;
+                    case EquipmentName.AntiAir1:
+                    case EquipmentName.AntiAir2:
+                    case EquipmentName.AntiAir3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiAir], equipmentArchetype[EquipmentName.AntiAir], EquipmentName.AntiAir);
+                        break;
+                    case EquipmentName.AntiTank1:
+                    case EquipmentName.AntiTank2:
+                    case EquipmentName.AntiTank3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiTank], equipmentArchetype[EquipmentName.AntiTank], EquipmentName.AntiTank);
+                        break;
+                    case EquipmentName.Artillery1:
+                    case EquipmentName.Artillery2:
+                    case EquipmentName.Artillery3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.Artillery], EquipmentName.Artillery);
+                        break;
+                    case EquipmentName.RocketArtillery1:
+                    case EquipmentName.RocketArtillery2:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.RocketArtillery], EquipmentName.RocketArtillery);
+                        break;
+                    case EquipmentName.MotorizedRocketArtillery1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.MotorizedRocketArtillery], EquipmentName.MotorizedRocketArtillery);
+                        break;
+                    case EquipmentName.Mechanized1:
+                    case EquipmentName.Mechanized2:
+                    case EquipmentName.Mechanized3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Mechanized], equipmentArchetype[EquipmentName.Mechanized], EquipmentName.Mechanized);
+                        break;
+                    case EquipmentName.Motorized1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Motorized], equipmentArchetype[EquipmentName.Motorized], EquipmentName.Motorized);
+                        break;
+                    case EquipmentName.HeavyTank1:
+                    case EquipmentName.HeavyTank2:
+                    case EquipmentName.HeavyTank3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTank], EquipmentName.HeavyTank);
+                        break;
+                    case EquipmentName.HeavyTankArtillery1:
+                    case EquipmentName.HeavyTankArtillery2:
+                    case EquipmentName.HeavyTankArtillery3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankArtillery], EquipmentName.HeavyTankArtillery);
+                        break;
+                    case EquipmentName.HeavyTankDestroyer1:
+                    case EquipmentName.HeavyTankDestroyer2:
+                    case EquipmentName.HeavyTankDestroyer3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankDestroyer], EquipmentName.HeavyTankDestroyer);
+                        break;
+                    case EquipmentName.HeavyTankAntiAir1:
+                    case EquipmentName.HeavyTankAntiAir2:
+                    case EquipmentName.HeavyTankAntiAir3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankAntiAir], EquipmentName.HeavyTankAntiAir);
+                        break;
+                    case EquipmentName.LightTank1:
+                    case EquipmentName.LightTank2:
+                    case EquipmentName.LightTank3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTank], EquipmentName.LightTank);
+                        break;
+                    case EquipmentName.LightTankArtillery1:
+                    case EquipmentName.LightTankArtillery2:
+                    case EquipmentName.LightTankArtillery3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankArtillery], EquipmentName.LightTankArtillery);
+                        break;
+                    case EquipmentName.LightTankDestroyer1:
+                    case EquipmentName.LightTankDestroyer2:
+                    case EquipmentName.LightTankDestroyer3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankDestroyer], EquipmentName.LightTankDestroyer);
+                        break;
+                    case EquipmentName.LightTankAntiAir1:
+                    case EquipmentName.LightTankAntiAir2:
+                    case EquipmentName.LightTankAntiAir3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankAntiAir], EquipmentName.LightTankAntiAir);
+                        break;
+                    case EquipmentName.MediumTank1:
+                    case EquipmentName.MediumTank2:
+                    case EquipmentName.MediumTank3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTank], EquipmentName.MediumTank);
+                        break;
+                    case EquipmentName.MediumTankArtillery1:
+                    case EquipmentName.MediumTankArtillery2:
+                    case EquipmentName.MediumTankArtillery3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankArtillery], EquipmentName.MediumTankArtillery);
+                        break;
+                    case EquipmentName.MediumTankDestroyer1:
+                    case EquipmentName.MediumTankDestroyer2:
+                    case EquipmentName.MediumTankDestroyer3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankDestroyer], EquipmentName.MediumTankDestroyer);
+                        break;
+                    case EquipmentName.MediumTankAntiAir1:
+                    case EquipmentName.MediumTankAntiAir2:
+                    case EquipmentName.MediumTankAntiAir3:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankAntiAir], EquipmentName.MediumTankAntiAir);
+                        break;
+                    case EquipmentName.SuperHeavyTank1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTank], EquipmentName.SuperHeavyTank);
+                        break;
+                    case EquipmentName.SuperHeavyTankArtillery1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankArtillery], EquipmentName.SuperHeavyTankArtillery);
+                        break;
+                    case EquipmentName.SuperHeavyTankDestroyer1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankDestroyer], EquipmentName.SuperHeavyTankDestroyer);
+                        break;
+                    case EquipmentName.SuperHeavyTankAntiAir1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankAntiAir], EquipmentName.SuperHeavyTankAntiAir);
+                        break;
+                    case EquipmentName.ModernTank1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTank], EquipmentName.ModernTank);
+                        break;
+                    case EquipmentName.ModernTankArtillery1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankArtillery], EquipmentName.ModernTankArtillery);
+                        break;
+                    case EquipmentName.ModernTankDestroyer1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankDestroyer], EquipmentName.ModernTankDestroyer);
+                        break;
+                    case EquipmentName.ModernTankAntiAir1:
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankAntiAir], EquipmentName.ModernTankAntiAir);
+                        break;
+                }
+            }
         }
 
 
@@ -160,74 +356,83 @@ namespace HOI4_Tools.Model
             }
         }
 
-        private void GetEquipmentStats(Equipment equipment, int start, int end)
+        private void GetEquipmentStats(EquipmentName equipmentName, string[] paradoxData, Equipment equipment, EquipmentName equipmentArchetypeName, bool isEquipmentArchetype = false)
         {
             Match match;
-            for (int i = start; i < end; i++)
+            for (int i = equipmentStart[equipmentName]; i < equipmentEnd[equipmentName]; i++)
             {
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"year[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"year[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.year = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"maximum_speed[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"maximum_speed[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.maximumSpeed = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"defense[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"defense[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.defense = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"breakthrough[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"breakthrough[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.breakthrough = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"armor_value[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"armor_value[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.armorValue = Int32.Parse(match.Groups[1].Value);
                 }
 
 
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"reliability[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"reliability[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.reliability = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"hardness[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"hardness[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.hardness = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"soft_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"soft_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.softAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"hard_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"hard_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.hardAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"ap_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"ap_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.apAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"air_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"air_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.airAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"build_cost_ic[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(paradoxData[i], @"build_cost_ic[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.buildCostIc = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
             }
+            if(isEquipmentArchetype)
+            {
+                equipmentArchetype[equipmentName] = equipment;
+            }
+            else
+            {
+                if(UnitsAndEquipment.equipment.ContainsKey(equipmentArchetypeName) == false) { UnitsAndEquipment.equipment[equipmentArchetypeName] = new Dictionary<int, Equipment>(); }
+                UnitsAndEquipment.equipment[equipmentArchetypeName][equipment.year] = equipment;
+            }            
         }
 
         private void GetUnitStats(UnitName unitName, string[] paradoxData)
