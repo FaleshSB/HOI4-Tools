@@ -12,38 +12,24 @@ namespace HOI4_Tools.Model
     {
         private Dictionary<UnitName, int> unitStart = new Dictionary<UnitName, int>();
         private Dictionary<UnitName, int> unitEnd = new Dictionary<UnitName, int>();
-        private Dictionary<UnitName, bool> checking = new Dictionary<UnitName, bool>();
+        private Dictionary<UnitName, bool> unitChecking = new Dictionary<UnitName, bool>();
         private Dictionary<UnitsInFile, string[]> unitFileData = new Dictionary<UnitsInFile, string[]>();
 
+        private Dictionary<EquipmentName, int> equipmentStart = new Dictionary<EquipmentName, int>();
+        private Dictionary<EquipmentName, int> equipmentEnd = new Dictionary<EquipmentName, int>();
+        private Dictionary<EquipmentName, bool> equipmentChecking = new Dictionary<EquipmentName, bool>();
         private Dictionary<EquipmentInFile, string[]> equipmentFileData = new Dictionary<EquipmentInFile, string[]>();
-
-
-        string[] infantryEquipmentFileData;
-
-        int infantryEquipmentStart;
-        int infantryEquipment0Start;
-        int infantryEquipment1Start;
-        int infantryEquipment2Start;
-        int infantryEquipment3Start;
-
-        int infantryEquipmentEnd;
-        int infantryEquipment0End;
-        int infantryEquipment1End;
-        int infantryEquipment2End;
-        int infantryEquipment3End;
-
-        bool isCheckinginfantryEquipment = false;
-        bool isCheckinginfantryEquipment0 = false;
-        bool isCheckinginfantryEquipment1 = false;
-        bool isCheckinginfantryEquipment2 = false;
-        bool isCheckinginfantryEquipment3 = false;
 
 
         public ParadoxDataGatherer()
         {
             foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
             {
-                checking[unitName] = false;
+                unitChecking[unitName] = false;
+            }
+            foreach (EquipmentName equipmentName in Enum.GetValues(typeof(EquipmentName)))
+            {
+                equipmentChecking[equipmentName] = false;
             }
 
             GetUnitData();
@@ -52,9 +38,19 @@ namespace HOI4_Tools.Model
 
         private void GetEquipmentData()
         {
-            infantryEquipmentFileData = FileHandler.LoadFile("infantry.txt", "equipment");
-            GetInfantryEquipmentLocations();
-
+            equipmentFileData[EquipmentInFile.AntiAir] = FileHandler.LoadFile("anti_air.txt", "equipment");
+            equipmentFileData[EquipmentInFile.AntiTank] = FileHandler.LoadFile("anti_tank.txt", "equipment");
+            equipmentFileData[EquipmentInFile.Artillery] = FileHandler.LoadFile("artillery.txt", "equipment");
+            equipmentFileData[EquipmentInFile.Infantry] = FileHandler.LoadFile("infantry.txt", "equipment");
+            equipmentFileData[EquipmentInFile.Mechanized] = FileHandler.LoadFile("mechanized.txt", "equipment");
+            equipmentFileData[EquipmentInFile.Motorized] = FileHandler.LoadFile("motorized.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankHeavy] = FileHandler.LoadFile("tank_heavy.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankLight] = FileHandler.LoadFile("tank_light.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankMedium] = FileHandler.LoadFile("tank_medium.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankModern] = FileHandler.LoadFile("tank_modern.txt", "equipment");
+            equipmentFileData[EquipmentInFile.TankSuperHeavy] = FileHandler.LoadFile("tank_super_heavy.txt", "equipment");
+            GetEquipmentLocations();
+            /*
             Equipment infantryEquipmentTemplate = new Equipment();
             GetEquipmentStats(infantryEquipmentTemplate, infantryEquipmentStart, infantryEquipmentEnd);
 
@@ -75,22 +71,10 @@ namespace HOI4_Tools.Model
             Equipment infantryEquipment3 = (Equipment)infantryEquipmentTemplate.GetClone();
             GetEquipmentStats(infantryEquipment3, infantryEquipment3Start, infantryEquipment3End);
             UnitsAndEquipment.equipment[EquipmentType.Infantry][infantryEquipment3.year] = infantryEquipment3;
+            */
         }
 
-        private void GetEquipmentDataNew()
-        {
-            equipmentFileData[EquipmentInFile.Infantry] = FileHandler.LoadFile("anti_air.txt", "equipment");
-            equipmentFileData[EquipmentInFile.AntiAir] = FileHandler.LoadFile("anti_tank.txt", "equipment");
-            equipmentFileData[EquipmentInFile.AntiTank] = FileHandler.LoadFile("artillery.txt", "equipment");
-            equipmentFileData[EquipmentInFile.Artillery] = FileHandler.LoadFile("infantry.txt", "equipment");
-            equipmentFileData[EquipmentInFile.Mechanized] = FileHandler.LoadFile("mechanized.txt", "equipment");
-            equipmentFileData[EquipmentInFile.Motorized] = FileHandler.LoadFile("motorized.txt", "equipment");
-            equipmentFileData[EquipmentInFile.TankHeavy] = FileHandler.LoadFile("tank_heavy.txt", "equipment");
-            equipmentFileData[EquipmentInFile.TankLight] = FileHandler.LoadFile("tank_light.txt", "equipment");
-            equipmentFileData[EquipmentInFile.TankMedium] = FileHandler.LoadFile("tank_medium.txt", "equipment");
-            equipmentFileData[EquipmentInFile.TankModern] = FileHandler.LoadFile("tank_modern.txt", "equipment");
-            equipmentFileData[EquipmentInFile.TankSuperHeavy] = FileHandler.LoadFile("tank_super_heavy.txt", "equipment");
-        }
+
         private void GetUnitData()
         {
             unitFileData[UnitsInFile.Infantry] = FileHandler.LoadFile("infantry.txt");
@@ -181,64 +165,64 @@ namespace HOI4_Tools.Model
             Match match;
             for (int i = start; i < end; i++)
             {
-                match = Regex.Match(infantryEquipmentFileData[i], @"year[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"year[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.year = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"maximum_speed[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"maximum_speed[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.maximumSpeed = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"defense[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"defense[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.defense = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"breakthrough[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"breakthrough[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.breakthrough = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"armor_value[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"armor_value[^0-9]+?([\-0-9]+)");
                 if (match.Success)
                 {
                     equipment.armorValue = Int32.Parse(match.Groups[1].Value);
                 }
 
 
-                match = Regex.Match(infantryEquipmentFileData[i], @"reliability[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"reliability[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.reliability = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"hardness[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"hardness[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.hardness = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"soft_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"soft_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.softAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"hard_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"hard_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.hardAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"ap_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"ap_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.apAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"air_attack[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"air_attack[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.airAttack = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
                 }
-                match = Regex.Match(infantryEquipmentFileData[i], @"build_cost_ic[^0-9]+?([\-0-9\.]+)");
+                match = Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"build_cost_ic[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     equipment.buildCostIc = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture.NumberFormat);
@@ -419,70 +403,49 @@ namespace HOI4_Tools.Model
             unit.terrainStats[terrainType] = terrainStats;
         }
 
-        private void GetInfantryEquipmentLocations()
+        private void GetEquipmentLocationsHelper(EquipmentName equipmentName, int location)
+        {
+            equipmentStart[equipmentName] = location;
+            GetEquipmentLocationEnds(location);
+            equipmentChecking[equipmentName] = true;
+        }
+        private void GetEquipmentLocations()
         {
             int i;
-            for (i = 0; i < infantryEquipmentFileData.Length; i++)
+            for (i = 0; i < equipmentFileData[EquipmentInFile.Infantry].Length; i++)
             {
-                if (Regex.Match(infantryEquipmentFileData[i], @"infantry_equipment[^_]*?\{").Success)
+                if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment[^_]*?\{").Success)
                 {
-                    infantryEquipmentStart = i;
-                    GetInfantryEquipmentLocationEnds(i);
-                    isCheckinginfantryEquipment = true;
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry, i);
                 }
-                else if (Regex.Match(infantryEquipmentFileData[i], @"infantry_equipment_0.*?\{").Success)
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_0.*?\{").Success)
                 {
-                    infantryEquipment0Start = i;
-                    GetInfantryEquipmentLocationEnds(i);
-                    isCheckinginfantryEquipment0 = true;
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry0, i);
                 }
-                else if (Regex.Match(infantryEquipmentFileData[i], @"infantry_equipment_1.*?\{").Success)
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_1.*?\{").Success)
                 {
-                    infantryEquipment1Start = i;
-                    GetInfantryEquipmentLocationEnds(i);
-                    isCheckinginfantryEquipment1 = true;
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry1, i);
                 }
-                else if (Regex.Match(infantryEquipmentFileData[i], @"infantry_equipment_2.*?\{").Success)
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_2.*?\{").Success)
                 {
-                    infantryEquipment2Start = i;
-                    GetInfantryEquipmentLocationEnds(i);
-                    isCheckinginfantryEquipment2 = true;
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry2, i);
                 }
-                else if (Regex.Match(infantryEquipmentFileData[i], @"infantry_equipment_3.*?\{").Success)
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_3.*?\{").Success)
                 {
-                    infantryEquipment3Start = i;
-                    GetInfantryEquipmentLocationEnds(i);
-                    isCheckinginfantryEquipment3 = true;
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry3, i);
                 }
             }
-            GetInfantryEquipmentLocationEnds(i);
+            GetEquipmentLocationEnds(i);
         }
-        private void GetInfantryEquipmentLocationEnds(int location)
+        private void GetEquipmentLocationEnds(int location)
         {
-            if (isCheckinginfantryEquipment)
+            foreach (EquipmentName equipmentName in Enum.GetValues(typeof(EquipmentName)))
             {
-                infantryEquipmentEnd = location - 1;
-                isCheckinginfantryEquipment = false;
-            }
-            else if (isCheckinginfantryEquipment0)
-            {
-                infantryEquipment0End = location - 1;
-                isCheckinginfantryEquipment0 = false;
-            }
-            else if (isCheckinginfantryEquipment1)
-            {
-                infantryEquipment1End = location - 1;
-                isCheckinginfantryEquipment1 = false;
-            }
-            else if (isCheckinginfantryEquipment2)
-            {
-                infantryEquipment2End = location - 1;
-                isCheckinginfantryEquipment2 = false;
-            }
-            else if (isCheckinginfantryEquipment3)
-            {
-                infantryEquipment3End = location - 1;
-                isCheckinginfantryEquipment3 = false;
+                if (equipmentChecking[equipmentName])
+                {
+                    equipmentEnd[equipmentName] = location - 1;
+                    equipmentChecking[equipmentName] = false;
+                }
             }
         }
 
@@ -490,7 +453,7 @@ namespace HOI4_Tools.Model
         {
             unitStart[unitName] = location;
             GetUnitLocationEnds(location);
-            checking[unitName] = true;
+            unitChecking[unitName] = true;
         }
         private void GetUnitLocations()
         {
@@ -696,10 +659,10 @@ namespace HOI4_Tools.Model
         {
             foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
             {
-                if (checking[unitName])
+                if (unitChecking[unitName])
                 {
                     unitEnd[unitName] = location - 1;
-                    checking[unitName] = false;
+                    unitChecking[unitName] = false;
                 }
             }
         }

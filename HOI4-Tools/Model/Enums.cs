@@ -19,6 +19,7 @@ namespace HOI4_Tools.Model
                              ModernSPAntiAir, ModernSPArtillery, ModernTank, ModernTankDestroyer, Motorized, MotorizedRocketArtillery,
                              Mountaineers, Paratroopers, RocketArtillery, SuperHeavySPAntiAir, SuperHeavySPArtillery, SuperHeavyTank,
                              SuperHeavyTankDestroyer, AddUnit, MediumSPAntiAir }
+    public enum EquipmentName { Infantry, Infantry0, Infantry1, Infantry2, Infantry3 }
     public enum EquipmentType { Infantry }
     public enum EquipmentInFile { Infantry, AntiAir, AntiTank, Artillery, Mechanized, Motorized, TankHeavy, TankLight, TankMedium,
                                   TankModern, TankSuperHeavy}
