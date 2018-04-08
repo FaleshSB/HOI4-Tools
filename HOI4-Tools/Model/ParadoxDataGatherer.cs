@@ -436,6 +436,489 @@ namespace HOI4_Tools.Model
                 }
             }
             GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.AntiAir].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.AntiTank].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.Artillery].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.Artillery].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"rocket_artillery_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"rocket_artillery_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"rocket_artillery_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery2, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.Artillery].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"motorized_rocket_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MotorizedRocketArtillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"motorized_rocket_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MotorizedRocketArtillery1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.Mechanized].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.Motorized].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.Motorized][i], @"motorized_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Motorized, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Motorized][i], @"motorized_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.Motorized1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir1, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment_2.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir2, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment_3.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir3, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTank, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTank1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_artillery_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankArtillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_artillery_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankArtillery1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_destroyer_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankDestroyer, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_destroyer_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankDestroyer1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_aa_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankAntiAir, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_aa_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankAntiAir1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTank, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTank1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_artillery_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankArtillery, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_artillery_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankArtillery1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_destroyer_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankDestroyer, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_destroyer_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankDestroyer1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
+
+            for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
+            {
+                if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_aa_equipment[^_]*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankAntiAir, i);
+                }
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_aa_equipment_1.*?\{").Success)
+                {
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankAntiAir1, i);
+                }
+            }
+            GetEquipmentLocationEnds(i);
         }
         private void GetEquipmentLocationEnds(int location)
         {
