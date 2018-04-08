@@ -13,7 +13,7 @@ namespace HOI4_Tools.Model
         public int displayOrder;
 
         public float maxSpeed;
-        public int maxStrength;
+        public float maxStrength;
         public int maxOrganisation;
         // recovery rate
         // reconnaissance

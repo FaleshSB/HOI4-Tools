@@ -447,10 +447,10 @@ namespace HOI4_Tools.Model
                 {
                     unit.combatWidth = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"max_strength[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"max_strength[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.maxStrength = Int32.Parse(match.Groups[1].Value);
+                    unit.maxStrength = float.Parse(match.Groups[1].Value);
                 }
                 match = Regex.Match(paradoxData[i], @"max_organisation[^0-9]+?([\-0-9]+)");
                 if (match.Success)

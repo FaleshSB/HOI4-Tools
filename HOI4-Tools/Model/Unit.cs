@@ -10,7 +10,6 @@ namespace HOI4_Tools.Model
     {
         public int manpower = 0;
         public int trainingTime = 0;
-        public int maxStrength = 0;
         public int maxOrganisation = 0;
         public int combatWidth = 0;
         public int suppression = 0;
@@ -20,6 +19,7 @@ namespace HOI4_Tools.Model
         public int mechanizedEquipment = 0;
 
         public float weight = 0;
+        public float maxStrength = 0;
         public float supplyConsumption = 0;
         public float maxSpeed = 0;
         public float breakthrough = 0;

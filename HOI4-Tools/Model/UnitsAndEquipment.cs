@@ -11,6 +11,7 @@ namespace HOI4_Tools.Model
         public static Dictionary<UnitName, Unit> units = new Dictionary<UnitName, Unit>();
         public static Dictionary<EquipmentName, Dictionary<int, Equipment>> equipment = new Dictionary<EquipmentName, Dictionary<int, Equipment>>();
 
+    
         public static Dictionary<int, Equipment> GetEquipment(UnitName unitName)
         {
             switch (unitName)
