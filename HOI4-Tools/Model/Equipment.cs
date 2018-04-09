@@ -10,11 +10,11 @@ namespace HOI4_Tools.Model
     {
         // When adding equipment stats make sure they are also added to places like Division.CalculateStats()
         public int year = 0;
-        public int maximumSpeed = 0;
-        public int defense = 0;
-        public int breakthrough = 0;
-        public int armorValue = 0;
 
+        public float maximumSpeed = 0;
+        public float defense = 0;
+        public float breakthrough = 0;
+        public float armorValue = 0;
         public float reliability = 0;
         public float hardness = 0;
         public float softAttack = 0;

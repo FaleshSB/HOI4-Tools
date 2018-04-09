@@ -201,16 +201,47 @@ namespace HOI4_Tools.View
                     StackPanel firstStatsColumn = new StackPanel();
                     firstStatsColumn.Orientation = Orientation.Vertical;
                     firstStatsColumn.VerticalAlignment = VerticalAlignment.Top;
-                    firstStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 15, 0, 0);
+                    firstStatsColumn.Margin = ScaledThicknessFactory.GetThickness(11, 0, 0, 0);
                     fullDesignerStackPanel.Children.Add(firstStatsColumn);
 
-                    AddStat(firstStatsColumn, "Speed", idAndDivision.Value.maxSpeed.ToString());
-                    AddStat(firstStatsColumn, "HP", idAndDivision.Value.maxStrength.ToString());
-                    AddStat(firstStatsColumn, "Organization", idAndDivision.Value.maxOrganisation.ToString());
-                    AddStat(firstStatsColumn, "Suppression", idAndDivision.Value.suppression.ToString());
-                    AddStat(firstStatsColumn, "Weight", idAndDivision.Value.weight.ToString());
-                    AddStat(firstStatsColumn, "Supply Consumtion", idAndDivision.Value.supplyConsumption.ToString());
-                    AddStat(firstStatsColumn, "Reliability", idAndDivision.Value.reliability.ToString());
+                    AddStat(firstStatsColumn, "Max Speed", idAndDivision.Value.maxSpeed.ToString(), idAndDivision.Value.maxSpeedDescription);
+                    AddStat(firstStatsColumn, "HP", idAndDivision.Value.maxStrength.ToString(), idAndDivision.Value.maxStrengthDescription);
+                    AddStat(firstStatsColumn, "Organization", idAndDivision.Value.maxOrganisation.ToString(), idAndDivision.Value.maxOrganisationDescription);
+                    AddStat(firstStatsColumn, "Recovery Rate", "0", "");
+                    AddStat(firstStatsColumn, "Recon", "0", "");
+                    AddStat(firstStatsColumn, "Suppression", idAndDivision.Value.suppression.ToString(), idAndDivision.Value.suppressionDescription);
+                    AddStat(firstStatsColumn, "Weight", idAndDivision.Value.weight.ToString(), idAndDivision.Value.weightDescription);
+                    AddStat(firstStatsColumn, "Supply Use", idAndDivision.Value.supplyConsumption.ToString(), idAndDivision.Value.supplyConsumptionDescription);
+                    AddStat(firstStatsColumn, "Reliability", idAndDivision.Value.reliability.ToString(), idAndDivision.Value.reliabilityDescription);
+                    AddStat(firstStatsColumn, "Trickleback", "0", "");
+                    AddStat(firstStatsColumn, "Exp. Loss", "0", "");
+
+                    StackPanel secondStatsColumn = new StackPanel();
+                    secondStatsColumn.Orientation = Orientation.Vertical;
+                    secondStatsColumn.VerticalAlignment = VerticalAlignment.Top;
+                    secondStatsColumn.Margin = ScaledThicknessFactory.GetThickness(2, 0, 0, 0);
+                    fullDesignerStackPanel.Children.Add(secondStatsColumn);
+
+                    AddStat(secondStatsColumn, "Soft Attack", idAndDivision.Value.softAttack.ToString(), idAndDivision.Value.softAttackDescription);
+                    AddStat(secondStatsColumn, "Hard Attack", idAndDivision.Value.hardAttack.ToString(), idAndDivision.Value.hardAttackDescription);
+                    AddStat(secondStatsColumn, "Air Attack", idAndDivision.Value.airAttack.ToString(), idAndDivision.Value.airAttackDescription);
+                    AddStat(secondStatsColumn, "Defence", idAndDivision.Value.defense.ToString(), idAndDivision.Value.defenseDescription);
+                    AddStat(secondStatsColumn, "Breakthrough", idAndDivision.Value.breakthrough.ToString(), idAndDivision.Value.breakthroughDescription);
+                    AddStat(secondStatsColumn, "Armor", idAndDivision.Value.armorValue.ToString(), idAndDivision.Value.armorValueDescription);
+                    AddStat(secondStatsColumn, "Piercing", "0", "");
+                    AddStat(secondStatsColumn, "Initiative", "0", "");
+                    AddStat(secondStatsColumn, "Entrenchment", "0", "");
+                    AddStat(secondStatsColumn, "Eq. Cap. Ratio", "0", "");
+                    AddStat(secondStatsColumn, "Combat Width", idAndDivision.Value.combatWidth.ToString(), idAndDivision.Value.combatWidthDescription);
+
+                    StackPanel thirdStatsColumn = new StackPanel();
+                    thirdStatsColumn.Orientation = Orientation.Vertical;
+                    thirdStatsColumn.VerticalAlignment = VerticalAlignment.Top;
+                    thirdStatsColumn.Margin = ScaledThicknessFactory.GetThickness(2, 0, 0, 0);
+                    fullDesignerStackPanel.Children.Add(thirdStatsColumn);
+
+                    AddStat(thirdStatsColumn, "Manpower", idAndDivision.Value.manpower.ToString(), idAndDivision.Value.manpowerDescription);
+                    AddStat(thirdStatsColumn, "Training Time", idAndDivision.Value.trainingTime.ToString(), idAndDivision.Value.trainingTimeDescription);
 
                 }
 
@@ -238,24 +269,39 @@ namespace HOI4_Tools.View
             return stackPanel;
         }
 
-        private void AddStat(StackPanel column, string statDescription, string stat)
+        private void AddStat(StackPanel column, string statDescription, string stat, string longStatDescription)
         {
             Label statLable;
             StackPanel descriptionAndStat = new StackPanel();
+            descriptionAndStat.SetValue(ToolTipService.ShowDurationProperty, Int32.MaxValue);
             descriptionAndStat.Orientation = Orientation.Horizontal;
             descriptionAndStat.VerticalAlignment = VerticalAlignment.Top;
             column.Children.Add(descriptionAndStat);
-            descriptionAndStat.Width = Opt.ApResMod(180);
 
-            
+            TextBlock toolTipTextBlock = new TextBlock();
+            toolTipTextBlock.FontSize = Opt.ApResMod(14);
+            toolTipTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            toolTipTextBlock.Text = longStatDescription;
+            toolTipTextBlock.TextWrapping = TextWrapping.Wrap;
+            toolTipTextBlock.MaxWidth = Opt.ApResMod(300);
+
+            ToolTip descriptionToolTip = new ToolTip();
+            descriptionToolTip.Content = toolTipTextBlock;
+            descriptionToolTip.Background = new SolidColorBrush(Color.FromRgb(230, 230, 230));
+            descriptionAndStat.ToolTip = descriptionToolTip;
+
             statLable = new Label();
-            statLable.Width = Opt.ApResMod(140);
+            statLable.Padding = ScaledThicknessFactory.GetThickness(0, 0, 0, 0);
+            statLable.Margin = ScaledThicknessFactory.GetThickness(5, 3, 0, 0);
+            statLable.Width = Opt.ApResMod(105);
             statLable.FontSize = Opt.ApResMod(16);
-            statLable.Content = statDescription + ": ";
+            statLable.Content = statDescription + ":";
             statLable.HorizontalContentAlignment = HorizontalAlignment.Left;
             descriptionAndStat.Children.Add(statLable);
             statLable = new Label();
-            statLable.Width = Opt.ApResMod(40);
+            statLable.Padding = ScaledThicknessFactory.GetThickness(0, 0, 0, 0);
+            statLable.Margin = ScaledThicknessFactory.GetThickness(5, 3, 0, 0);
+            statLable.Width = Opt.ApResMod(57);
             statLable.FontSize = Opt.ApResMod(16);
             statLable.Content = stat;
             statLable.HorizontalContentAlignment = HorizontalAlignment.Right;
@@ -270,7 +316,10 @@ namespace HOI4_Tools.View
             {
                 if (e.RightButton == MouseButtonState.Pressed)
                 {
-                    Divisions.divisions[imageButton.uniqueDivisionId].AddUnit((UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()), imageButton.column);
+                    if (imageButton.ButtonName != ButtonName.AddUnit && Divisions.divisions[imageButton.uniqueDivisionId].IsColumnFull(imageButton.column) == false)
+                    {
+                        Divisions.divisions[imageButton.uniqueDivisionId].AddUnit((UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()), imageButton.column);
+                    }
                 }
                 else
                 {

@@ -14,10 +14,10 @@ namespace HOI4_Tools.Model
 
         public float maxSpeed;
         public float maxStrength;
-        public int maxOrganisation;
+        public float maxOrganisation;
         // recovery rate
         // reconnaissance
-        public int suppression;
+        public float suppression;
         public float weight;
         public float supplyConsumption;
         public float reliability;
@@ -26,28 +26,76 @@ namespace HOI4_Tools.Model
         public float softAttack;
         public float hardAttack;
         public float airAttack;
-        public int defense;
+        public float defense;
         public float breakthrough;
-        public int armorValue;
+        public float armorValue;
         // piercing
         // initiative
         // entrenchment
         // eq capture ratio
-        public int combatWidth;
-        public int manpower;
-        public int trainingTime;
+        public float combatWidth;
+        public float manpower;
+        public float trainingTime;
         // artillery eq
-        public int infantryEquipment;
-        public int mechanizedEquipment;
-        public int motorizedEquipment;
-        public int supportEquipment;
+        public float infantryEquipment;
+        public float mechanizedEquipment;
+        public float motorizedEquipment;
+        public float supportEquipment;
 
 
         public float hardness;
         public float apAttack;
         public float buildCostIc;
 
-        public int year = 1918;
+        public string maxSpeedDescription = "How quickly this unit can traverse terrain under optimal circumstances.";
+        public string maxStrengthDescription = "HP represents how much damage this unit can suffer before it is destroyed.";
+        public string maxOrganisationDescription = "Organization indicates combat readiness and how organized a unit is. A unit with no organization can't fight or move effectively.";
+        // recovery rate
+        // reconnaissance
+        public string suppressionDescription = "Ability to suppress local resistance.";
+        public string weightDescription = "How much the unit will weigh. Heavier units will require more transports to ship and perform invasions effectively.";
+        public string supplyConsumptionDescription = "How much supply a unit consumes per day.";
+        public string reliabilityDescription = "The lower the value the more likely the equipment is of suffering random failure, accidents or exploding in a fiery ball of death when lightly bumped.";
+        // Trickleback
+        // exp loss
+        public string softAttackDescription = "How many attacks the unit can make versus enemies with low hardness.";
+        public string hardAttackDescription = "How many attacks the unit can make versus enemies with high hardness.";
+        public string airAttackDescription = "How much damage we can do against airplanes. High Air Attack also helps to counter enemy Air Superiority effects.";
+        public string defenseDescription = "How many enemy attacks a unit can attempt to avoid while on the defensive, effectively allowing it to hold the line longer.";
+        public string breakthroughDescription = "How many enemy attacks a unit can attempt to avoid while on the offensive, effectively allowing it to stay on the offense longer.";
+        public string armorValueDescription = "Having Armor that is higher than the opponents Piercing value makes you take less damage and also makes it possible to perform more attacks in combat as the unit has more freedom of movement.";
+        // piercing
+        // initiative
+        // entrenchment
+        // eq capture ratio
+        public string combatWidthDescription = "The size of the fighting unit. A unit needs to be able to fit into the total §HCombat Width§! of a battle to contribute to it.";
+        public string manpowerDescription = "";
+        public string trainingTimeDescription = "";
+        // artillery eq
+        public string infantryEquipmentDescription = "";
+        public string mechanizedEquipmentDescription = "";
+        public string motorizedEquipmentDescription = "";
+        public string supportEquipmentDescription = "";
+
+
+        public string hardnessDescription = "Hardness represents how much of your Division is made up of armored or at least protected vehicles. When attacked, a Division adds together all Soft Attacks and Hard Attacks. A Division with high Hardness will suffer fewer Soft Attacks and more Hard Attacks - and vice versa.";
+        public string apAttackDescription = "Having equal or greater Piercing to the targets Armor value allow you to do more damage and more effectively pin down their armored forces";
+        public string buildCostIcDescription = "How much Factory Output a piece of equipment needs.";
+
+        public int year = 1936;
+
+        public bool IsColumnFull(int column)
+        {
+            if (unitsInDivision.ContainsKey(column) == false) { return false; }
+
+            int columnCount = 0;
+            foreach(KeyValuePair<UnitName, int> unitNameAndNumber in unitsInDivision[column])
+            {
+                columnCount += unitNameAndNumber.Value;
+            }
+            if(columnCount < 5) { return false; }
+            else { return true; }
+        }
 
         public void AddUnit(UnitName unitName, int column)
         {

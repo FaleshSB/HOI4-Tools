@@ -8,15 +8,15 @@ namespace HOI4_Tools.Model
 {
     class Unit
     {
-        public int manpower = 0;
-        public int trainingTime = 0;
-        public int maxOrganisation = 0;
-        public int combatWidth = 0;
-        public int suppression = 0;
-        public int infantryEquipment = 0;
-        public int supportEquipment = 0;
-        public int motorizedEquipment = 0;
-        public int mechanizedEquipment = 0;
+        public float manpower = 0;
+        public float trainingTime = 0;
+        public float maxOrganisation = 0;
+        public float combatWidth = 0;
+        public float suppression = 0;
+        public float infantryEquipment = 0;
+        public float supportEquipment = 0;
+        public float motorizedEquipment = 0;
+        public float mechanizedEquipment = 0;
 
         public float weight = 0;
         public float maxStrength = 0;

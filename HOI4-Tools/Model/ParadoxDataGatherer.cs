@@ -34,6 +34,7 @@ namespace HOI4_Tools.Model
 
             GetUnitData();
             GetEquipmentData();
+            UnitsAndEquipment.test();
         }
 
         private void GetEquipmentData()
@@ -366,25 +367,25 @@ namespace HOI4_Tools.Model
                 {
                     equipment.year = Int32.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"maximum_speed[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"maximum_speed[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    equipment.maximumSpeed = Int32.Parse(match.Groups[1].Value);
+                    equipment.maximumSpeed = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"defense[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"defense[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    equipment.defense = Int32.Parse(match.Groups[1].Value);
+                    equipment.defense = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"breakthrough[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"breakthrough[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    equipment.breakthrough = Int32.Parse(match.Groups[1].Value);
+                    equipment.breakthrough = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"armor_value[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"armor_value[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    equipment.armorValue = Int32.Parse(match.Groups[1].Value);
+                    equipment.armorValue = float.Parse(match.Groups[1].Value);
                 }
 
 
@@ -442,55 +443,55 @@ namespace HOI4_Tools.Model
 
             for (int i = unitStart[unitName]; i < unitEnd[unitName]; i++)
             {
-                match = Regex.Match(paradoxData[i], @"combat_width[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"combat_width[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.combatWidth = Int32.Parse(match.Groups[1].Value);
+                    unit.combatWidth = float.Parse(match.Groups[1].Value);
                 }
                 match = Regex.Match(paradoxData[i], @"max_strength[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
                     unit.maxStrength = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"max_organisation[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"max_organisation[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.maxOrganisation = Int32.Parse(match.Groups[1].Value);
+                    unit.maxOrganisation = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"manpower[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"manpower[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.manpower = Int32.Parse(match.Groups[1].Value);
+                    unit.manpower = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"training_time[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"training_time[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.trainingTime = Int32.Parse(match.Groups[1].Value);
+                    unit.trainingTime = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"suppression[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"suppression[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.suppression = Int32.Parse(match.Groups[1].Value);
+                    unit.suppression = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"infantry_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"infantry_equipment[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.infantryEquipment = Int32.Parse(match.Groups[1].Value);
+                    unit.infantryEquipment = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"support_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"support_equipment[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.supportEquipment = Int32.Parse(match.Groups[1].Value);
+                    unit.supportEquipment = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"motorized_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"motorized_equipment[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.motorizedEquipment = Int32.Parse(match.Groups[1].Value);
+                    unit.motorizedEquipment = float.Parse(match.Groups[1].Value);
                 }
-                match = Regex.Match(paradoxData[i], @"mechanized_equipment[^0-9]+?([\-0-9]+)");
+                match = Regex.Match(paradoxData[i], @"mechanized_equipment[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
                 {
-                    unit.mechanizedEquipment = Int32.Parse(match.Groups[1].Value);
+                    unit.mechanizedEquipment = float.Parse(match.Groups[1].Value);
                 }
 
 
