@@ -17,7 +17,6 @@ namespace HOI4_Tools.Model
 
         private Dictionary<EquipmentName, int> equipmentStart = new Dictionary<EquipmentName, int>();
         private Dictionary<EquipmentName, int> equipmentEnd = new Dictionary<EquipmentName, int>();
-        private Dictionary<EquipmentName, bool> equipmentChecking = new Dictionary<EquipmentName, bool>();
         private Dictionary<EquipmentInFile, string[]> equipmentFileData = new Dictionary<EquipmentInFile, string[]>();
         private Dictionary<EquipmentName, Equipment> equipmentArchetype = new Dictionary<EquipmentName, Equipment>();
 
@@ -26,10 +25,6 @@ namespace HOI4_Tools.Model
             foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
             {
                 unitChecking[unitName] = false;
-            }
-            foreach (EquipmentName equipmentName in Enum.GetValues(typeof(EquipmentName)))
-            {
-                equipmentChecking[equipmentName] = false;
             }
 
             GetUnitData();
@@ -151,121 +146,121 @@ namespace HOI4_Tools.Model
                     case EquipmentName.Infantry1:
                     case EquipmentName.Infantry2:
                     case EquipmentName.Infantry3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Infantry], equipmentArchetype[EquipmentName.Infantry], EquipmentName.Infantry);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Infantry], equipmentArchetype[EquipmentName.Infantry].GetClone(), EquipmentName.Infantry);
                         break;
                     case EquipmentName.AntiAir1:
                     case EquipmentName.AntiAir2:
                     case EquipmentName.AntiAir3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiAir], equipmentArchetype[EquipmentName.AntiAir], EquipmentName.AntiAir);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiAir], equipmentArchetype[EquipmentName.AntiAir].GetClone(), EquipmentName.AntiAir);
                         break;
                     case EquipmentName.AntiTank1:
                     case EquipmentName.AntiTank2:
                     case EquipmentName.AntiTank3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiTank], equipmentArchetype[EquipmentName.AntiTank], EquipmentName.AntiTank);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.AntiTank], equipmentArchetype[EquipmentName.AntiTank].GetClone(), EquipmentName.AntiTank);
                         break;
                     case EquipmentName.Artillery1:
                     case EquipmentName.Artillery2:
                     case EquipmentName.Artillery3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.Artillery], EquipmentName.Artillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.Artillery].GetClone(), EquipmentName.Artillery);
                         break;
                     case EquipmentName.RocketArtillery1:
                     case EquipmentName.RocketArtillery2:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.RocketArtillery], EquipmentName.RocketArtillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.RocketArtillery].GetClone(), EquipmentName.RocketArtillery);
                         break;
                     case EquipmentName.MotorizedRocketArtillery1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.MotorizedRocketArtillery], EquipmentName.MotorizedRocketArtillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Artillery], equipmentArchetype[EquipmentName.MotorizedRocketArtillery].GetClone(), EquipmentName.MotorizedRocketArtillery);
                         break;
                     case EquipmentName.Mechanized1:
                     case EquipmentName.Mechanized2:
                     case EquipmentName.Mechanized3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Mechanized], equipmentArchetype[EquipmentName.Mechanized], EquipmentName.Mechanized);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Mechanized], equipmentArchetype[EquipmentName.Mechanized].GetClone(), EquipmentName.Mechanized);
                         break;
                     case EquipmentName.Motorized1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Motorized], equipmentArchetype[EquipmentName.Motorized], EquipmentName.Motorized);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.Motorized], equipmentArchetype[EquipmentName.Motorized].GetClone(), EquipmentName.Motorized);
                         break;
                     case EquipmentName.HeavyTank1:
                     case EquipmentName.HeavyTank2:
                     case EquipmentName.HeavyTank3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTank], EquipmentName.HeavyTank);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTank].GetClone(), EquipmentName.HeavyTank);
                         break;
                     case EquipmentName.HeavyTankArtillery1:
                     case EquipmentName.HeavyTankArtillery2:
                     case EquipmentName.HeavyTankArtillery3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankArtillery], EquipmentName.HeavyTankArtillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankArtillery].GetClone(), EquipmentName.HeavyTankArtillery);
                         break;
                     case EquipmentName.HeavyTankDestroyer1:
                     case EquipmentName.HeavyTankDestroyer2:
                     case EquipmentName.HeavyTankDestroyer3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankDestroyer], EquipmentName.HeavyTankDestroyer);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankDestroyer].GetClone(), EquipmentName.HeavyTankDestroyer);
                         break;
                     case EquipmentName.HeavyTankAntiAir1:
                     case EquipmentName.HeavyTankAntiAir2:
                     case EquipmentName.HeavyTankAntiAir3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankAntiAir], EquipmentName.HeavyTankAntiAir);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankHeavy], equipmentArchetype[EquipmentName.HeavyTankAntiAir].GetClone(), EquipmentName.HeavyTankAntiAir);
                         break;
                     case EquipmentName.LightTank1:
                     case EquipmentName.LightTank2:
                     case EquipmentName.LightTank3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTank], EquipmentName.LightTank);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTank].GetClone(), EquipmentName.LightTank);
                         break;
                     case EquipmentName.LightTankArtillery1:
                     case EquipmentName.LightTankArtillery2:
                     case EquipmentName.LightTankArtillery3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankArtillery], EquipmentName.LightTankArtillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankArtillery].GetClone(), EquipmentName.LightTankArtillery);
                         break;
                     case EquipmentName.LightTankDestroyer1:
                     case EquipmentName.LightTankDestroyer2:
                     case EquipmentName.LightTankDestroyer3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankDestroyer], EquipmentName.LightTankDestroyer);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankDestroyer].GetClone(), EquipmentName.LightTankDestroyer);
                         break;
                     case EquipmentName.LightTankAntiAir1:
                     case EquipmentName.LightTankAntiAir2:
                     case EquipmentName.LightTankAntiAir3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankAntiAir], EquipmentName.LightTankAntiAir);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankLight], equipmentArchetype[EquipmentName.LightTankAntiAir].GetClone(), EquipmentName.LightTankAntiAir);
                         break;
                     case EquipmentName.MediumTank1:
                     case EquipmentName.MediumTank2:
                     case EquipmentName.MediumTank3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTank], EquipmentName.MediumTank);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTank].GetClone(), EquipmentName.MediumTank);
                         break;
                     case EquipmentName.MediumTankArtillery1:
                     case EquipmentName.MediumTankArtillery2:
                     case EquipmentName.MediumTankArtillery3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankArtillery], EquipmentName.MediumTankArtillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankArtillery].GetClone(), EquipmentName.MediumTankArtillery);
                         break;
                     case EquipmentName.MediumTankDestroyer1:
                     case EquipmentName.MediumTankDestroyer2:
                     case EquipmentName.MediumTankDestroyer3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankDestroyer], EquipmentName.MediumTankDestroyer);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankDestroyer].GetClone(), EquipmentName.MediumTankDestroyer);
                         break;
                     case EquipmentName.MediumTankAntiAir1:
                     case EquipmentName.MediumTankAntiAir2:
                     case EquipmentName.MediumTankAntiAir3:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankAntiAir], EquipmentName.MediumTankAntiAir);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankMedium], equipmentArchetype[EquipmentName.MediumTankAntiAir].GetClone(), EquipmentName.MediumTankAntiAir);
                         break;
                     case EquipmentName.SuperHeavyTank1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTank], EquipmentName.SuperHeavyTank);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTank].GetClone(), EquipmentName.SuperHeavyTank);
                         break;
                     case EquipmentName.SuperHeavyTankArtillery1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankArtillery], EquipmentName.SuperHeavyTankArtillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankArtillery].GetClone(), EquipmentName.SuperHeavyTankArtillery);
                         break;
                     case EquipmentName.SuperHeavyTankDestroyer1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankDestroyer], EquipmentName.SuperHeavyTankDestroyer);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankDestroyer].GetClone(), EquipmentName.SuperHeavyTankDestroyer);
                         break;
                     case EquipmentName.SuperHeavyTankAntiAir1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankAntiAir], EquipmentName.SuperHeavyTankAntiAir);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankSuperHeavy], equipmentArchetype[EquipmentName.SuperHeavyTankAntiAir].GetClone(), EquipmentName.SuperHeavyTankAntiAir);
                         break;
                     case EquipmentName.ModernTank1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTank], EquipmentName.ModernTank);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTank].GetClone(), EquipmentName.ModernTank);
                         break;
                     case EquipmentName.ModernTankArtillery1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankArtillery], EquipmentName.ModernTankArtillery);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankArtillery].GetClone(), EquipmentName.ModernTankArtillery);
                         break;
                     case EquipmentName.ModernTankDestroyer1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankDestroyer], EquipmentName.ModernTankDestroyer);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankDestroyer].GetClone(), EquipmentName.ModernTankDestroyer);
                         break;
                     case EquipmentName.ModernTankAntiAir1:
-                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankAntiAir], EquipmentName.ModernTankAntiAir);
+                        GetEquipmentStats(equipmentName, equipmentFileData[EquipmentInFile.TankModern], equipmentArchetype[EquipmentName.ModernTankAntiAir].GetClone(), EquipmentName.ModernTankAntiAir);
                         break;
                 }
             }
@@ -384,7 +379,7 @@ namespace HOI4_Tools.Model
                 }
                 match = Regex.Match(paradoxData[i], @"armor_value[^0-9]+?([\-0-9\.]+)");
                 if (match.Success)
-                {
+                {                    
                     equipment.armorValue = float.Parse(match.Groups[1].Value);
                 }
 
@@ -433,7 +428,7 @@ namespace HOI4_Tools.Model
             {
                 if(UnitsAndEquipment.equipment.ContainsKey(equipmentArchetypeName) == false) { UnitsAndEquipment.equipment[equipmentArchetypeName] = new Dictionary<int, Equipment>(); }
                 UnitsAndEquipment.equipment[equipmentArchetypeName][equipment.year] = equipment;
-            }            
+            }
         }
 
         private void GetUnitStats(UnitName unitName, string[] paradoxData)
@@ -577,6 +572,7 @@ namespace HOI4_Tools.Model
                     GetTerrainStats(unit, TerrainType.Amphibious, i + 1, i + 3, paradoxData);
                 }
             }
+
             UnitsAndEquipment.units[unitName] = unit;
         }
 
@@ -609,11 +605,23 @@ namespace HOI4_Tools.Model
             unit.terrainStats[terrainType] = terrainStats;
         }
 
-        private void GetEquipmentLocationsHelper(EquipmentName equipmentName, int location)
+        private void GetEquipmentLocationsHelper(EquipmentName equipmentName, int startLocation, EquipmentInFile equipmentInFile)
         {
-            equipmentStart[equipmentName] = location;
-            GetEquipmentLocationEnds(location);
-            equipmentChecking[equipmentName] = true;
+            equipmentStart[equipmentName] = startLocation;
+            int bracketCount = 1;
+            for (int i = startLocation + 1; i < equipmentFileData[equipmentInFile].Length; i++)
+            {
+                for (int y = 0; y < equipmentFileData[equipmentInFile][i].Length; y++)
+                {
+                    if(equipmentFileData[equipmentInFile][i][y] == '{') { bracketCount++; }
+                    if(equipmentFileData[equipmentInFile][i][y] == '}') { bracketCount--; }
+                }
+                if(bracketCount == 0)
+                {
+                    equipmentEnd[equipmentName] = i;
+                    break;
+                }
+            }
         }
         private void GetEquipmentLocations()
         {
@@ -622,518 +630,479 @@ namespace HOI4_Tools.Model
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Infantry, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry, i, EquipmentInFile.Infantry);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_0.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Infantry0, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry0, i, EquipmentInFile.Infantry);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Infantry1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry1, i, EquipmentInFile.Infantry);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Infantry2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry2, i, EquipmentInFile.Infantry);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Infantry][i], @"infantry_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Infantry3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Infantry3, i, EquipmentInFile.Infantry);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.AntiAir].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiAir, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir, i, EquipmentInFile.AntiAir );
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiAir1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir1, i, EquipmentInFile.AntiAir);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiAir2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir2, i, EquipmentInFile.AntiAir);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiAir][i], @"anti_air_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiAir3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiAir3, i, EquipmentInFile.AntiAir);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.AntiTank].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiTank, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank, i, EquipmentInFile.AntiTank);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiTank1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank1, i, EquipmentInFile.AntiTank);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiTank2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank2, i, EquipmentInFile.AntiTank);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.AntiTank][i], @"anti_tank_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.AntiTank3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.AntiTank3, i, EquipmentInFile.AntiTank);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.Artillery].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Artillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery, i, EquipmentInFile.Artillery);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Artillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery1, i, EquipmentInFile.Artillery);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Artillery2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery2, i, EquipmentInFile.Artillery);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Artillery3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Artillery3, i, EquipmentInFile.Artillery);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.Artillery].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"rocket_artillery_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery, i, EquipmentInFile.Artillery);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"rocket_artillery_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery1, i, EquipmentInFile.Artillery);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"rocket_artillery_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.RocketArtillery2, i, EquipmentInFile.Artillery);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.Artillery].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"motorized_rocket_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MotorizedRocketArtillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MotorizedRocketArtillery, i, EquipmentInFile.Artillery);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"motorized_rocket_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MotorizedRocketArtillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MotorizedRocketArtillery1, i, EquipmentInFile.Artillery);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.Mechanized].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Mechanized, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized, i, EquipmentInFile.Mechanized);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Mechanized1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized1, i, EquipmentInFile.Mechanized);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Mechanized2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized2, i, EquipmentInFile.Mechanized);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Mechanized][i], @"mechanized_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Mechanized3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Mechanized3, i, EquipmentInFile.Mechanized);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.Motorized].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.Motorized][i], @"motorized_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Motorized, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Motorized, i, EquipmentInFile.Motorized);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.Motorized][i], @"motorized_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.Motorized1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.Motorized1, i, EquipmentInFile.Motorized);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank1, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank2, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTank3, i, EquipmentInFile.TankHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery1, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery2, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_artillery_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankArtillery3, i, EquipmentInFile.TankHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer1, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer2, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_destroyer_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankDestroyer3, i, EquipmentInFile.TankHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir1, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir2, i, EquipmentInFile.TankHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankHeavy][i], @"heavy_tank_aa_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.HeavyTankAntiAir3, i, EquipmentInFile.TankHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTank, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTank1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank1, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTank2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank2, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTank3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTank3, i, EquipmentInFile.TankLight);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery1, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery2, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_artillery_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankArtillery3, i, EquipmentInFile.TankLight);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer1, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer2, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_destroyer_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankDestroyer3, i, EquipmentInFile.TankLight);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankLight].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir1, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir2, i, EquipmentInFile.TankLight);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankLight][i], @"light_tank_aa_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.LightTankAntiAir3, i, EquipmentInFile.TankLight);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTank, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTank1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank1, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTank2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank2, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTank3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTank3, i, EquipmentInFile.TankMedium);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery1, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery2, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_artillery_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankArtillery3, i, EquipmentInFile.TankMedium);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer1, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer2, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_destroyer_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankDestroyer3, i, EquipmentInFile.TankMedium);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankMedium].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir1, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment_2.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir2, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir2, i, EquipmentInFile.TankMedium);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankMedium][i], @"medium_tank_aa_equipment_3.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir3, i);
+                    GetEquipmentLocationsHelper(EquipmentName.MediumTankAntiAir3, i, EquipmentInFile.TankMedium);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTank, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTank, i, EquipmentInFile.TankSuperHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTank1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTank1, i, EquipmentInFile.TankSuperHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_artillery_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankArtillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankArtillery, i, EquipmentInFile.TankSuperHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_artillery_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankArtillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankArtillery1, i, EquipmentInFile.TankSuperHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_destroyer_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankDestroyer, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankDestroyer, i, EquipmentInFile.TankSuperHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_destroyer_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankDestroyer1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankDestroyer1, i, EquipmentInFile.TankSuperHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankSuperHeavy].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_aa_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankAntiAir, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankAntiAir, i, EquipmentInFile.TankSuperHeavy);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankSuperHeavy][i], @"super_heavy_tank_aa_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankAntiAir1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.SuperHeavyTankAntiAir1, i, EquipmentInFile.TankSuperHeavy);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTank, i);
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTank, i, EquipmentInFile.TankModern);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTank1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTank1, i, EquipmentInFile.TankModern);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_artillery_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTankArtillery, i);
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankArtillery, i, EquipmentInFile.TankModern);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_artillery_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTankArtillery1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankArtillery1, i, EquipmentInFile.TankModern);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_destroyer_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTankDestroyer, i);
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankDestroyer, i, EquipmentInFile.TankModern);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_destroyer_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTankDestroyer1, i);
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankDestroyer1, i, EquipmentInFile.TankModern);
                 }
             }
-            GetEquipmentLocationEnds(i);
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.TankModern].Length; i++)
             {
                 if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_aa_equipment[^_]*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTankAntiAir, i);
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankAntiAir, i, EquipmentInFile.TankModern);
                 }
                 else if (Regex.Match(equipmentFileData[EquipmentInFile.TankModern][i], @"modern_tank_aa_equipment_1.*?\{").Success)
                 {
-                    GetEquipmentLocationsHelper(EquipmentName.ModernTankAntiAir1, i);
-                }
-            }
-            GetEquipmentLocationEnds(i);
-        }
-        private void GetEquipmentLocationEnds(int location)
-        {
-            foreach (EquipmentName equipmentName in Enum.GetValues(typeof(EquipmentName)))
-            {
-                if (equipmentChecking[equipmentName])
-                {
-                    equipmentEnd[equipmentName] = location - 1;
-                    equipmentChecking[equipmentName] = false;
+                    GetEquipmentLocationsHelper(EquipmentName.ModernTankAntiAir1, i, EquipmentInFile.TankModern);
                 }
             }
         }

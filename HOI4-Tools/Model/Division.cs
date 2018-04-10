@@ -82,7 +82,7 @@ namespace HOI4_Tools.Model
         public string apAttackDescription = "Having equal or greater Piercing to the targets Armor value allow you to do more damage and more effectively pin down their armored forces";
         public string buildCostIcDescription = "How much Factory Output a piece of equipment needs.";
 
-        public int year = 1936;
+        public int year = 1934;
 
         public bool IsColumnFull(int column)
         {
@@ -144,7 +144,9 @@ namespace HOI4_Tools.Model
             motorizedEquipment = 0;
             supportEquipment = 0;
 
-            int totalNumberOfUnits = 0;
+            float totalNumberOfUnits = 0;
+            float highestArmor = 0;
+            float totalArmor = 0;
 
             foreach (KeyValuePair<int, Dictionary<UnitName, int>> columnAndUnitData in unitsInDivision)
             {
@@ -152,9 +154,9 @@ namespace HOI4_Tools.Model
                 {
                     Unit unit = UnitsAndEquipment.units[unitNameAndNumber.Key];
                     Equipment equipmentUsed = new Equipment();
-                    int numberOfUnits = unitNameAndNumber.Value;
+                    float numberOfUnits = unitNameAndNumber.Value;
                     totalNumberOfUnits += numberOfUnits;
-                    int highest = 0;
+                    float highest = 0;
                     foreach (KeyValuePair<int, Equipment> yearAndEquipment in UnitsAndEquipment.GetEquipment(unitNameAndNumber.Key))
                     {
                         if (yearAndEquipment.Key <= year && yearAndEquipment.Key > highest)
@@ -176,14 +178,15 @@ namespace HOI4_Tools.Model
                     airAttack += equipmentUsed.airAttack * numberOfUnits;
                     defense += equipmentUsed.defense * numberOfUnits;
                     breakthrough += (unit.breakthrough + equipmentUsed.breakthrough) * numberOfUnits;
-                    armorValue += equipmentUsed.armorValue * numberOfUnits;
+                    highestArmor = (highestArmor < equipmentUsed.armorValue) ? equipmentUsed.armorValue : highestArmor;
+                    totalArmor += equipmentUsed.armorValue * numberOfUnits;
                     // piercing
                     // initiative
                     // entrenchment
                     // eq capture ratio
                     combatWidth += unit.combatWidth * numberOfUnits;
                     manpower += unit.manpower * numberOfUnits;
-                    trainingTime += unit.trainingTime * numberOfUnits;
+                    trainingTime = (trainingTime < unit.trainingTime) ? unit.trainingTime : trainingTime; 
                     // artillery eq
                     infantryEquipment += unit.infantryEquipment * numberOfUnits;
                     mechanizedEquipment += unit.mechanizedEquipment * numberOfUnits;
@@ -198,6 +201,7 @@ namespace HOI4_Tools.Model
                 }
             }
             maxOrganisation = maxOrganisation / totalNumberOfUnits;
+            armorValue = ((float)0.3 * highestArmor) + ((float)0.7 * (totalArmor / totalNumberOfUnits));
         }
     }
 }

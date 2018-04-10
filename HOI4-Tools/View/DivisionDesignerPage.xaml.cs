@@ -39,6 +39,13 @@ namespace HOI4_Tools.View
             contentScrollViewer.Content = contentWrapPanel;
 
             Division testDivision = new Division();
+            testDivision.AddUnit(UnitName.Cavalry, 0);
+            testDivision.AddUnit(UnitName.Cavalry, 0);
+            testDivision.AddUnit(UnitName.Cavalry, 1);
+            testDivision.AddUnit(UnitName.Cavalry, 1);
+            testDivision.AddUnit(UnitName.Motorized, 2);
+            testDivision.AddUnit(UnitName.Motorized, 2);
+            testDivision.AddUnit(UnitName.LightTank, 3);
             Divisions.divisions[0] = testDivision;
         }
 
