@@ -8,15 +8,15 @@ namespace HOI4_Tools.Model
 {
     static class UnitsAndEquipment
     {
-        public static Dictionary<UnitName, Unit> units = new Dictionary<UnitName, Unit>();
-        public static Dictionary<EquipmentName, Dictionary<int, Equipment>> equipment = new Dictionary<EquipmentName, Dictionary<int, Equipment>>();
+        public static Dictionary<UnitName, UnitOrEquipment> units = new Dictionary<UnitName, UnitOrEquipment>();
+        public static Dictionary<EquipmentName, Dictionary<float, UnitOrEquipment>> equipment = new Dictionary<EquipmentName, Dictionary<float, UnitOrEquipment>>();
 
         public static void test()
         {
 
         }
     
-        public static Dictionary<int, Equipment> GetEquipment(UnitName unitName)
+        public static Dictionary<float, UnitOrEquipment> GetEquipment(UnitName unitName)
         {
             switch (unitName)
             {

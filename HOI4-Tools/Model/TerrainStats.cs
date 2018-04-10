@@ -11,5 +11,10 @@ namespace HOI4_Tools.Model
         public float attack = 0;
         public float defence = 0;
         public float movement = 0;
+
+        public TerrainStats GetClone()
+        {
+            return (TerrainStats)this.MemberwiseClone();
+        }
     }
 }

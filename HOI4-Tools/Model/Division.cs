@@ -152,12 +152,12 @@ namespace HOI4_Tools.Model
             {
                 foreach (KeyValuePair<UnitName, int> unitNameAndNumber in columnAndUnitData.Value)
                 {
-                    Unit unit = UnitsAndEquipment.units[unitNameAndNumber.Key];
-                    Equipment equipmentUsed = new Equipment();
+                    UnitOrEquipment unit = UnitsAndEquipment.units[unitNameAndNumber.Key];
+                    UnitOrEquipment equipmentUsed = new UnitOrEquipment();
                     float numberOfUnits = unitNameAndNumber.Value;
                     totalNumberOfUnits += numberOfUnits;
                     float highest = 0;
-                    foreach (KeyValuePair<int, Equipment> yearAndEquipment in UnitsAndEquipment.GetEquipment(unitNameAndNumber.Key))
+                    foreach (KeyValuePair<float, UnitOrEquipment> yearAndEquipment in UnitsAndEquipment.GetEquipment(unitNameAndNumber.Key))
                     {
                         if (yearAndEquipment.Key <= year && yearAndEquipment.Key > highest)
                         {
