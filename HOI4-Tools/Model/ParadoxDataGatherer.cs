@@ -625,19 +625,19 @@ namespace HOI4_Tools.Model
 
             for (i = 0; i < equipmentFileData[EquipmentInFile.Artillery].Length; i++)
             {
-                if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment[^_]*?\{").Success)
+                if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"^[^_]*?artillery_equipment[^_]*?\{").Success)
                 {
                     GetEquipmentLocationsHelper(EquipmentName.Artillery, i, EquipmentInFile.Artillery);
                 }
-                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_1.*?\{").Success)
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"^[^_]*?artillery_equipment_1.*?\{").Success)
                 {
                     GetEquipmentLocationsHelper(EquipmentName.Artillery1, i, EquipmentInFile.Artillery);
                 }
-                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_2.*?\{").Success)
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"^[^_]*?artillery_equipment_2.*?\{").Success)
                 {
                     GetEquipmentLocationsHelper(EquipmentName.Artillery2, i, EquipmentInFile.Artillery);
                 }
-                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"artillery_equipment_3.*?\{").Success)
+                else if (Regex.Match(equipmentFileData[EquipmentInFile.Artillery][i], @"^[^_]*?artillery_equipment_3.*?\{").Success)
                 {
                     GetEquipmentLocationsHelper(EquipmentName.Artillery3, i, EquipmentInFile.Artillery);
                 }

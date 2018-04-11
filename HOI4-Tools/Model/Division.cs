@@ -82,7 +82,7 @@ namespace HOI4_Tools.Model
         public string apAttackDescription = "Having equal or greater Piercing to the targets Armor value allow you to do more damage and more effectively pin down their armored forces";
         public string buildCostIcDescription = "How much Factory Output a piece of equipment needs.";
 
-        public int year = 1936;
+        public int year = 1939;
 
         public bool IsColumnFull(int column)
         {
@@ -102,8 +102,10 @@ namespace HOI4_Tools.Model
             unitsInDivision[column][unitName]--;
             if(unitsInDivision[column][unitName] < 1)
             {
-                unitsInDivision.Remove(column);
+                unitsInDivision[column].Remove(unitName);
             }
+
+            CalculateStats();
         }
 
         public void AddUnit(UnitName unitName, int column)
@@ -137,10 +139,10 @@ namespace HOI4_Tools.Model
             softAttack = 0;
             hardAttack = 0;
             airAttack = 0;
+            apAttack = 0;
             defense = 0;
             breakthrough = 0;
             armorValue = 0;
-            // piercing
             // initiative
             // entrenchment
             // eq capture ratio
@@ -156,6 +158,9 @@ namespace HOI4_Tools.Model
             float totalNumberOfUnits = 0;
             float highestArmor = 0;
             float totalArmor = 0;
+            float highestAp = 0;
+            float totalAp = 0;
+            float totalHardness = 0;
 
             foreach (KeyValuePair<int, Dictionary<UnitName, int>> columnAndUnitData in unitsInDivision)
             {
@@ -192,9 +197,16 @@ namespace HOI4_Tools.Model
                     airAttack += (unit.airAttack + equipmentUsed.airAttack) * numberOfUnits;
                     defense += (unit.defense + equipmentUsed.defense) * numberOfUnits;
                     breakthrough += ((unit.breakthrough + 1) * equipmentUsed.breakthrough) * numberOfUnits;
+
                     highestArmor = (highestArmor < unit.armorValue + equipmentUsed.armorValue) ? unit.armorValue + equipmentUsed.armorValue : highestArmor;
                     totalArmor += (unit.armorValue + equipmentUsed.armorValue) * numberOfUnits;
-                    // piercing
+
+                    highestAp = (highestAp < unit.apAttack + equipmentUsed.apAttack) ? unit.apAttack + equipmentUsed.apAttack : highestAp;
+                    totalAp += (unit.apAttack + equipmentUsed.apAttack) * numberOfUnits;
+
+                    totalHardness += (unit.hardness + equipmentUsed.hardness) * numberOfUnits;
+
+                    // piercing ((unit.softAttack + 1) * equipmentUsed.softAttack)
                     // initiative
                     // entrenchment
                     // eq capture ratio
@@ -216,6 +228,8 @@ namespace HOI4_Tools.Model
             }
             maxOrganisation = maxOrganisation / totalNumberOfUnits;
             armorValue = ((float)0.3 * highestArmor) + ((float)0.7 * (totalArmor / totalNumberOfUnits));
+            apAttack = ((float)0.4 * highestAp) + ((float)0.6 * (totalAp / totalNumberOfUnits));
+            hardness = (totalHardness / totalNumberOfUnits);
         }
     }
 }

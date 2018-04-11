@@ -41,6 +41,9 @@ namespace HOI4_Tools.View
             Division testDivision = new Division();
             //testDivision.AddUnit(UnitName.Cavalry, 1);
             Divisions.divisions[0] = testDivision;
+
+            testDivision = new Division();
+            Divisions.divisions[1] = testDivision;
         }
 
 
@@ -229,7 +232,7 @@ namespace HOI4_Tools.View
                     AddStat(secondStatsColumn, "Defence", idAndDivision.Value.defense.ToString(), idAndDivision.Value.defenseDescription);
                     AddStat(secondStatsColumn, "Breakthrough", idAndDivision.Value.breakthrough.ToString(), idAndDivision.Value.breakthroughDescription);
                     AddStat(secondStatsColumn, "Armor", idAndDivision.Value.armorValue.ToString(), idAndDivision.Value.armorValueDescription);
-                    AddStat(secondStatsColumn, "Piercing", "0", "");
+                    AddStat(secondStatsColumn, "Piercing", idAndDivision.Value.apAttack.ToString(), idAndDivision.Value.apAttackDescription);
                     AddStat(secondStatsColumn, "Initiative", "0", "");
                     AddStat(secondStatsColumn, "Entrenchment", "0", "");
                     AddStat(secondStatsColumn, "Eq. Cap. Ratio", "0", "");
@@ -243,6 +246,7 @@ namespace HOI4_Tools.View
 
                     AddStat(thirdStatsColumn, "Manpower", idAndDivision.Value.manpower.ToString(), idAndDivision.Value.manpowerDescription);
                     AddStat(thirdStatsColumn, "Training Time", idAndDivision.Value.trainingTime.ToString(), idAndDivision.Value.trainingTimeDescription);
+                    AddStat(thirdStatsColumn, "Hardness", idAndDivision.Value.hardness.ToString(), idAndDivision.Value.hardnessDescription);
 
                 }
 
@@ -317,7 +321,14 @@ namespace HOI4_Tools.View
             {
                 if (e.RightButton == MouseButtonState.Pressed)
                 {
-                    if (imageButton.ButtonName != ButtonName.AddUnit && Divisions.divisions[imageButton.uniqueDivisionId].IsColumnFull(imageButton.column) == false)
+                    if (imageButton.ButtonName != ButtonName.AddUnit)
+                    {
+                        Divisions.divisions[imageButton.uniqueDivisionId].RemoveUnit(imageButton.column, (UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()));
+                    }
+                }
+                else if((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && imageButton.ButtonName != ButtonName.AddUnit)
+                {
+                    if(Divisions.divisions[imageButton.uniqueDivisionId].IsColumnFull(imageButton.column) == false)
                     {
                         Divisions.divisions[imageButton.uniqueDivisionId].AddUnit((UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()), imageButton.column);
                     }
