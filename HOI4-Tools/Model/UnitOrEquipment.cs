@@ -11,7 +11,6 @@ namespace HOI4_Tools.Model
         // When adding equipment stats make sure they are also added to places like Division.CalculateStats()
         public float year = 0;
 
-        public float maximumSpeed = 0;
         public float defense = 0;
         public float breakthrough = 0;
         public float armorValue = 0;
@@ -49,6 +48,51 @@ namespace HOI4_Tools.Model
                 clone.terrainStats[terrainStst.Key] = terrainStst.Value.GetClone();
             }
             return clone;
+        }
+
+        public UnitOrEquipment GetCombinedClone(UnitOrEquipment b)
+        {
+            UnitOrEquipment combined = GetClone();
+
+            combined.year = (combined.year > b.year) ? combined.year : b.year;
+
+            // TODO some of these need to be averaged or otherwise changed
+            combined.maxSpeed = (combined.maxSpeed == 0 || b.maxSpeed > combined.maxSpeed) ? b.maxSpeed : combined.maxSpeed;
+            combined.defense += b.defense;
+            combined.breakthrough += b.breakthrough;
+            combined.armorValue += b.armorValue;
+            combined.reliability += b.reliability;
+            combined.hardness += b.hardness;
+            combined.softAttack += b.softAttack;
+            combined.hardAttack += b.hardAttack;
+            combined.apAttack += b.apAttack;
+            combined.airAttack += b.airAttack;
+            combined.buildCostIc += b.buildCostIc;
+            combined.manpower += b.manpower;
+            combined.trainingTime += b.trainingTime;
+            combined.maxOrganisation += b.maxOrganisation;
+            combined.combatWidth += b.combatWidth;
+            combined.suppression += b.suppression;
+            combined.infantryEquipment += b.infantryEquipment;
+            combined.supportEquipment += b.supportEquipment;
+            combined.motorizedEquipment += b.motorizedEquipment;
+            combined.mechanizedEquipment += b.mechanizedEquipment;
+
+            combined.weight += b.weight;
+            combined.maxStrength += b.maxStrength;
+            combined.supplyConsumption += b.supplyConsumption;
+            combined.maxSpeed += b.maxSpeed;
+
+            combined.canBeParachuted = (combined.canBeParachuted && b.canBeParachuted) ? true : false;
+
+            foreach (KeyValuePair<TerrainType, TerrainStats> terrainStst in b.terrainStats)
+            {
+                combined.terrainStats[terrainStst.Key].attack += terrainStst.Value.attack;
+                combined.terrainStats[terrainStst.Key].defence += terrainStst.Value.defence;
+                combined.terrainStats[terrainStst.Key].movement += terrainStst.Value.movement;
+            }
+
+            return combined;
         }
     }
 }

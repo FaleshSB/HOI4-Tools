@@ -39,13 +39,7 @@ namespace HOI4_Tools.View
             contentScrollViewer.Content = contentWrapPanel;
 
             Division testDivision = new Division();
-            testDivision.AddUnit(UnitName.Cavalry, 0);
-            testDivision.AddUnit(UnitName.Cavalry, 0);
-            testDivision.AddUnit(UnitName.Cavalry, 1);
-            testDivision.AddUnit(UnitName.Cavalry, 1);
-            testDivision.AddUnit(UnitName.Motorized, 2);
-            testDivision.AddUnit(UnitName.Motorized, 2);
-            testDivision.AddUnit(UnitName.LightTank, 3);
+            //testDivision.AddUnit(UnitName.Cavalry, 1);
             Divisions.divisions[0] = testDivision;
         }
 
@@ -341,7 +335,7 @@ namespace HOI4_Tools.View
                 isAddingUnit = false;
                 if(buttonNamePressedToAddUnit != ButtonName.AddUnit)
                 {
-                    Divisions.divisions[imageButton.uniqueDivisionId].unitsInDivision[columnIsAddingUnitTo][(UnitName)Enum.Parse(typeof(UnitName), buttonNamePressedToAddUnit.ToString())]--;
+                    Divisions.divisions[imageButton.uniqueDivisionId].RemoveUnit(columnIsAddingUnitTo, (UnitName)Enum.Parse(typeof(UnitName), buttonNamePressedToAddUnit.ToString()));
                 }
                 Divisions.divisions[imageButton.uniqueDivisionId].AddUnit((UnitName)Enum.Parse(typeof(UnitName), imageButton.ButtonName.ToString()), imageButton.column);
             }            

@@ -82,7 +82,7 @@ namespace HOI4_Tools.Model
         public string apAttackDescription = "Having equal or greater Piercing to the targets Armor value allow you to do more damage and more effectively pin down their armored forces";
         public string buildCostIcDescription = "How much Factory Output a piece of equipment needs.";
 
-        public int year = 1934;
+        public int year = 1936;
 
         public bool IsColumnFull(int column)
         {
@@ -95,6 +95,15 @@ namespace HOI4_Tools.Model
             }
             if(columnCount < 5) { return false; }
             else { return true; }
+        }
+
+        public void RemoveUnit(int column, UnitName unitName)
+        {
+            unitsInDivision[column][unitName]--;
+            if(unitsInDivision[column][unitName] < 1)
+            {
+                unitsInDivision.Remove(column);
+            }
         }
 
         public void AddUnit(UnitName unitName, int column)
@@ -152,6 +161,7 @@ namespace HOI4_Tools.Model
             {
                 foreach (KeyValuePair<UnitName, int> unitNameAndNumber in columnAndUnitData.Value)
                 {
+                    if(unitNameAndNumber.Value < 1) { continue; }
                     UnitOrEquipment unit = UnitsAndEquipment.units[unitNameAndNumber.Key];
                     UnitOrEquipment equipmentUsed = new UnitOrEquipment();
                     float numberOfUnits = unitNameAndNumber.Value;
@@ -161,37 +171,41 @@ namespace HOI4_Tools.Model
                     {
                         if (yearAndEquipment.Key <= year && yearAndEquipment.Key > highest)
                         {
-                            equipmentUsed = yearAndEquipment.Value;
+                            highest = yearAndEquipment.Key;
                         }
                     }
+                    if (highest != 0)
+                    {
+                        equipmentUsed = UnitsAndEquipment.GetEquipment(unitNameAndNumber.Key)[highest];
+                    }
 
-                    float newMaxSpeed = (unit.maxSpeed > equipmentUsed.maximumSpeed) ? unit.maxSpeed : equipmentUsed.maximumSpeed;
-                    maxSpeed = (maxSpeed == 0 || (maxSpeed > newMaxSpeed)) ? newMaxSpeed : maxSpeed;
-                    maxStrength += unit.maxStrength * numberOfUnits;
-                    maxOrganisation += unit.maxOrganisation * numberOfUnits;
-                    suppression += unit.suppression * numberOfUnits;
-                    weight += unit.weight * numberOfUnits;
-                    supplyConsumption += unit.supplyConsumption * numberOfUnits;
+                    float newMaxSpeed = equipmentUsed.maxSpeed * (1 + unit.maxSpeed);
+                    maxSpeed = (maxSpeed == 0 || maxSpeed > newMaxSpeed) ? newMaxSpeed : maxSpeed;
+                    maxStrength += (unit.maxStrength + equipmentUsed.maxStrength) * numberOfUnits;
+                    maxOrganisation += (unit.maxOrganisation + equipmentUsed.maxOrganisation) * numberOfUnits;
+                    suppression += (unit.suppression + equipmentUsed.suppression) * numberOfUnits;
+                    weight += (unit.weight + equipmentUsed.weight) * numberOfUnits;
+                    supplyConsumption += (unit.supplyConsumption + equipmentUsed.supplyConsumption) * numberOfUnits;
                     // Relyability
-                    softAttack += equipmentUsed.softAttack * numberOfUnits;
-                    hardAttack += equipmentUsed.hardAttack * numberOfUnits;
-                    airAttack += equipmentUsed.airAttack * numberOfUnits;
-                    defense += equipmentUsed.defense * numberOfUnits;
-                    breakthrough += (unit.breakthrough + equipmentUsed.breakthrough) * numberOfUnits;
-                    highestArmor = (highestArmor < equipmentUsed.armorValue) ? equipmentUsed.armorValue : highestArmor;
-                    totalArmor += equipmentUsed.armorValue * numberOfUnits;
+                    softAttack += ((unit.softAttack + 1) * equipmentUsed.softAttack) * numberOfUnits;
+                    hardAttack += ((unit.hardAttack + 1) * equipmentUsed.hardAttack) * numberOfUnits;
+                    airAttack += (unit.airAttack + equipmentUsed.airAttack) * numberOfUnits;
+                    defense += (unit.defense + equipmentUsed.defense) * numberOfUnits;
+                    breakthrough += ((unit.breakthrough + 1) * equipmentUsed.breakthrough) * numberOfUnits;
+                    highestArmor = (highestArmor < unit.armorValue + equipmentUsed.armorValue) ? unit.armorValue + equipmentUsed.armorValue : highestArmor;
+                    totalArmor += (unit.armorValue + equipmentUsed.armorValue) * numberOfUnits;
                     // piercing
                     // initiative
                     // entrenchment
                     // eq capture ratio
-                    combatWidth += unit.combatWidth * numberOfUnits;
-                    manpower += unit.manpower * numberOfUnits;
-                    trainingTime = (trainingTime < unit.trainingTime) ? unit.trainingTime : trainingTime; 
+                    combatWidth += (unit.combatWidth + equipmentUsed.combatWidth) * numberOfUnits;
+                    manpower += (unit.manpower + equipmentUsed.manpower) * numberOfUnits;
+                    trainingTime = (trainingTime < unit.trainingTime + equipmentUsed.trainingTime) ? unit.trainingTime + equipmentUsed.trainingTime : trainingTime; 
                     // artillery eq
-                    infantryEquipment += unit.infantryEquipment * numberOfUnits;
-                    mechanizedEquipment += unit.mechanizedEquipment * numberOfUnits;
-                    motorizedEquipment += unit.motorizedEquipment * numberOfUnits;
-                    supportEquipment += unit.supportEquipment * numberOfUnits;
+                    infantryEquipment += (unit.infantryEquipment + equipmentUsed.infantryEquipment) * numberOfUnits;
+                    mechanizedEquipment += (unit.mechanizedEquipment + equipmentUsed.mechanizedEquipment) * numberOfUnits;
+                    motorizedEquipment += (unit.motorizedEquipment + equipmentUsed.motorizedEquipment) * numberOfUnits;
+                    supportEquipment += (unit.supportEquipment + equipmentUsed.supportEquipment) * numberOfUnits;
 
 
                     /*

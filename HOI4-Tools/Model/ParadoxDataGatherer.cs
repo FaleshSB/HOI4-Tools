@@ -264,6 +264,58 @@ namespace HOI4_Tools.Model
                         break;
                 }
             }
+
+            Dictionary<float, UnitOrEquipment> motorized = UnitsAndEquipment.GetEquipment(UnitName.Motorized);
+            Dictionary<float, UnitOrEquipment> mechanized = UnitsAndEquipment.GetEquipment(UnitName.Mechanized);
+            Dictionary<float, UnitOrEquipment> infantry = UnitsAndEquipment.GetEquipment(UnitName.Infantry);
+
+            // Combained Motorized equipment with the latest Infantry equipment for each year
+            float currentMotorized = 0;
+            float currentInfantry = 0;
+            bool hasFoundNew = false;
+            for (float i = 1910; i < 1960; i++)
+            {
+                hasFoundNew = false;
+                if (motorized.ContainsKey(i))
+                {
+                    currentMotorized = i;
+                    hasFoundNew = true;
+                }
+                if (infantry.ContainsKey(i))
+                {
+                    currentInfantry = i;
+                    hasFoundNew = true;
+                }
+                if(hasFoundNew && currentMotorized > 0 && currentInfantry > 0)
+                {
+                    UnitOrEquipment combined = motorized[currentMotorized].GetCombinedClone(infantry[currentInfantry]);
+                    UnitsAndEquipment.equipment[EquipmentName.Motorized][combined.year] = combined;
+                }
+            }
+
+            // Combained Motorized equipment with the latest Infantry equipment for each year
+            float currentMechanized = 0;
+            currentInfantry = 0;
+            for (float i = 1910; i < 1960; i++)
+            {
+                hasFoundNew = false;
+                if (mechanized.ContainsKey(i))
+                {
+                    currentMechanized = i;
+                    hasFoundNew = true;
+                }
+                if (infantry.ContainsKey(i))
+                {
+                    currentInfantry = i;
+                    hasFoundNew = true;
+                }
+                if (hasFoundNew && currentMechanized > 0 && currentInfantry > 0)
+                {
+                    UnitOrEquipment combined = mechanized[currentMechanized].GetCombinedClone(infantry[currentInfantry]);
+                    UnitsAndEquipment.equipment[EquipmentName.Mechanized][combined.year] = combined;
+                }
+            }
+
         }
 
 
@@ -383,74 +435,73 @@ namespace HOI4_Tools.Model
         {
             for (int i = start; i < end; i++)
             {
-                unitOrEquipment.airAttack = GetStatsHelper(paradoxData[i], @"air_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.airAttack);
-                unitOrEquipment.apAttack = GetStatsHelper(paradoxData[i], @"ap_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.apAttack);
-                unitOrEquipment.armorValue = GetStatsHelper(paradoxData[i], @"armor_value[^0-9]+?([\-0-9\.]+)", unitOrEquipment.armorValue);
-                unitOrEquipment.breakthrough = GetStatsHelper(paradoxData[i], @"breakthrough[^0-9]+?([\-0-9\.]+)", unitOrEquipment.breakthrough);
-                unitOrEquipment.buildCostIc = GetStatsHelper(paradoxData[i], @"build_cost_ic[^0-9]+?([\-0-9\.]+)", unitOrEquipment.buildCostIc);
-                unitOrEquipment.combatWidth = GetStatsHelper(paradoxData[i], @"combat_width[^0-9]+?([\-0-9\.]+)", unitOrEquipment.combatWidth);
-                unitOrEquipment.defense = GetStatsHelper(paradoxData[i], @"defense[^0-9]+?([\-0-9\.]+)", unitOrEquipment.defense);
-                unitOrEquipment.hardAttack = GetStatsHelper(paradoxData[i], @"hard_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.hardAttack);
-                unitOrEquipment.hardness = GetStatsHelper(paradoxData[i], @"hardness[^0-9]+?([\-0-9\.]+)", unitOrEquipment.hardness);
-                unitOrEquipment.infantryEquipment = GetStatsHelper(paradoxData[i], @"infantry_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.infantryEquipment);
-                unitOrEquipment.manpower = GetStatsHelper(paradoxData[i], @"manpower[^0-9]+?([\-0-9\.]+)", unitOrEquipment.manpower);
-                unitOrEquipment.maximumSpeed = GetStatsHelper(paradoxData[i], @"maximum_speed[^0-9]+?([\-0-9\.]+)", unitOrEquipment.maximumSpeed);
-                unitOrEquipment.maxOrganisation = GetStatsHelper(paradoxData[i], @"max_organisation[^0-9]+?([\-0-9\.]+)", unitOrEquipment.maxOrganisation);
-                unitOrEquipment.maxSpeed = GetStatsHelper(paradoxData[i], @"maximum_speed[^0-9]+?([\-0-9\.]+)", unitOrEquipment.maxSpeed);
-                unitOrEquipment.maxStrength = GetStatsHelper(paradoxData[i], @"max_strength[^0-9]+?([\-0-9\.]+)", unitOrEquipment.maxStrength);
-                unitOrEquipment.mechanizedEquipment = GetStatsHelper(paradoxData[i], @"mechanized_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.mechanizedEquipment);
-                unitOrEquipment.motorizedEquipment = GetStatsHelper(paradoxData[i], @"motorized_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.motorizedEquipment);
-                unitOrEquipment.reliability = GetStatsHelper(paradoxData[i], @"reliability[^0-9]+?([\-0-9\.]+)", unitOrEquipment.reliability);
-                unitOrEquipment.softAttack = GetStatsHelper(paradoxData[i], @"soft_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.softAttack);
-                unitOrEquipment.supplyConsumption = GetStatsHelper(paradoxData[i], @"supply_consumption[^0-9]+?([\-0-9\.]+)", unitOrEquipment.supplyConsumption);
-                unitOrEquipment.supportEquipment = GetStatsHelper(paradoxData[i], @"support_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.supportEquipment);
-                unitOrEquipment.suppression = GetStatsHelper(paradoxData[i], @"suppression[^0-9]+?([\-0-9\.]+)", unitOrEquipment.suppression);
-                unitOrEquipment.trainingTime = GetStatsHelper(paradoxData[i], @"training_time[^0-9]+?([\-0-9\.]+)", unitOrEquipment.trainingTime);
-                unitOrEquipment.weight = GetStatsHelper(paradoxData[i], @"weight[^0-9]+?([\-0-9\.]+)", unitOrEquipment.weight);
-                unitOrEquipment.year = GetStatsHelper(paradoxData[i], @"year[^0-9]+?([\-0-9]+)", unitOrEquipment.year);
+                unitOrEquipment.airAttack = GetStatsHelper(paradoxData[i], @"^[^#]*air_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.airAttack);
+                unitOrEquipment.apAttack = GetStatsHelper(paradoxData[i], @"^[^#]*ap_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.apAttack);
+                unitOrEquipment.armorValue = GetStatsHelper(paradoxData[i], @"^[^#]*armor_value[^0-9]+?([\-0-9\.]+)", unitOrEquipment.armorValue);
+                unitOrEquipment.breakthrough = GetStatsHelper(paradoxData[i], @"^[^#]*breakthrough[^0-9]+?([\-0-9\.]+)", unitOrEquipment.breakthrough);
+                unitOrEquipment.buildCostIc = GetStatsHelper(paradoxData[i], @"^[^#]*build_cost_ic[^0-9]+?([\-0-9\.]+)", unitOrEquipment.buildCostIc);
+                unitOrEquipment.combatWidth = GetStatsHelper(paradoxData[i], @"^[^#]*combat_width[^0-9]+?([\-0-9\.]+)", unitOrEquipment.combatWidth);
+                unitOrEquipment.defense = GetStatsHelper(paradoxData[i], @"^[^#]*defense[^0-9]+?([\-0-9\.]+)", unitOrEquipment.defense);
+                unitOrEquipment.hardAttack = GetStatsHelper(paradoxData[i], @"^[^#]*hard_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.hardAttack);
+                unitOrEquipment.hardness = GetStatsHelper(paradoxData[i], @"^[^#]*hardness[^0-9]+?([\-0-9\.]+)", unitOrEquipment.hardness);
+                unitOrEquipment.infantryEquipment = GetStatsHelper(paradoxData[i], @"^[^#]*infantry_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.infantryEquipment);
+                unitOrEquipment.manpower = GetStatsHelper(paradoxData[i], @"^[^#]*manpower[^0-9]+?([\-0-9\.]+)", unitOrEquipment.manpower);
+                unitOrEquipment.maxSpeed = GetStatsHelper(paradoxData[i], @"^[^#]*maximum_speed[^0-9]+?([\-0-9\.]+)", unitOrEquipment.maxSpeed);
+                unitOrEquipment.maxOrganisation = GetStatsHelper(paradoxData[i], @"^[^#]*max_organisation[^0-9]+?([\-0-9\.]+)", unitOrEquipment.maxOrganisation);
+                unitOrEquipment.maxStrength = GetStatsHelper(paradoxData[i], @"^[^#]*max_strength[^0-9]+?([\-0-9\.]+)", unitOrEquipment.maxStrength);
+                unitOrEquipment.mechanizedEquipment = GetStatsHelper(paradoxData[i], @"^[^#]*mechanized_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.mechanizedEquipment);
+                unitOrEquipment.motorizedEquipment = GetStatsHelper(paradoxData[i], @"^[^#]*motorized_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.motorizedEquipment);
+                unitOrEquipment.reliability = GetStatsHelper(paradoxData[i], @"^[^#]*reliability[^0-9]+?([\-0-9\.]+)", unitOrEquipment.reliability);
+                unitOrEquipment.softAttack = GetStatsHelper(paradoxData[i], @"^[^#]*soft_attack[^0-9]+?([\-0-9\.]+)", unitOrEquipment.softAttack);
+                unitOrEquipment.supplyConsumption = GetStatsHelper(paradoxData[i], @"^[^#]*supply_consumption[^0-9]+?([\-0-9\.]+)", unitOrEquipment.supplyConsumption);
+                unitOrEquipment.supportEquipment = GetStatsHelper(paradoxData[i], @"^[^#]*support_equipment[^0-9]+?([\-0-9\.]+)", unitOrEquipment.supportEquipment);
+                unitOrEquipment.suppression = GetStatsHelper(paradoxData[i], @"^[^#]*suppression[^0-9]+?([\-0-9\.]+)", unitOrEquipment.suppression);
+                unitOrEquipment.trainingTime = GetStatsHelper(paradoxData[i], @"^[^#]*training_time[^0-9]+?([\-0-9\.]+)", unitOrEquipment.trainingTime);
+                unitOrEquipment.weight = GetStatsHelper(paradoxData[i], @"^[^#]*weight[^0-9]+?([\-0-9\.]+)", unitOrEquipment.weight);
+                unitOrEquipment.year = GetStatsHelper(paradoxData[i], @"^[^#]*year[^0-9]+?([\-0-9]+)", unitOrEquipment.year);
 
 
 
-                if (Regex.Match(paradoxData[i], @"can_be_parachuted.*?yes").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*can_be_parachuted.*?yes").Success)
                 {
                     unitOrEquipment.canBeParachuted = true;
                 }
 
 
 
-                if (Regex.Match(paradoxData[i], @"forest.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*forest.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Forest, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"hills.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*hills.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Hills, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"mountain.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*mountain.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Mountain, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"marsh.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*marsh.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Marsh, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"plains.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*plains.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Plains, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"urban.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*urban.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Urban, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"desert.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*desert.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Desert, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"river.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*river.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.River, i + 1, i + 3, paradoxData);
                 }
-                if (Regex.Match(paradoxData[i], @"amphibious.*?\{").Success)
+                if (Regex.Match(paradoxData[i], @"^[^#]*amphibious.*?\{").Success)
                 {
                     GetTerrainStats(unitOrEquipment, TerrainType.Amphibious, i + 1, i + 3, paradoxData);
                 }
